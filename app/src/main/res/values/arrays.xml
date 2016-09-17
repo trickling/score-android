@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nav_list_activities">
+        <item>@string/nav_view_label_events</item>
+        <item>@string/nav_view_label_teams</item>
+        <item>@string/nav_view_label_users</item>
+    </string-array>
+
+    <string-array name="nav_list_values">
+        <item>@string/nav_events</item>
+        <item>@string/nav_teams</item>
+        <item>@string/nav_users</item>
+    </string-array>
+
+    <string-array name="list_action_activities">
+        <item>@string/action_view_label_edit</item>
+        <item>@string/action_view_label_view</item>
+        <item>@string/action_view_label_delete</item>
+        <item>@string/action_view_label_undo</item>
+    </string-array>
+
+    <string-array name="action_values">
+        <item>@string/action_edit</item>
+        <item>@string/action_view</item>
+        <item>@string/action_delete</item>
+        <item>@string/action_undo</item>
+    </string-array>
+
+
+    <string-array name="pref_list_activities">
+        <item>@string/nav_view_label_events</item>
+        <item>@string/nav_view_label_teams</item>
+        <item>@string/nav_view_label_users</item>
+    </string-array>
+
+    <string-array name="pref_list_values">
+        <item>@string/nav_events</item>
+        <item>@string/nav_teams</item>
+        <item>@string/nav_users</item>
+    </string-array>
+
+    <string-array name="pref_list_edit_activities">
+        <item>@string/action_view_label_edit</item>
+        <item>@string/action_view_label_view</item>
+        <item>@string/action_view_label_delete</item>
+        <item>@string/action_view_label_undo</item>
+    </string-array>
+
+    <string-array name="pref_edit_values">
+        <item>@string/action_edit</item>
+        <item>@string/action_view</item>
+        <item>@string/action_delete</item>
+        <item>@string/action_undo</item>
+    </string-array>
+
+</resources>

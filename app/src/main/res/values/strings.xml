@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">ScoreSheet</string>
+
+    <string name="nav_list_key">Nav</string>
+    <string name="nav_events">Events</string>
+    <string name="nav_teams">Teams</string>
+    <string name="nav_users">Users</string>
+
+    <string name="nav_view_label_events">Events</string>
+    <string name="nav_view_label_teams">Teams</string>
+    <string name="nav_view_label_users">Users</string>
+
+    <string name="action_add">Add</string>
+    <string name="title_new_detail">New Event</string>
+    <string name="title_edit_detail">Edit Event</string>
+    <string name="eventNewTextLabel">Description:</string>
+
+    <string name="eventEditTextLabel">Description:</string>
+
+    <string name="action_view_label_edit">Edit</string>
+    <string name="action_view_label_delete">Delete</string>
+    <string name="action_view_label_view">View</string>
+    <string name="action_view_label_undo">Undo</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_view">View</string>
+    <string name="action_undo">Undo</string>
+
+
+
+    <string name="action_share">Share</string>
+    <string name="title_activity_detail">Details</string>
+    <string name="title_action_settings">Settings</string>
+
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">scoresheet.example.com</string>
+    <string name="content_authority">com.example.android.scoresheet.app</string>
+
+    <string name="pref_activity_list_key">ActivityPrefs</string>
+    <string name="select_activity">Select</string>
+    <string name="pref_events">EventPref</string>
+
+    <string name="pref_edit_list_key">PrefEditListKey</string>
+    <string name="select_edit_activity">SelectEdit</string>
+    <string name="pref_add">AddPref</string>
+
+</resources>

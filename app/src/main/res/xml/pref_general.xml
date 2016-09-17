@@ -1,0 +1,22 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListPreference
+        android:key="@string/pref_activity_list_key"
+        android:title="@string/select_activity"
+        android:entries="@array/pref_list_activities"
+        android:entryValues="@array/pref_list_values"
+        android:defaultValue="@string/pref_events" >
+    </ListPreference>
+
+    <ListPreference
+        android:key="@string/pref_edit_list_key"
+        android:title="@string/select_edit_activity"
+        android:entries="@array/pref_list_edit_activities"
+        android:entryValues="@array/pref_edit_values"
+        android:defaultValue="@string/pref_add" >
+    </ListPreference>
+
+</PreferenceScreen>
