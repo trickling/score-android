@@ -30,6 +30,9 @@
 
     <string name="action_share">Share</string>
     <string name="title_activity_detail">Details</string>
+    <string name="title_activity_events">Events</string>
+    <string name="title_activity_entrants">Teams</string>
+    <string name="title_activity_users">Users</string>
     <string name="title_action_settings">Settings</string>
 
     <!-- SyncAdapter related -->

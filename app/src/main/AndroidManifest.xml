@@ -27,13 +27,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EventEntrantDetailActivity"
-            android:label="@string/title_activity_detail"
+            android:name=".EventsActivity"
+            android:label="@string/title_activity_events"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.scoresheet.app.MainActivity" />
+        </activity>
+        <activity
+            android:name=".EntrantsActivity"
+            android:label="@string/title_activity_entrants"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.scoresheet.app.MainActivity" />
+        </activity>
+        <activity
+            android:name=".UsersActivity"
+            android:label="@string/title_activity_users"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.scoresheet.app.MainActivity" />
+        </activity>
+        <activity
+            android:name=".EventEntrantDetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".EventsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.scoresheet.app.EventsActivity" />
         </activity>
         <activity
             android:name=".EventViewDetailActivity"
@@ -57,10 +84,10 @@
             android:name=".EventEditActivity"
             android:label="@string/title_edit_detail"
             android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".EventsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.scoresheet.app.MainActivity" />
+                android:value="com.example.android.scoresheet.app.EventsActivity" />
         </activity>
         <activity
             android:name=".OptionsActivity"
