@@ -1,0 +1,19 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.scoresheet.app.EntrantsActivity" >
+
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_white_48dp"
+        android:title="@string/action_add"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.AppCompatImageButton" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/title_action_settings"
+        app:showAsAction="never" />
+
+</menu>

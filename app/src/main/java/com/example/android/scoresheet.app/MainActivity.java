@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.example.android.scoresheet.app.Entrants.EntrantsActivity;
+import com.example.android.scoresheet.app.Events.EventsActivity;
+import com.example.android.scoresheet.app.Users.UsersActivity;
+
 public class MainActivity extends TabActivity {
 
     @Override

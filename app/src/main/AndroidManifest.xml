@@ -26,17 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".EventsActivity"
-            android:label="@string/title_activity_events"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.scoresheet.app.MainActivity" />
-        </activity>
-        <activity
-            android:name=".EntrantsActivity"
+            android:name=".Entrants.EntrantsActivity"
             android:label="@string/title_activity_entrants"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
@@ -45,8 +37,36 @@
                 android:value="com.example.android.scoresheet.app.MainActivity" />
         </activity>
         <activity
-            android:name=".UsersActivity"
-            android:label="@string/title_activity_users"
+            android:name=".Entrants.EntrantViewDetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Entrants.EntrantsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Entrants.EntrantsActivity" />
+        </activity>
+        <activity
+            android:name=".Entrants.EntrantNewActivity"
+            android:label="@string/title_new_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Entrants.EntrantsActivity" />
+        </activity>
+        <activity
+            android:name=".Entrants.EntrantEditActivity"
+            android:label="@string/title_edit_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Entrants.EntrantsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Entrants.EntrantsActivity" />
+        </activity>
+
+        <activity
+            android:name=".Events.EventsActivity"
+            android:label="@string/title_activity_events"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -54,25 +74,25 @@
                 android:value="com.example.android.scoresheet.app.MainActivity" />
         </activity>
         <activity
-            android:name=".EventEntrantDetailActivity"
+            android:name=".Events.EventEntrantDetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme"
-            android:parentActivityName=".EventsActivity" >
+            android:parentActivityName=".Events.EventsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.scoresheet.app.EventsActivity" />
+                android:value=".Events.EventsActivity" />
         </activity>
         <activity
-            android:name=".EventViewDetailActivity"
+            android:name=".Events.EventViewDetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme"
-            android:parentActivityName=".EventEntrantDetailActivity" >
+            android:parentActivityName=".Events.EventEntrantDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.scoresheet.app.EventEntrantDetailActivity" />
+                android:value=".Events.EventEntrantDetailActivity" />
         </activity>
         <activity
-            android:name=".EventNewActivity"
+            android:name=".Events.EventNewActivity"
             android:label="@string/title_new_detail"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
@@ -81,14 +101,25 @@
                 android:value="com.example.android.scoresheet.app.MainActivity" />
         </activity>
         <activity
-            android:name=".EventEditActivity"
+            android:name=".Events.EventEditActivity"
             android:label="@string/title_edit_detail"
             android:theme="@style/AppTheme"
-            android:parentActivityName=".EventsActivity" >
+            android:parentActivityName=".Events.EventsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.scoresheet.app.EventsActivity" />
+                android:value=".Events.EventsActivity" />
         </activity>
+
+        <activity
+            android:name=".Users.UsersActivity"
+            android:label="@string/title_activity_users"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.scoresheet.app.MainActivity" />
+        </activity>
+
         <activity
             android:name=".OptionsActivity"
             android:label="@string/title_action_settings"

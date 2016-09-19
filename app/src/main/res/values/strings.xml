@@ -26,7 +26,8 @@
     <string name="action_view">View</string>
     <string name="action_undo">Undo</string>
 
-
+    <string name="entrantEditTextLabel">Description:</string>
+    <string name="entrantNewTextLabel">Description:</string>
 
     <string name="action_share">Share</string>
     <string name="title_activity_detail">Details</string>
