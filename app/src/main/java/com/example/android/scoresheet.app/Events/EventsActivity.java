@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.example.android.scoresheet.app.OptionsActivity;
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.sync.ScoreSheetSyncAdapter;
 
 /**
  * Created by Kari Stromsland on 9/17/2016.
@@ -56,7 +55,7 @@ public class EventsActivity extends AppCompatActivity implements EventListFragme
                 .findFragmentById(R.id.fragment_list_event));
 
 //        eventFragment.setUseTodayLayout(!mTwoPane);
-        ScoreSheetSyncAdapter.initializeSyncAdapter(this);
+//        ScoreSheetSyncAdapter.initializeSyncAdapter(this);
     }
     protected void onResume() {
         // Resume and either load unchanged data or updated data

@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 
 /**
  * Created by Kari Stromsland on 9/15/2016.
  */
-public class EventEditFragment extends Fragment {
+public class EventEditFragment extends Fragment{
 
     public static final String LOG_TAG = EventEditFragment.class.getSimpleName();
 
@@ -27,14 +27,16 @@ public class EventEditFragment extends Fragment {
             // On the one hand, that's annoying.  On the other, you can search the weather table
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
-            ScoreSheetContract.EventEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntry._ID,
-            ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC
+            EventEntry.TABLE_NAME + "." + EventEntry._ID,
+            EventEntry.COLUMN_SHORT_DESC
     };
     static final int COL_EVENT_ID = 0;
     static final int COL_EVENT_DESC = 1;
+
     static final String EVENTEDIT_URI = "URI";
 
     private Uri mUri;
+    private Uri eventUri;
     public Uri editUri;
     private EditText mDescrEditText;
     private String DescrEditText;
@@ -43,12 +45,19 @@ public class EventEditFragment extends Fragment {
         // Required empty public constructor
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        // Add this line in order for this fragment to handle menu events.
-////        setHasOptionsMenu(true);
-//    }
+    public interface Callback {
+        /**
+         * EventEditEntrantsFragmentCallback to EditEventActivity for when an item has been selected.
+         */
+        public void onEventEditEntrants(Uri editUri);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Add this line in order for this fragment to handle menu events.
+//        setHasOptionsMenu(true);
+    }
 
 //    @Override
 //    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -76,13 +85,14 @@ public class EventEditFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mUri = arguments.getParcelable(EventEditFragment.EVENTEDIT_URI);
+            DescrEditText = EventEntry.getEventIdDescriptionFromUri(mUri);
         }
 
         View rootView = inflater.inflate(R.layout.fragment_edit_event, container, false);
 
         mDescrEditText = (EditText) rootView.findViewById(R.id.eventEditText);
 
-        mDescrEditText.setText(ScoreSheetContract.EventEntry.getEventDescriptionFromUri(mUri));
+        mDescrEditText.setText(DescrEditText);
 
         Button save_edit_button = (Button) rootView.findViewById(R.id.eventEditSave);
 
@@ -91,58 +101,28 @@ public class EventEditFragment extends Fragment {
                 DescrEditText = mDescrEditText.getText().toString();
 
                 if ( !(DescrEditText.equals("")) ) {
-                    editUri = ScoreSheetContract.EventEntry.buildEventDesc(DescrEditText);
+
+                    editUri = EventEntry.buildEventDescUri(DescrEditText);
                     ContentValues mEditContentValues = new ContentValues();
-                    mEditContentValues.put(ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC, DescrEditText);
-                    String selection = ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC + " = ?";
-                    String[] selectionArgs = {ScoreSheetContract.EventEntry.getEventDescriptionFromUri(mUri)};
-                    getContext().getContentResolver().update(mUri, mEditContentValues, selection, selectionArgs);
+                    mEditContentValues.put(EventEntry.COLUMN_SHORT_DESC, DescrEditText);
+                    String selection = EventEntry.COLUMN_SHORT_DESC + " = ?";
+                    String[] selectionArgs = {EventEntry.getEventDescriptionFromUri(mUri)};
+                    getContext().getContentResolver().update(EventEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
                 }
             }
         };
 
         save_edit_button.setOnClickListener(edit_saveOnClickListener);
 
+        Button edit_entrants_button = (Button) rootView.findViewById(R.id.event_edit_entrant);
+
+        View.OnClickListener edit_entrantsOnClickListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                ((Callback) getActivity()).onEventEditEntrants(mUri);
+            }
+        };
+        edit_entrants_button.setOnClickListener(edit_entrantsOnClickListener);
+
         return rootView;
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-//        getLoaderManager().initLoader(EVENT_LOADER, null, this);
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-//    @Override
-//    public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
-//
-//        String sortOrder = ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC + " ASC";
-//
-//        Uri eventUri = ScoreSheetContract.EventEntry.buildEvent(ScoreSheetContract.EventEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntry._ID);
-//
-//        return new CursorLoader(getActivity(), eventUri, EVENT_COLUMNS, null, null, sortOrder);
-//    }
-
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
-//        mEventAdapter.swapCursor(data);
-//
-//        if (mPosition != ListView.INVALID_POSITION) {
-//            // If we don't need to restart the loader, and there's a desired position to restore to, do so now.
-//            mListView.smoothScrollToPosition(mPosition);
-//        }
-//    }
-
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
-//        mEventAdapter.swapCursor(null);
-//    }
-
-//    private void updateEvents(){
-//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-//    }
 }

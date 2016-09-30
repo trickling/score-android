@@ -17,8 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
-import com.example.android.scoresheet.app.sync.ScoreSheetSyncAdapter;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 
 /**
  * Created by Kari Stromsland on 9/18/2016.
@@ -42,8 +41,8 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
             // On the one hand, that's annoying.  On the other, you can search the weather table
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
-            ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EntrantEntry._ID,
-            ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
+            EntrantEntry.COLUMN_TEAM_DESC
     };
     static final int COL_ENTRANT_ID = 0;
     static final int COL_ENTRANT_DESC = 1;
@@ -97,7 +96,7 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        mUri = ScoreSheetContract.EntrantEntry.buildEntrantDesc(mEntrantListAdapter.getCursor().getString(COL_ENTRANT_DESC));
+        mUri = EntrantEntry.buildEntrantDescUri(mEntrantListAdapter.getCursor().getString(COL_ENTRANT_DESC));
         switch (item.getItemId()) {
             case R.id.edit:
                 editEntrant(mUri, info.id);
@@ -111,9 +110,9 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     }
 
     private void deleteEntrant(Uri itemUri, long l){
-        String selection = ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC + " = ?";
-        String[] selectionArgs = {ScoreSheetContract.EntrantEntry.getEntrantDescriptionFromUri(mUri)};
-        getContext().getContentResolver().delete(itemUri, selection, selectionArgs);
+        String selection = EntrantEntry.COLUMN_TEAM_DESC + " = ?";
+        String[] selectionArgs = {EntrantEntry.getEntrantDescFromUri(mUri)};
+        getContext().getContentResolver().delete(EntrantEntry.CONTENT_URI, selection, selectionArgs);
     }
 
     private void editEntrant(Uri itemUri, long l){
@@ -144,7 +143,7 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
 
                 if (cursor != null) {
-                    ((Callback) getActivity()).onItemSelected(ScoreSheetContract.EntrantEntry.buildEntrantDesc(cursor.getString(COL_ENTRANT_DESC)));
+                    ((Callback) getActivity()).onItemSelected(EntrantEntry.buildEntrantDescUri(cursor.getString(COL_ENTRANT_DESC)));
                 }
                 mPosition = position;
             }
@@ -192,11 +191,8 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC + " ASC";
-
-        Uri entrantUri = ScoreSheetContract.EntrantEntry.buildEntrant(ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EntrantEntry._ID);
-
-        return new CursorLoader(getActivity(), entrantUri, ENTRANT_COLUMNS, null, null, sortOrder);
+        String sortOrder = EntrantEntry.COLUMN_TEAM_DESC + " ASC";
+        return new CursorLoader(getActivity(), EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, null, null, sortOrder);
     }
 
     @Override
@@ -214,7 +210,7 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
         mEntrantListAdapter.swapCursor(null);
     }
 
-    private void updateEntrants(){
-        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-    }
+//    private void updateEntrants(){
+//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
+//    }
 }

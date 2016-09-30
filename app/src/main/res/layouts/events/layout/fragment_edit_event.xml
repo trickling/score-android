@@ -6,6 +6,13 @@
     android:layout_height="wrap_content"
     android:id="@+id/fragment_edit_event">
 
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="db_mgr"-->
+        <!--android:id="@+id/event_edit_db_mgr"-->
+        <!--android:clickable="true"/>-->
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -39,4 +46,14 @@
         android:id="@+id/eventEditSave"
         android:text="Save" />
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:enabled="true"
+        android:gravity="center"
+        android:id="@+id/event_edit_entrant"
+        android:text="Add|Delete Teams" />
+    
 </LinearLayout>

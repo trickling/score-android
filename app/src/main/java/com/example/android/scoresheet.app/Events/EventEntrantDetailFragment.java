@@ -14,10 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
-import com.example.android.scoresheet.app.sync.ScoreSheetSyncAdapter;
+import com.example.android.scoresheet.app.data.ScoreSheetDbHelper;
 
 /**
  * Created by Kari Stromsland on 8/25/2016.
@@ -29,7 +29,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
-
+    private ScoreSheetDbHelper mOpenHelper;
     static final String EVENTENTRANTDETAIL_URI = "URI";
     private static final String EVENT_SHARE_HASHTAG = " #ScoreSheetApp";
     private Uri mUri;
@@ -58,6 +58,17 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     public static final int COL_ENTRANT_ID = 0;
     public static final int COL_TEAM_DESC = 1;
 
+    private static final int EVENTENTRANT_LOADER = 0;
+
+    private static final String[] EVENTENTRANT_COLUMNS = {
+            EventEntrantEntry.TABLE_NAME + "." + EventEntrantEntry._ID,
+            EventEntrantEntry.COLUMN_EVENT_ID, EventEntrantEntry.COLUMN_ENTRANT_ID
+    };
+
+    public static final int COL_EVENTENTRANT_ID = 0;
+    public static final int COL_EV_ID = 1;
+    public static final int COL_EN_ID = 2;
+
     public interface Callback {
         /**
          * EventDetailFragmentCallback to EventEntrantDetailActivity for when an item has been selected.
@@ -72,6 +83,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Add this line in order for this fragment to handle menu events.
 //        setHasOptionsMenu(true);
     }
@@ -130,7 +142,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
 
         mDescriptionView = (TextView) rootView.findViewById(R.id.event_summary_textview);
 
-        mDescriptionView.setText(EventEntry.getEventDescriptionFromUri(mUri));
+        mDescriptionView.setText(EventEntry.getEventIdDescriptionFromUri(mUri));
 
         View.OnClickListener DescOnClickListener = new View.OnClickListener() {
 //            @Override
@@ -194,14 +206,17 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
         super.onSaveInstanceState(outState);
     }
 
+
+
+
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
-        String sortOrder = ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC + " ASC";
+        String sortOrder = EntrantEntry.COLUMN_TEAM_DESC + " ASC";
 
-        Uri entrantUri = ScoreSheetContract.EntrantEntry.buildEntrant(ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EntrantEntry._ID);
+        Uri event_entrantUri = EntrantEntry.buildEntrantIdUri(EventEntry.getEventIdFromUri(mUri));
 
-        return new CursorLoader(getActivity(), entrantUri, ENTRANT_DETAIL_COLUMNS, null, null, sortOrder);
+        return new CursorLoader(getActivity(), event_entrantUri, ENTRANT_DETAIL_COLUMNS, null, null, sortOrder);
     }
 
     @Override
@@ -236,7 +251,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
         mEventEntrantDetailAdapter.swapCursor(null);
     }
 
-    private void updateEvents(){
-        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-    }
+//    private void updateEvents(){
+//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
+//    }
 }

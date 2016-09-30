@@ -1,5 +1,7 @@
 package com.example.android.scoresheet.app.Events;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +11,7 @@ import com.example.android.scoresheet.app.R;
 /**
  * Created by Kari Stromsland on 9/9/2016.
  */
-public class EventEditActivity extends AppCompatActivity {
+public class EventEditActivity extends AppCompatActivity implements EventEditFragment.Callback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,6 +39,21 @@ public class EventEditActivity extends AppCompatActivity {
         }
     }
 
+    protected void onResume() {
+        // Resume and either load unchanged data or updated data
+        super.onResume();
+
+        EventEditFragment edf = (EventEditFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_edit_event);
+        EventEditEntrantsFragment eeeef = (EventEditEntrantsFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_entrants_edit_event);
+    }
+
+    @Override
+    public void onEventEditEntrants(Uri contentUri) {
+        // Callback from EventEntrantDetailFragment to implement data updates to EventViewDetailFragment
+        Intent intent = new Intent(this, EventEditEntrantsActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

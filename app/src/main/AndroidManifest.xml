@@ -12,7 +12,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/nose"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -109,6 +109,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Events.EventsActivity" />
         </activity>
+        <activity
+            android:name=".Events.EventEditEntrantsActivity"
+            android:label="@string/title_edit_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Events.EventEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEditActivity" />
+        </activity>
 
         <activity
             android:name=".Users.UsersActivity"
@@ -124,6 +133,16 @@
             android:name=".OptionsActivity"
             android:label="@string/title_action_settings"
             android:theme="@style/SettingsTheme"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.scoresheet.app.MainActivity" />
+        </activity>
+
+        <activity
+            android:name="com.example.android.scoresheet.app.DatabaseMgr.AndroidDatabaseManager"
+            android:label="database_manager"
+            android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

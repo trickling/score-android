@@ -42,9 +42,7 @@ public class EventEntrantDetailAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-
         String description = cursor.getString(EventEntrantDetailFragment.COL_TEAM_DESC);
-
         viewHolder.entrantListView.setText(description);
     }
 

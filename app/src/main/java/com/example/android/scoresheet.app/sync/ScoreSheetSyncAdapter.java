@@ -47,7 +47,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
     private static void dropDB(Context context) {
 
         context.getContentResolver().delete(ScoreSheetContract.EventEntry.CONTENT_URI, null, null);
-
+        context.getContentResolver().delete(ScoreSheetContract.EntrantEntry.CONTENT_URI, null, null);
         Log.d(LOG_TAG, "Delete Complete.");
     }
 
@@ -102,7 +102,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
      * @param context The context used to access the account service
      */
     public static void syncImmediately(Context context) {
-//        dropDB(context);
+        dropDB(context);
 //        seedEventDB(EventData.EVENTS, context);
 //        seedEntrantDB(EntrantData.ENTRANTS, context);
         Bundle bundle = new Bundle();

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 
 /**
  * Created by Kari Stromsland on 9/18/2016.
@@ -27,11 +27,12 @@ public class EntrantNewFragment extends Fragment {
             // On the one hand, that's annoying.  On the other, you can search the weather table
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
-            ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EntrantEntry._ID,
-            ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
+            EntrantEntry.COLUMN_TEAM_DESC
     };
     static final int COL_ENTRANT_ID = 0;
     static final int COL_ENTRANT_DESC = 1;
+
     static final String ENTRANTNEW_URI = "URI";
 
     private Uri mUri;
@@ -101,10 +102,10 @@ public class EntrantNewFragment extends Fragment {
             public void onClick(View v) {
                 DescrNewText = mDescrNewText.getText().toString();
                 if ( !(DescrNewText.equals("")) ) {
-                    mUri = ScoreSheetContract.EntrantEntry.buildEntrantDesc(DescrNewText);
+                    mUri = EntrantEntry.buildEntrantDescUri(DescrNewText);
                     ContentValues mNewContentValues = new ContentValues();
-                    mNewContentValues.put(ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC,DescrNewText);
-                    newUri = getContext().getContentResolver().insert(mUri, mNewContentValues);
+                    mNewContentValues.put(EntrantEntry.COLUMN_TEAM_DESC,DescrNewText);
+                    newUri = getContext().getContentResolver().insert(EntrantEntry.CONTENT_URI, mNewContentValues);
                 }
             }
         };

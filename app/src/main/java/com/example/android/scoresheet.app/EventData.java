@@ -4,5 +4,5 @@ package com.example.android.scoresheet.app;
  */
 
 public class EventData {
-    public static final String[] EVENTS = { "NW1BoiseID08242016", "NW2PeoriaIL09242016", "NW3BendOR10242016", "ContainerSpecialtyAdakAK11242016", "ElitePerthIA12162016", "NW1FifeWA01242017", "NW2BoiseID08242017", "NW3PeoriaIL09242017", "NW1BendOR10242017", "Vehicle_SpecialtyAdakAK11242017", "NW3PerthIA12162017", "EliteFifeWA01242018" };
+    public static final String[] EVENTS = { "NW1 Boise ID 08/24/2016", "NW2 Peoria IL 09/24/2016", "NW3 Bend OR 10/24/2016", "Container Specialty Adak AK 11/24/2016", "Elite Perth IA 12/16/2016", "NW1 Fife WA 01/24/2017", "NW2 Boise ID 08/24/2017", "NW3 Peoria IL 09/24/2017", "NW1 Bend OR 10/24/2017", "Vehicle_Specialty Adak AK 11/24/2017", "NW3 Perth IA 12/16/2017", "Elite Fife WA 01/24/2018" };
 }

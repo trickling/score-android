@@ -34,6 +34,7 @@ public class EventViewDetailFragment extends Fragment {
     };
     static final int COL_EVENT_ID = 0;
     static final int COL_EVENT_DESC = 1;
+
     static final String EVENTVIEW_URI = "URI";
 
     private Uri mUri;
@@ -83,7 +84,7 @@ public class EventViewDetailFragment extends Fragment {
 
         mDescrViewText = (TextView) rootView.findViewById(R.id.event_text_view);
 
-        mDescrViewText.setText(EventEntry.getEventDescriptionFromUri(mUri));
+        mDescrViewText.setText(EventEntry.getEventIdDescriptionFromUri(mUri));
 
         return rootView;
 

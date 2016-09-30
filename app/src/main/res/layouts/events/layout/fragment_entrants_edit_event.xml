@@ -4,12 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.example.android.scoresheet.app.EventListFragment" >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Events"/>
+    tools:context=".Events.EventEditEntrantsFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,7 +12,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listview_events" />
+            android:id="@+id/listview_event_edit_entrants" />
     </FrameLayout>
 
 </LinearLayout>

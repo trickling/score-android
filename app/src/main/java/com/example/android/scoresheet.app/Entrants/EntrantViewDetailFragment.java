@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 
 /**
  * Created by Kari Stromsland on 9/18/2016.
@@ -27,11 +27,12 @@ public class EntrantViewDetailFragment extends Fragment {
             // On the one hand, that's annoying.  On the other, you can search the weather table
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
-            ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EntrantEntry._ID,
-            ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
+            EntrantEntry.COLUMN_TEAM_DESC
     };
     static final int COL_ENTRANT_ID = 0;
     static final int COL_ENTRANT_DESC = 1;
+
     static final String ENTRANTVIEW_URI = "URI";
 
     private Uri mUri;
@@ -81,7 +82,7 @@ public class EntrantViewDetailFragment extends Fragment {
 
         mDescrViewText = (TextView) rootView.findViewById(R.id.entrant_text_view);
 
-        mDescrViewText.setText(ScoreSheetContract.EntrantEntry.getEntrantDescriptionFromUri(mUri));
+        mDescrViewText.setText(EntrantEntry.getEntrantDescFromUri(mUri));
 
         return rootView;
 

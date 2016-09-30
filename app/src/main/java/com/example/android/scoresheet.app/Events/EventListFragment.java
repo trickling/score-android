@@ -17,8 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
-import com.example.android.scoresheet.app.sync.ScoreSheetSyncAdapter;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 
 /**
  * Created by Kari Stromsland on 9/6/2016.
@@ -42,8 +41,8 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
             // On the one hand, that's annoying.  On the other, you can search the weather table
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
-            ScoreSheetContract.EventEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntry._ID,
-            ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC
+            EventEntry.TABLE_NAME + "." + EventEntry._ID,
+            EventEntry.COLUMN_SHORT_DESC
     };
     static final int COL_EVENT_ID = 0;
     static final int COL_EVENT_DESC = 1;
@@ -97,7 +96,7 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        mUri = ScoreSheetContract.EventEntry.buildEventDesc(mEventListAdapter.getCursor().getString(COL_EVENT_DESC));
+        mUri = EventEntry.buildEventIdDescUri(mEventListAdapter.getCursor().getLong(COL_EVENT_ID), mEventListAdapter.getCursor().getString(COL_EVENT_DESC));
         switch (item.getItemId()) {
             case R.id.edit:
                 editEvent(mUri, info.id);
@@ -111,9 +110,9 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     private void deleteEvent(Uri itemUri, long l){
-        String selection = ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC + " = ?";
-        String[] selectionArgs = {ScoreSheetContract.EventEntry.getEventDescriptionFromUri(mUri)};
-        getContext().getContentResolver().delete(itemUri, selection, selectionArgs);
+        String selection = EventEntry._ID + " = ?";
+        String[] selectionArgs = {Long.valueOf((EventEntry.getEventIdFromUri(mUri))).toString()};
+        getContext().getContentResolver().delete(EventEntry.CONTENT_URI, selection, selectionArgs);
     }
 
     private void editEvent(Uri itemUri, long l){
@@ -144,7 +143,7 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
 
                 if (cursor != null) {
-                    ((Callback) getActivity()).onItemSelected(ScoreSheetContract.EventEntry.buildEventDesc(cursor.getString(COL_EVENT_DESC)));
+                    ((Callback) getActivity()).onItemSelected(EventEntry.buildEventIdDescUri(mEventListAdapter.getCursor().getLong(COL_EVENT_ID), mEventListAdapter.getCursor().getString(COL_EVENT_DESC)));
                 }
                 mPosition = position;
             }
@@ -209,11 +208,8 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC + " ASC";
-
-        Uri eventUri = ScoreSheetContract.EventEntry.buildEvent(ScoreSheetContract.EventEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntry._ID);
-
-        return new CursorLoader(getActivity(), eventUri, EVENT_COLUMNS, null, null, sortOrder);
+        String sortOrder = EventEntry.COLUMN_SHORT_DESC + " ASC";
+        return new CursorLoader(getActivity(), EventEntry.CONTENT_URI, EVENT_COLUMNS, null, null, sortOrder);
     }
 
     @Override
@@ -224,6 +220,7 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
             // If we don't need to restart the loader, and there's a desired position to restore to, do so now.
             mListView.smoothScrollToPosition(mPosition);
         }
+
     }
 
     @Override
@@ -231,8 +228,8 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
         mEventListAdapter.swapCursor(null);
     }
 
-    private void updateEvents(){
-        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-    }
+//    private void updateEvents(){
+//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
+//    }
 
 }
