@@ -32,7 +32,13 @@ public final class ScoreSheetContract {
 
     public static final String PATH_EVENT = "event";
     public static final String PATH_ENTRANT = "entrant";
-    public static final String PATH_EVENTENTRANT = "evententrant";
+    public static final String PATH_USER = "user";
+    public static final String PATH_EVENTUSER = "eventuser";
+    public static final String PATH_EVENTENTRANTSCORECARD = "evententrantscorecard";
+    public static final String PATH_SCORECARD = "scorecard";
+    public static final String PATH_TALLY = "tally";
+
+
 
 
     public static final class EventEntry implements BaseColumns {
@@ -134,42 +140,135 @@ public final class ScoreSheetContract {
 
 
 
-    public static final class EventEntrantEntry implements BaseColumns {
+    public static final class UserEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTENTRANT).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
 
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANT;
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANT;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
 
-        public static final String TABLE_NAME = "evententrant";
+        public static final String TABLE_NAME = "user";
 
-        public static final String COLUMN_EVENT_ID= "event_id";
-        public static final String COLUMN_ENTRANT_ID = "entrant_id";
+        public static final String COLUMN_USER_DESC = "user_descr";
 
-        public static Uri buildEventEntrantUri() {
+        public static Uri buildUserDescUri(String user_desc) {
+            return CONTENT_URI.buildUpon().appendPath(user_desc).build();
+        }
+
+        public static Uri buildUserUri() {
             return CONTENT_URI;
         }
 
-        public static Uri buildEventEntrantIdUri(String entrant_id) {
+        public static Uri buildUseridUri(String _id) {
+            return CONTENT_URI.buildUpon().appendPath(_id).build();
+        }
+
+        public static Uri buildUserIdUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildUserEventIdCheckedUri(long id, String path){
+            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
+        }
+
+        public static String getUserDescFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static long getUserIdFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
+        public static String getUserEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+    }
+
+
+
+    public static final class EventUserEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTUSER).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTUSER;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTUSER;
+
+        public static final String TABLE_NAME = "eventuser";
+
+        public static final String COLUMN_EVENT_ID= "event_id";
+        public static final String COLUMN_USER_ID = "user_id";
+
+        public static Uri buildEventUserUri() {
+            return CONTENT_URI;
+        }
+
+        public static Uri buildEventUserIdUri(String entrant_id) {
             return CONTENT_URI.buildUpon().appendPath(entrant_id).build();
         }
 
-        public static Uri buildEventIdEntrantUri(String event_id) {
+        public static Uri buildEventIdUserUri(String event_id) {
             return CONTENT_URI.buildUpon().appendPath(event_id).build();
         }
 
-        public static Uri buildIdEventEntrant(String eventid, String entrantid){
+        public static Uri buildIdEventUser(String eventid, String entrantid){
             return CONTENT_URI.buildUpon().appendPath(eventid).appendPath(entrantid).build();
         }
 
-//        public static Uri buildEventEntrantUri(String TABLE_NAME) {
-//            return CONTENT_URI;
-//        }
+        public static Uri buildIdEventUserUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
 
-        public static Uri buildIdEventEntrantUri(long id) {
+        public static String getUserIdFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String getEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String getUserIdWithEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+    }
+
+
+
+    public static final class EventEntrantScorecardEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTENTRANTSCORECARD).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANTSCORECARD;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANTSCORECARD;
+
+        public static final String TABLE_NAME = "evententrantscorecard";
+
+        public static final String COLUMN_EVENT_ID= "event_id";
+        public static final String COLUMN_ENTRANT_ID = "entrant_id";
+        public static final String COLUMN_SCORECARD_ID = "scorecard_id";
+
+        public static Uri buildEventEntrantScorecardUri() {
+            return CONTENT_URI;
+        }
+
+        public static Uri buildEventEntrantIdScorecardUri(String entrant_id) {
+            return CONTENT_URI.buildUpon().appendPath(entrant_id).build();
+        }
+
+        public static Uri buildEventIdEntrantScorecardUri(String event_id) {
+            return CONTENT_URI.buildUpon().appendPath(event_id).build();
+        }
+
+        public static Uri buildIdEventEntrantScorecard(String eventid, String entrantid){
+            return CONTENT_URI.buildUpon().appendPath(eventid).appendPath(entrantid).build();
+        }
+
+        public static Uri buildIdEventEntrantScorecardUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
@@ -183,6 +282,106 @@ public final class ScoreSheetContract {
 
         public static String getEntrantIdWithEventIdFromUri(Uri uri){
             return uri.getPathSegments().get(2);
+        }
+
+        public static String getScorecardIdWithEventIdEntrantIdFromUri(Uri uri){
+            return uri.getPathSegments().get(3);
+        }
+    }
+
+
+
+    public static final class ScorecardEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_SCORECARD).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_SCORECARD;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_SCORECARD;
+
+        public static final String TABLE_NAME = "scorecard";
+
+        public static final String COLUMN_SCORECARD_DESC = "scorecard_descr";
+
+        public static Uri buildScorecardDescUri(String scorecard_desc) {
+            return CONTENT_URI.buildUpon().appendPath(scorecard_desc).build();
+        }
+
+        public static Uri buildScorecardUri() {
+            return CONTENT_URI;
+        }
+
+        public static Uri buildScorecardidUri(String _id) {
+            return CONTENT_URI.buildUpon().appendPath(_id).build();
+        }
+
+        public static Uri buildScorecardIdUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildEventIdCheckedUri(long id, String path){
+            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
+        }
+
+        public static String getScorecardDescFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static long getScorecardIdFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
+        public static String getScorecardEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+    }
+
+
+
+    public static final class TallyEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_TALLY).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TALLY;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TALLY;
+
+        public static final String TABLE_NAME = "tally";
+
+        public static final String COLUMN_TALLY_DESC = "tally_descr";
+
+        public static final String COLUMN_EVENTID = "event_id";
+
+        public static Uri buildTallyDescUri(String tally_desc) {
+            return CONTENT_URI.buildUpon().appendPath(tally_desc).build();
+        }
+
+        public static Uri buildTallyUri() {
+            return CONTENT_URI;
+        }
+
+        public static Uri buildTallyidUri(String _id) {
+            return CONTENT_URI.buildUpon().appendPath(_id).build();
+        }
+
+        public static Uri buildTallyIdUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildTallyEventIdCheckedUri(long id, String path){
+            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
+        }
+
+            public static String getTallyDescFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static long getTallyEventIdFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(1));
         }
     }
 }

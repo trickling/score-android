@@ -44,8 +44,10 @@ public class EventEditActivity extends AppCompatActivity implements EventEditFra
         super.onResume();
 
         EventEditFragment edf = (EventEditFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_edit_event);
-        EventEditEntrantsFragment eeeef = (EventEditEntrantsFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_entrants_edit_event);
+        EventEditEntrantsFragment eeef = (EventEditEntrantsFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_entrants_edit_event);
+        EventEditUsersFragment eevf = (EventEditUsersFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_users_edit_event);
     }
+
 
     @Override
     public void onEventEditEntrants(Uri contentUri) {
@@ -55,6 +57,13 @@ public class EventEditActivity extends AppCompatActivity implements EventEditFra
         startActivity(intent);
     }
 
+    @Override
+    public void onEventEditUsers(Uri contentUri) {
+        // Callback from EventEntrantDetailFragment to implement data updates to EventViewDetailFragment
+        Intent intent = new Intent(this, EventEditUsersActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+    }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.

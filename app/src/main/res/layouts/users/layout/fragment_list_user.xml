@@ -1,16 +1,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Events.EventViewDetailFragment">
+    android:orientation="vertical"
+    tools:context=".Users.UserListFragment" >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/event_text_view"
-        android:layout_gravity="center_horizontal" />
+        android:text="Users"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listview_user_events" />
+            android:id="@+id/listview_users" />
     </FrameLayout>
 
 </LinearLayout>

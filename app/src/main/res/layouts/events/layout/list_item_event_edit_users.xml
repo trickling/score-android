@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:id="@+id/list_item_event_edit_users">
+    <!--android:background="@drawable/touch_selector"-->
+
+    <CheckedTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:id="@+id/list_item_event_edit_users_textview"
+        android:checked="false"/>
+    <!--android:checkMark="@drawable/ic_check_box_black_24dp"-->
+    <!--android:checked="false"-->
+
+</LinearLayout>

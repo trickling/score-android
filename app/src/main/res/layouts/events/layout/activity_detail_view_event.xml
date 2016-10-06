@@ -15,8 +15,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <!--android:elevation="4dp"-->
-
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/fragment_detail_view_event"
@@ -24,6 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".Events.EventViewDetailFragment"
-        tools:layout="@layout/fragment_detail_view_event" />
+        tools:layout="@android:layout/list_content" />
 
 </LinearLayout>

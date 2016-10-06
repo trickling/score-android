@@ -122,10 +122,6 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        List<String> events = new ArrayList<String>(Arrays.asList(EventData.EVENTS));
-
-//        mEventAdapter = new ArrayAdapter <String> (getActivity(), R.layout.list_item_event, R.id.list_item_event_textview, events);
-
         mEntrantListAdapter = new EntrantListAdapter(getActivity(), null, 0);
 
         // Inflate the layout for this fragment

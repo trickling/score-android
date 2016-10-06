@@ -36,7 +36,7 @@ public class EntrantNewFragment extends Fragment {
     static final String ENTRANTNEW_URI = "URI";
 
     private Uri mUri;
-    public Uri newUri;
+    private Uri newUri;
     private EditText mDescrNewText;
     private String DescrNewText;
     private Boolean mNewTextFocus;
@@ -125,31 +125,6 @@ public class EntrantNewFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-
-//    @Override
-//    public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
-//
-//        String sortOrder = ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC + " ASC";
-//
-//        Uri eventUri = ScoreSheetContract.EventEntry.buildEvent(ScoreSheetContract.EventEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntry._ID);
-//
-//        return new CursorLoader(getActivity(), eventUri, EVENT_COLUMNS, null, null, sortOrder);
-//    }
-
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
-//        mEventAdapter.swapCursor(data);
-//
-//        if (mPosition != ListView.INVALID_POSITION) {
-//            // If we don't need to restart the loader, and there's a desired position to restore to, do so now.
-//            mListView.smoothScrollToPosition(mPosition);
-//        }
-//    }
-
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
-//        mEventAdapter.swapCursor(null);
-//    }
 
 //    private void updateEvents(){
 //        ScoreSheetSyncAdapter.syncImmediately(getActivity());

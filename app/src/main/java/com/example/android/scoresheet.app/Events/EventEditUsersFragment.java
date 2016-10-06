@@ -17,45 +17,45 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
-import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
-import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventUserEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.UserEntry;
+
 
 /**
- * Created by Kari Stromsland on 9/19/2016.
+ * Created by Kari Stromsland on 10/3/2016.
  */
-public class EventEditEntrantsFragment extends Fragment implements LoaderManager.LoaderCallbacks <Cursor>{
+public class EventEditUsersFragment extends Fragment implements LoaderManager.LoaderCallbacks <Cursor>{
     // A loader is a class that performs asynchronous loading of data.
     // LoaderManager is an interface for managing one or more Loader instances associated with it.
     // LoaderManager.LoaderCallbacks <D> is a callback interface for a client to interact with the manager, D data.
 
-    public static final String LOG_TAG = EventEditEntrantsFragment.class.getSimpleName();
-    private EventEditEntrantsListAdapter mEventEntrantListAdapter;
+    public static final String LOG_TAG = EventEditUsersFragment.class.getSimpleName();
+    private EventEditUsersListAdapter mEventUserListAdapter;
     private ListView mListView;
     private Uri mUri;
     private static Uri eventUri;
     private long eventid;
-    private long entrantid;
+    private long userid;
     private Boolean event_edit_checked;
-    static final String EVENTEDITENTRANTS_URI = "URI";
+    static final String EVENTEDITUSERS_URI = "URI";
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
 
-    private static final int EVENTENTRANTS_LOADER = 0;
+    private static final int EVENTUSERS_LOADER = 0;
 
-    private static final String[] ENTRANT_COLUMNS = {
+    private static final String[] USER_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
             // the content provider joins the location & weather tables in the background
             // (both have an _id column)
             // On the one hand, that's annoying.  On the other, you can search the weather table
             // using the location set by the user, which is only in the Location table.
             // So the convenience is worth it.
-            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
+            UserEntry.TABLE_NAME + "." + UserEntry._ID,
+            UserEntry.COLUMN_USER_DESC
     };
-    static final int COL_ENTRANT_ID = 0;
-    static final int COL_ENTRANT_DESC = 1;
+    static final int COL_USER_ID = 0;
+    static final int COL_USER_DESC = 1;
 
     private static final String[] EVENT_COLUMNS = {
             EventEntry.TABLE_NAME + "." + EventEntry._ID,
@@ -64,16 +64,15 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
     public static final int COL_EVENT_ID = 0;
     public static final int COL_EVENT_DESC = 1;
 
-    private static final String[] EVENTENTRANT_COLUMNS = {
-            EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
-            EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID
+    private static final String[] EVENTUSER_COLUMNS = {
+            EventUserEntry.TABLE_NAME + "." + EventUserEntry._ID,
+            EventUserEntry.COLUMN_EVENT_ID, EventUserEntry.COLUMN_USER_ID
     };
-    public static final int COL_EVENTENTRANT_ID = 0;
+    public static final int COL_EVENTUSER_ID = 0;
     public static final int COL_EV_ID = 1;
-    public static final int COL_EN_ID = 2;
-//    public static final int COL_SC_ID = 3;
+    public static final int COL_US_ID = 2;
 
-    public EventEditEntrantsFragment() {
+    public EventEditUsersFragment() {
         // Required empty public constructor
     }
 
@@ -86,7 +85,7 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
 
 //    @Override
 //    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.entrant_options_fragment, menu);
+//        inflater.inflate(R.menu.user_options_fragment, menu);
 //    }
 
 //    @Override
@@ -107,24 +106,24 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
 //    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 //        super.onCreateContextMenu(menu, v, menuInfo);
 //        MenuInflater inflater = new MenuInflater(getContext());
-//        inflater.inflate(R.menu.event_edit_entrants_fragment, menu);
+//        inflater.inflate(R.menu.event_edit_users_fragment, menu);
 //    }
 //
 //    @Override
 //    public boolean onContextItemSelected(MenuItem item) {
 //        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//        mUri = ScoreSheetContract.EntrantEntry.buildEntrantDesc(mEventEntrantListAdapter.getCursor().getString(COL_ENTRANT_DESC));
+//        mUri = ScoreSheetContract.UserEntry.buildUserDesc(mEventUserListAdapter.getCursor().getString(COL_USER_DESC));
 //        switch (item.getItemId()) {
 //            case R.id.edit:
-//                editEventEntrant(mUri, info.id);
+//                editEventUser(mUri, info.id);
 //                return true;
 //            default:
 //                return super.onContextItemSelected(item);
 //        }
 //    }
 //
-//    private void editEventEntrant(Uri itemUri, long l){
-//        ((Callback) getActivity()).onEventEntrantsEdit(itemUri);
+//    private void editEventUser(Uri itemUri, long l){
+//        ((Callback) getActivity()).onEventUsersEdit(itemUri);
 //    }
 
 
@@ -137,27 +136,27 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
         // The CursorAdapter binds db data to a child view of the listview. An adapter object acts as a bridge
         // between an AdapterView and the underlying data for that view.  The adapter provides access to the
         // data items.  The adapter is also responsible for making a view for each item in the data set.
-        mEventEntrantListAdapter = new EventEditEntrantsListAdapter(getActivity(), null, 0);
+        mEventUserListAdapter = new EventEditUsersListAdapter(getActivity(), null, 0);
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_entrants_edit_event, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_users_edit_event, container, false);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            eventUri = arguments.getParcelable(EventEditEntrantsFragment.EVENTEDITENTRANTS_URI);
+            eventUri = arguments.getParcelable(EventEditUsersFragment.EVENTEDITUSERS_URI);
         }
 
-        mListView = (ListView) rootView.findViewById(R.id.listview_event_edit_entrants);
+        mListView = (ListView) rootView.findViewById(R.id.listview_event_edit_users);
 
         registerForContextMenu(mListView);
 
-        mListView.setAdapter(mEventEntrantListAdapter);
+        mListView.setAdapter(mEventUserListAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            // OnClick if false, get unchecked entrant_id with ""  if true, update entrant_id with checkmarked entrant_id
+            // OnClick if false, get unchecked user_id with ""  if true, update user_id with checkmarked user_id
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-                CheckedTextView tt = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_entrants_textview);
+                CheckedTextView tt = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_users_textview);
 //                event_edit_checked = mListView.isItemChecked(position);
                 if (!tt.isChecked()){
                     mListView.setItemChecked(position, true);
@@ -171,27 +170,25 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
                     event_edit_checked = false;
                 }
                 if (cursor != null) {
-                    mUri = EntrantEntry.buildEntrantIdUri(cursor.getLong(COL_ENTRANT_ID));
-                    entrantid = EntrantEntry.getEntrantIdFromUri(mUri);
+                    mUri = UserEntry.buildUserIdUri(cursor.getLong(COL_USER_ID));
+                    userid = UserEntry.getUserIdFromUri(mUri);
                     eventid = EventEntry.getEventIdFromUri(eventUri);
                     if (event_edit_checked) {
                         ContentValues mEditContentValues = new ContentValues();
-                        mEditContentValues.put(EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, entrantid);
-                        mEditContentValues.put(EventEntrantScorecardEntry.COLUMN_EVENT_ID, eventid);
-                        Uri uri = EventEntrantScorecardEntry.buildEventEntrantScorecardUri();
-
-                        getContext().getContentResolver().insert(EventEntrantScorecardEntry.buildEventEntrantScorecardUri(), mEditContentValues);
+                        mEditContentValues.put(EventUserEntry.COLUMN_USER_ID, userid);
+                        mEditContentValues.put(EventUserEntry.COLUMN_EVENT_ID, eventid);
+                        getContext().getContentResolver().insert(EventUserEntry.buildEventUserUri(), mEditContentValues);
                     }else{
-                        String sortOrder = EventEntrantScorecardEntry._ID + " ASC";
-                        String selection = EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = ?" + " AND " + EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ?";
-                        Uri uri = EventEntrantScorecardEntry.buildIdEventEntrantScorecard(Long.valueOf(eventid).toString(), Long.valueOf(entrantid).toString());
-                        String[] selectionArgs = {Long.valueOf(entrantid).toString(), Long.valueOf(eventid).toString()};
-                        Cursor c = getContext().getContentResolver().query(uri, EVENTENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
+                        String sortOrder = EventUserEntry._ID + " ASC";
+                        String selection = EventUserEntry.COLUMN_USER_ID + " = ?" + " AND " + EventUserEntry.COLUMN_EVENT_ID + " = ?";
+                        Uri uri = EventUserEntry.buildIdEventUser(Long.valueOf(eventid).toString(), Long.valueOf(userid).toString());
+                        String[] selectionArgs = {Long.valueOf(userid).toString(), Long.valueOf(eventid).toString()};
+                        Cursor c = getContext().getContentResolver().query(uri, EVENTUSER_COLUMNS, selection, selectionArgs, sortOrder);
                         if(c.moveToFirst()) {
-                            long evententrant_id = c.getLong(COL_EVENTENTRANT_ID);
-                            String dSelection = EventEntrantScorecardEntry._ID + " = ?";
-                            String[] dSelectionArgs = {Long.valueOf(evententrant_id).toString()};
-                            getContext().getContentResolver().delete(EventEntrantScorecardEntry.CONTENT_URI, dSelection, dSelectionArgs);
+                            long eventuser_id = c.getLong(COL_EVENTUSER_ID);
+                            String dSelection = EventUserEntry._ID + " = ?";
+                            String[] dSelectionArgs = {Long.valueOf(eventuser_id).toString()};
+                            getContext().getContentResolver().delete(EventUserEntry.CONTENT_URI, dSelection, dSelectionArgs);
                         }
                     }
                 }
@@ -234,18 +231,18 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
 
     public static boolean checked_status(Context context, Cursor c){
         boolean checked = false;
-        long entrantid = c.getLong(0);
-        long eventid = ScoreSheetContract.EventEntry.getEventIdFromUri(eventUri);
-        Uri uri = EntrantEntry.buildEntrantEventIdCheckedUri(eventid, "checked");
+        long userid = c.getLong(0);
+        long eventid = EventEntry.getEventIdFromUri(eventUri);
+        Uri uri = UserEntry.buildUserEventIdCheckedUri(eventid, "checked");
 //        String selection = EventEntry.COLUMN_SHORT_DESC + " = ?";
 //        String[] selectionArgs = {EventEntry.getEventDescriptionFromUri(mUri)};
         Cursor cursor;
-        cursor = context.getContentResolver().query(uri, ENTRANT_COLUMNS, null, null, null);
+        cursor = context.getContentResolver().query(uri, USER_COLUMNS, null, null, null);
         if (!cursor.moveToFirst()) {
             checked = false;
         }else {
             do {
-                if(cursor.getLong(0) == entrantid) {
+                if(cursor.getLong(0) == userid) {
                     checked = true;
                 }
             }while(cursor.moveToNext());
@@ -255,7 +252,7 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(EVENTENTRANTS_LOADER, null, this);
+        getLoaderManager().initLoader(EVENTUSERS_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -273,19 +270,19 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = EntrantEntry.COLUMN_TEAM_DESC + " ASC";
+        String sortOrder = UserEntry.COLUMN_USER_DESC + " ASC";
 
         // CursorLoader is a loader that queries the ContentResolver and returns a Cursor.  This class implements
         // the Loader protocol in a standard way for querying cursors, building on AsyncTaskLoader to perform
         // the cursor query on a background thread.
-//        return new CursorLoader(getActivity(), EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, null, null, sortOrder);
+//        return new CursorLoader(getActivity(), UserEntry.CONTENT_URI, USER_COLUMNS, null, null, sortOrder);
 
-        return new CursorLoader(getActivity(), EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, null, null, sortOrder);
+        return new CursorLoader(getActivity(), UserEntry.CONTENT_URI, USER_COLUMNS, null, null, sortOrder);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data){
-        mEventEntrantListAdapter.swapCursor(data);
+        mEventUserListAdapter.swapCursor(data);
         if (mPosition != ListView.INVALID_POSITION) {
             // If we don't need to restart the loader, and there's a desired position to restore to, do so now.
             mListView.smoothScrollToPosition(mPosition);
@@ -294,10 +291,10 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
-        mEventEntrantListAdapter.swapCursor(null);
+        mEventUserListAdapter.swapCursor(null);
     }
 
-//    private void updateEntrants(){
+//    private void updateUsers(){
 //        ScoreSheetSyncAdapter.syncImmediately(getActivity());
 //    }
 

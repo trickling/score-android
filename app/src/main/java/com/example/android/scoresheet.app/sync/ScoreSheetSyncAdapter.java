@@ -48,6 +48,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
 
         context.getContentResolver().delete(ScoreSheetContract.EventEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.EntrantEntry.CONTENT_URI, null, null);
+        context.getContentResolver().delete(ScoreSheetContract.UserEntry.CONTENT_URI, null, null);
         Log.d(LOG_TAG, "Delete Complete.");
     }
 
@@ -69,6 +70,17 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
         for (String item : entrant_seed){
             entrantValue.put(ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC, item);
             context.getContentResolver().insert(ScoreSheetContract.EntrantEntry.CONTENT_URI, entrantValue);
+        }
+
+        Log.d(LOG_TAG, "Insert Complete.");
+    }
+
+    private static void seedUserDB(String[] user_seed, Context context) {
+
+        ContentValues userValue = new ContentValues();
+        for (String item : user_seed){
+            userValue.put(ScoreSheetContract.UserEntry.COLUMN_USER_DESC, item);
+            context.getContentResolver().insert(ScoreSheetContract.UserEntry.CONTENT_URI, userValue);
         }
 
         Log.d(LOG_TAG, "Insert Complete.");
@@ -102,9 +114,10 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
      * @param context The context used to access the account service
      */
     public static void syncImmediately(Context context) {
-        dropDB(context);
+//        dropDB(context);
 //        seedEventDB(EventData.EVENTS, context);
 //        seedEntrantDB(EntrantData.ENTRANTS, context);
+//        seedUserDB(UserData.USERS, context);
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);

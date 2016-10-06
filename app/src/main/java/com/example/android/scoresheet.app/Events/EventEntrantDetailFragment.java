@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.android.scoresheet.app.R;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
-import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetDbHelper;
 
@@ -49,8 +49,6 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     public static final int COL_EVENT_ID = 0;
     public static final int COL_EVENT_DESC = 1;
 
-    private static final int ENTRANT_DETAIL_LOADER = 0;
-
     private static final String[] ENTRANT_DETAIL_COLUMNS = {
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
             EntrantEntry.COLUMN_TEAM_DESC
@@ -58,16 +56,15 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     public static final int COL_ENTRANT_ID = 0;
     public static final int COL_TEAM_DESC = 1;
 
-    private static final int EVENTENTRANT_LOADER = 0;
-
     private static final String[] EVENTENTRANT_COLUMNS = {
-            EventEntrantEntry.TABLE_NAME + "." + EventEntrantEntry._ID,
-            EventEntrantEntry.COLUMN_EVENT_ID, EventEntrantEntry.COLUMN_ENTRANT_ID
+            EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
+            EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
     };
 
     public static final int COL_EVENTENTRANT_ID = 0;
     public static final int COL_EV_ID = 1;
     public static final int COL_EN_ID = 2;
+    public static final int COL_SC_ID = 3;
 
     public interface Callback {
         /**
@@ -145,7 +142,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
         mDescriptionView.setText(EventEntry.getEventIdDescriptionFromUri(mUri));
 
         View.OnClickListener DescOnClickListener = new View.OnClickListener() {
-//            @Override
+            @Override
             public void onClick(View v) {
                 if (mUri != null) {
                     ((Callback) getActivity()).onItemSelected(mUri);

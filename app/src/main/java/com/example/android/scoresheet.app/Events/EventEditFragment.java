@@ -37,7 +37,7 @@ public class EventEditFragment extends Fragment{
 
     private Uri mUri;
     private Uri eventUri;
-    public Uri editUri;
+    private Uri editUri;
     private EditText mDescrEditText;
     private String DescrEditText;
 
@@ -50,6 +50,7 @@ public class EventEditFragment extends Fragment{
          * EventEditEntrantsFragmentCallback to EditEventActivity for when an item has been selected.
          */
         public void onEventEditEntrants(Uri editUri);
+        public void onEventEditUsers(Uri editUri);
     }
 
     @Override
@@ -106,13 +107,15 @@ public class EventEditFragment extends Fragment{
                     ContentValues mEditContentValues = new ContentValues();
                     mEditContentValues.put(EventEntry.COLUMN_SHORT_DESC, DescrEditText);
                     String selection = EventEntry.COLUMN_SHORT_DESC + " = ?";
-                    String[] selectionArgs = {EventEntry.getEventDescriptionFromUri(mUri)};
+                    String[] selectionArgs = {EventEntry.getEventIdDescriptionFromUri(mUri)};
                     getContext().getContentResolver().update(EventEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
                 }
             }
         };
 
         save_edit_button.setOnClickListener(edit_saveOnClickListener);
+
+
 
         Button edit_entrants_button = (Button) rootView.findViewById(R.id.event_edit_entrant);
 
@@ -122,6 +125,18 @@ public class EventEditFragment extends Fragment{
             }
         };
         edit_entrants_button.setOnClickListener(edit_entrantsOnClickListener);
+
+
+
+        Button edit_users_button = (Button) rootView.findViewById(R.id.event_edit_user);
+
+        View.OnClickListener edit_usersOnClickListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                ((Callback) getActivity()).onEventEditUsers(mUri);
+            }
+        };
+        edit_users_button.setOnClickListener(edit_usersOnClickListener);
+
 
         return rootView;
     }

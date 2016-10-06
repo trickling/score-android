@@ -11,6 +11,8 @@ import com.example.android.scoresheet.app.Events.EventsActivity;
 import com.example.android.scoresheet.app.Users.UsersActivity;
 import com.example.android.scoresheet.app.sync.ScoreSheetSyncAdapter;
 
+//import com.example.android.scoresheet.app.DatabaseMgr.AndroidDatabaseManager;
+
 public class MainActivity extends TabActivity {
 
     @Override

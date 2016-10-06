@@ -118,6 +118,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Events.EventEditActivity" />
         </activity>
+        <activity
+            android:name=".Events.EventEditUsersActivity"
+            android:label="@string/title_edit_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Events.EventEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEditActivity" />
+        </activity>
 
         <activity
             android:name=".Users.UsersActivity"
@@ -127,6 +136,33 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.scoresheet.app.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Users.UserViewDetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Users.UsersActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Users.UsersActivity" />
+        </activity>
+        <activity
+            android:name=".Users.UserNewActivity"
+            android:label="@string/title_new_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Users.UsersActivity" />
+        </activity>
+        <activity
+            android:name=".Users.UserEditActivity"
+            android:label="@string/title_edit_detail"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Users.UsersActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Users.UsersActivity" />
         </activity>
 
         <activity

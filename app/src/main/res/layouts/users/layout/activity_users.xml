@@ -1,11 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/event_entrant_detail_container"
-    tools:ignore="MergeRootFrame" >
+    android:id="@+id/user_container">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -17,11 +17,17 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:id="@+id/fragment_detail_entrant_event"
-        android:name="com.example.android.scoresheet.app.EventEntrantDetailFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".Events.EventEntrantDetailFragment"
-        tools:layout="@android:layout/list_content" />
+        android:layout_height="match_parent" >
+        <fragment
+            android:orientation="vertical"
+            android:id="@+id/fragment_list_user"
+            android:name="com.example.android.scoresheet.app.Users.UserListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".Users.UserListFragment"
+            tools:layout="@android:layout/list_content" />
+
+    </LinearLayout>
 
 </LinearLayout>

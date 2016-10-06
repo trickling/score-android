@@ -29,6 +29,9 @@
     <string name="entrantEditTextLabel">Description:</string>
     <string name="entrantNewTextLabel">Description:</string>
 
+    <string name="userEditTextLabel">Description:</string>
+    <string name="userNewTextLabel">Description:</string>
+
     <string name="action_share">Share</string>
     <string name="title_activity_detail">Details</string>
     <string name="title_activity_events">Events</string>

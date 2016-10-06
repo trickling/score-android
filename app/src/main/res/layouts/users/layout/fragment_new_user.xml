@@ -4,14 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/fragment_edit_event">
-
-    <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="db_mgr"-->
-        <!--android:id="@+id/event_edit_db_mgr"-->
-        <!--android:clickable="true"/>-->
+    android:id="@+id/fragment_new_user">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -21,15 +14,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/eventEditTextHeader"
+            android:id="@+id/userNewTextHeader"
             android:layout_gravity="center_horizontal"
-            android:text="@string/eventEditTextLabel" />
+            android:text="@string/userNewTextLabel" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:id="@+id/eventEditText"
+            android:id="@+id/userNewText"
             android:layout_gravity="center_horizontal"
             android:allowUndo="true"
             android:clickable="true"
@@ -43,26 +36,7 @@
         android:clickable="true"
         android:enabled="true"
         android:gravity="center"
-        android:id="@+id/eventEditSave"
+        android:id="@+id/userNewSave"
         android:text="Save" />
 
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:enabled="true"
-        android:gravity="center"
-        android:id="@+id/event_edit_entrant"
-        android:text="Add|Remove Teams" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:enabled="true"
-        android:gravity="center"
-        android:id="@+id/event_edit_user"
-        android:text="Add|Remove Users" />
-    
 </LinearLayout>

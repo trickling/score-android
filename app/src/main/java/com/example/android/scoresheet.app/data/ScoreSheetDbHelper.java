@@ -23,21 +23,25 @@ package com.example.android.scoresheet.app.data;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
-import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventUserEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.UserEntry;
 
 import java.util.ArrayList;
 
 public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 8;
 
     public static final String DATABASE_NAME = "scoresheet.db";
 
@@ -49,16 +53,31 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         final String SQL_CREATE_EVENT_TABLE = "CREATE TABLE " + EventEntry.TABLE_NAME + " (" + EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventEntry.COLUMN_SHORT_DESC + " TEXT NOT NULL);";
-
         db.execSQL(SQL_CREATE_EVENT_TABLE);
 
-        final String SQL_CREATE_ENTRANT_TABLE = "CREATE TABLE " + EntrantEntry.TABLE_NAME + " (" + EntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EntrantEntry.COLUMN_TEAM_DESC + " TEXT NOT NULL)";
 
+        final String SQL_CREATE_ENTRANT_TABLE = "CREATE TABLE " + EntrantEntry.TABLE_NAME + " (" + EntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EntrantEntry.COLUMN_TEAM_DESC + " TEXT NOT NULL)";
         db.execSQL(SQL_CREATE_ENTRANT_TABLE);
 
-        final String SQL_CREATE_EVENTENTRANT_TABLE = "CREATE TABLE " + EventEntrantEntry.TABLE_NAME + " (" + EventEntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventEntrantEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL," + EventEntrantEntry.COLUMN_ENTRANT_ID + " INTEGER NOT NULL)";
 
-        db.execSQL(SQL_CREATE_EVENTENTRANT_TABLE);
+        final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + UserEntry.TABLE_NAME + " (" + UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + UserEntry.COLUMN_USER_DESC + " TEXT NOT NULL)";
+        db.execSQL(SQL_CREATE_USER_TABLE);
+
+
+        final String SQL_CREATE_EVENTUSER_TABLE = "CREATE TABLE " + EventUserEntry.TABLE_NAME + " (" + EventUserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventUserEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL," + EventUserEntry.COLUMN_USER_ID + " INTEGER NOT NULL)";
+        db.execSQL(SQL_CREATE_EVENTUSER_TABLE);
+
+
+        final String SQL_CREATE_EVENTENTRANTSCORECARD_TABLE = "CREATE TABLE " + EventEntrantScorecardEntry.TABLE_NAME + " (" + EventEntrantScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventEntrantScorecardEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL," + EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " INTEGER NOT NULL," + EventEntrantScorecardEntry.COLUMN_SCORECARD_ID + " INTEGER)";
+        db.execSQL(SQL_CREATE_EVENTENTRANTSCORECARD_TABLE);
+
+
+        final String SQL_CREATE_SCORECARD_TABLE = "CREATE TABLE " + ScorecardEntry.TABLE_NAME + " (" + ScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + ScorecardEntry.COLUMN_SCORECARD_DESC + " TEXT NOT NULL)";
+        db.execSQL(SQL_CREATE_SCORECARD_TABLE);
+
+
+        final String SQL_CREATE_TALLY_TABLE = "CREATE TABLE " + TallyEntry.TABLE_NAME + " (" + TallyEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TallyEntry.COLUMN_TALLY_DESC + " TEXT NOT NULL," + TallyEntry.COLUMN_EVENTID + " INTEGER NOT NULL)";
+        db.execSQL(SQL_CREATE_TALLY_TABLE);
     }
 
     @Override
@@ -71,7 +90,11 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
         // should be your top priority before modifying this method.
         db.execSQL("DROP TABLE IF EXISTS " + EventEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + EntrantEntry.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + EventEntrantEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + UserEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + EventUserEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + EventEntrantScorecardEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ScorecardEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TallyEntry.TABLE_NAME);
         onCreate(db);
     }
 
@@ -106,7 +129,7 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
                 return alc ;
             }
             return alc;
-        } catch(SQLException sqlEx){
+        } catch(SQLiteException sqlEx){
             Log.d("printing exception", sqlEx.getMessage());
             //if any exceptions are triggered save the error message to cursor an return the arraylist
             Cursor2.addRow(new Object[] { ""+sqlEx.getMessage() });

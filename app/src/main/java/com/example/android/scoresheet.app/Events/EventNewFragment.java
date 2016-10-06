@@ -38,7 +38,7 @@ public class EventNewFragment extends Fragment {
     static final String EVENTNEW_URI = "URI";
 
     private Uri mUri;
-    public Uri newUri;
+    private Uri newUri;
     private EditText mDescrNewText;
     private String DescrNewText;
     private Boolean mNewTextFocus;
