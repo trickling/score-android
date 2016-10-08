@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.android.scoresheet.app.OptionsActivity;
 import com.example.android.scoresheet.app.R;
 
 /**
@@ -54,7 +53,6 @@ public class UsersActivity extends AppCompatActivity implements UserListFragment
                 .findFragmentById(R.id.fragment_list_user));
 
 //        eventFragment.setUseTodayLayout(!mTwoPane);
-//        ScoreSheetSyncAdapter.initializeSyncAdapter(this);
     }
     protected void onResume() {
         // Resume and either load unchanged data or updated data
@@ -65,9 +63,7 @@ public class UsersActivity extends AppCompatActivity implements UserListFragment
 
     @Override
     public void onItemSelected(Uri contentUri) {
-        // Callback from EventListFragment to implement data updates to EventUserDetailFragment
 
-//        if (contentUri.getPathSegments().get(0).equals(UserEntry.TABLE_NAME)) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
@@ -86,7 +82,6 @@ public class UsersActivity extends AppCompatActivity implements UserListFragment
                     .setData(contentUri);
             startActivity(intent);
         }
-//        }
     }
 
     @Override
@@ -102,11 +97,6 @@ public class UsersActivity extends AppCompatActivity implements UserListFragment
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, OptionsActivity.class));
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
             case R.id.action_add:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...

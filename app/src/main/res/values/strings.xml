@@ -1,6 +1,43 @@
 <resources>
     <string name="app_name">ScoreSheet</string>
 
+    <string name="title_activity_entrants">Teams</string>
+    <string name="title_activity_entrants_detail">Team Details</string>
+    <string name="title_activity_entrants_new">New Team</string>
+    <string name="title_activity_entrants_edit">Edit Team</string>
+
+    <string name="title_activity_events">Events</string>
+    <string name="title_activity_event_entrants_detail">Event</string>
+    <string name="title_activity_events_detail">Event</string>
+    <string name="title_activity_events_new">New Event</string>
+    <string name="title_activity_events_edit">Edit Event</string>
+    <string name="title_activity_event_entrants_edit">Add or Remove Teams</string>
+    <string name="title_activity_event_users_edit">Add or Remove Users</string>
+
+    <string name="title_activity_users">Users</string>
+    <string name="title_activity_users_detail">User Details</string>
+    <string name="title_activity_users_new">New User</string>
+    <string name="title_activity_users_edit">Edit User</string>
+
+    <string name="title_activity_scorecards">View Scorecard</string>
+    <string name="title_activity_scorecards_edit">Edit Scorecard</string>
+
+    <string name="title_activity_tallies">View Tally</string>
+    <string name="title_activity_tallies_edit">Edit Tally</string>
+
+    <string name="action_add">Add</string>
+
+    <string name="eventNewTextLabel">Description:</string>
+    <string name="eventEditTextLabel">Description:</string>
+    <string name="entrantNewTextLabel">Description:</string>
+    <string name="entrantEditTextLabel">Description:</string>
+    <string name="userNewTextLabel">Description:</string>
+    <string name="userEditTextLabel">Description:</string>
+    <string name="scorecardNewTextLabel">Description:</string>
+    <string name="scorecardEditTextLabel">Description:</string>
+    <string name="tallyNewTextLabel">Description:</string>
+    <string name="tallyEditTextLabel">Description:</string>
+
     <string name="nav_list_key">Nav</string>
     <string name="nav_events">Events</string>
     <string name="nav_teams">Teams</string>
@@ -10,13 +47,6 @@
     <string name="nav_view_label_teams">Teams</string>
     <string name="nav_view_label_users">Users</string>
 
-    <string name="action_add">Add</string>
-    <string name="title_new_detail">New Event</string>
-    <string name="title_edit_detail">Edit Event</string>
-    <string name="eventNewTextLabel">Description:</string>
-
-    <string name="eventEditTextLabel">Description:</string>
-
     <string name="action_view_label_edit">Edit</string>
     <string name="action_view_label_delete">Delete</string>
     <string name="action_view_label_view">View</string>
@@ -25,19 +55,6 @@
     <string name="action_delete">Delete</string>
     <string name="action_view">View</string>
     <string name="action_undo">Undo</string>
-
-    <string name="entrantEditTextLabel">Description:</string>
-    <string name="entrantNewTextLabel">Description:</string>
-
-    <string name="userEditTextLabel">Description:</string>
-    <string name="userNewTextLabel">Description:</string>
-
-    <string name="action_share">Share</string>
-    <string name="title_activity_detail">Details</string>
-    <string name="title_activity_events">Events</string>
-    <string name="title_activity_entrants">Teams</string>
-    <string name="title_activity_users">Users</string>
-    <string name="title_action_settings">Settings</string>
 
     <!-- SyncAdapter related -->
     <string name="sync_account_type">scoresheet.example.com</string>

@@ -34,12 +34,6 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int USER_LOADER = 0;
 
     private static final String[] USER_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             UserEntry.TABLE_NAME + "." + UserEntry._ID,
             UserEntry.COLUMN_USER_DESC
     };
@@ -48,9 +42,7 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
 
 
     public interface Callback {
-        /**
-         * UserListFragmentCallback to UsersActivity for when an item has been selected.
-         */
+
         public void onItemSelected(Uri descUri);
         public void onUserEdit(Uri editUri);
     }
@@ -62,28 +54,7 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-//        setHasOptionsMenu(true);
     }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.entrant_options_fragment, menu);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-////        if (id == R.id.action_map) {
-////            openPreferredLocationInMap();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -149,7 +120,6 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
 
             public boolean onLongClick(View view) {
 
-                // Start the CAB using the ActionMode.Callback defined above
                 view.setSelected(true);
                 return true;
             }
@@ -201,11 +171,8 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
+    public void onLoaderReset(Loader<Cursor> loader){
         mUserListAdapter.swapCursor(null);
     }
 
-//    private void updateUsers(){
-//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-//    }
 }

@@ -38,7 +38,7 @@
         </activity>
         <activity
             android:name=".Entrants.EntrantViewDetailActivity"
-            android:label="@string/title_activity_detail"
+            android:label="@string/title_activity_entrants_detail"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Entrants.EntrantsActivity" >
             <meta-data
@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name=".Entrants.EntrantNewActivity"
-            android:label="@string/title_new_detail"
+            android:label="@string/title_activity_entrants_new"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -56,7 +56,7 @@
         </activity>
         <activity
             android:name=".Entrants.EntrantEditActivity"
-            android:label="@string/title_edit_detail"
+            android:label="@string/title_activity_entrants_edit"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Entrants.EntrantsActivity" >
             <meta-data
@@ -75,7 +75,7 @@
         </activity>
         <activity
             android:name=".Events.EventEntrantDetailActivity"
-            android:label="@string/title_activity_detail"
+            android:label="@string/title_activity_events_detail"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Events.EventsActivity" >
             <meta-data
@@ -84,7 +84,7 @@
         </activity>
         <activity
             android:name=".Events.EventViewDetailActivity"
-            android:label="@string/title_activity_detail"
+            android:label="@string/title_activity_events_detail"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Events.EventEntrantDetailActivity" >
             <meta-data
@@ -93,7 +93,7 @@
         </activity>
         <activity
             android:name=".Events.EventNewActivity"
-            android:label="@string/title_new_detail"
+            android:label="@string/title_activity_events_new"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -102,7 +102,7 @@
         </activity>
         <activity
             android:name=".Events.EventEditActivity"
-            android:label="@string/title_edit_detail"
+            android:label="@string/title_activity_events_edit"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Events.EventsActivity" >
             <meta-data
@@ -111,7 +111,7 @@
         </activity>
         <activity
             android:name=".Events.EventEditEntrantsActivity"
-            android:label="@string/title_edit_detail"
+            android:label="@string/title_activity_event_entrants_edit"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Events.EventEditActivity" >
             <meta-data
@@ -120,7 +120,7 @@
         </activity>
         <activity
             android:name=".Events.EventEditUsersActivity"
-            android:label="@string/title_edit_detail"
+            android:label="@string/title_activity_event_users_edit"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Events.EventEditActivity" >
             <meta-data
@@ -139,7 +139,7 @@
         </activity>
         <activity
             android:name=".Users.UserViewDetailActivity"
-            android:label="@string/title_activity_detail"
+            android:label="@string/title_activity_users_detail"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Users.UsersActivity" >
             <meta-data
@@ -148,7 +148,7 @@
         </activity>
         <activity
             android:name=".Users.UserNewActivity"
-            android:label="@string/title_new_detail"
+            android:label="@string/title_activity_users_new"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -157,7 +157,7 @@
         </activity>
         <activity
             android:name=".Users.UserEditActivity"
-            android:label="@string/title_edit_detail"
+            android:label="@string/title_activity_users_edit"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Users.UsersActivity" >
             <meta-data
@@ -166,14 +166,52 @@
         </activity>
 
         <activity
-            android:name=".OptionsActivity"
-            android:label="@string/title_action_settings"
-            android:theme="@style/SettingsTheme"
-            android:parentActivityName=".MainActivity" >
+            android:name=".Scorecards.ScorecardViewActivity"
+            android:label="@string/title_activity_scorecards"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Scorecards.ScorecardViewActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.scoresheet.app.MainActivity" />
+                android:value=".Events.EventEntrantDetailActivity" />
         </activity>
+        <activity
+            android:name=".Scorecards.ScorecardEditActivity"
+            android:label="@string/title_activity_scorecards_edit"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Scorecards.ScorecardEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEntrantDetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".Tallies.TallyViewActivity"
+            android:label="@string/title_activity_tallies"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Tallies.TallyViewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEntrantDetailActivity" />
+        </activity>
+        <activity
+            android:name=".Tallies.TallyEditActivity"
+            android:label="@string/title_activity_tallies_edit"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Tallies.TallyEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEntrantDetailActivity" />
+        </activity>
+
+        <!--<activity-->
+            <!--android:name=".OptionsActivity"-->
+            <!--android:label="@string/title_action_settings"-->
+            <!--android:theme="@style/SettingsTheme"-->
+            <!--android:parentActivityName=".MainActivity" >-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value="com.example.android.scoresheet.app.MainActivity" />-->
+        <!--</activity>-->
 
         <activity
             android:name="com.example.android.scoresheet.app.DatabaseMgr.AndroidDatabaseManager"

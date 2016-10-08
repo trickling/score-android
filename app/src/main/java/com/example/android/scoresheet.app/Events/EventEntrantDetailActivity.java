@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.example.android.scoresheet.app.Entrants.EntrantViewDetailActivity;
 import com.example.android.scoresheet.app.R;
+import com.example.android.scoresheet.app.Scorecards.ScorecardEditActivity;
+import com.example.android.scoresheet.app.Scorecards.ScorecardViewActivity;
+import com.example.android.scoresheet.app.Tallies.TallyViewActivity;
 
 /**
  * Created by Kari Stromsland on 8/25/2016.
@@ -64,44 +68,51 @@ public class EventEntrantDetailActivity extends AppCompatActivity implements Eve
         }
     }
 
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.event_entrant_detail, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            startActivity(new Intent(this, OptionsActivity.class));
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-    protected void onResume() {
+//    protected void onResume() {
         // Resume and either load unchanged data or updated data
-        super.onResume();
+//        super.onResume();
 
-        EventEntrantDetailFragment eedf = (EventEntrantDetailFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_detail_entrant_event);
-        EventViewDetailFragment evvdf = (EventViewDetailFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_detail_view_event);
-    }
+//        EventEntrantDetailFragment eedf = (EventEntrantDetailFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_detail_entrant_event);
+//        EventViewDetailFragment evvdf = (EventViewDetailFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_detail_view_event);
+//    }
 
     @Override
-    public void onItemSelected(Uri contentUri) {
+    public void onEventItemSelected(Uri contentUri) {
         // Callback from EventEntrantDetailFragment to implement data updates to EventViewDetailFragment
         Intent intent = new Intent(this, EventViewDetailActivity.class)
                 .setData(contentUri);
         startActivity(intent);
+    }
+
+    @Override
+    public void onTallyItemSelected(Uri contentUri) {
+        // Callback from EventEntrantDetailFragment to implement data updates to EventViewDetailFragment
+        Intent intent = new Intent(this, TallyViewActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onEntrantSelected(Uri contentUri) {
+        // Callback from EventEntrantDetailFragment to implement data updates to EventViewDetailFragment
+        Intent intent = new Intent(this, EntrantViewDetailActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onEntrantScorecardSelected(Uri contentUri){
+        Intent intent = new Intent(this, ScorecardViewActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onEntrantScorecardSelectedtoRun(Uri contentUri){
+        Intent intent = new Intent(this, ScorecardEditActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+
     }
 
 }

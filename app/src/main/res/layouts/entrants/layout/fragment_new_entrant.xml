@@ -4,6 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:id="@+id/fragment_new_entrant">
 
     <LinearLayout
@@ -13,8 +15,9 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100px"
             android:id="@+id/entrantNewTextHeader"
+            android:gravity="center_vertical"
             android:layout_gravity="center_horizontal"
             android:text="@string/entrantNewTextLabel" />
 

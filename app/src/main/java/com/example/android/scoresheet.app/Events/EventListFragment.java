@@ -30,17 +30,10 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     private String DescrText = new String("");
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
-//    private ArrayAdapter <String> mEventAdapter;
 
     private static final int EVENT_LOADER = 0;
 
     private static final String[] EVENT_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             EventEntry.TABLE_NAME + "." + EventEntry._ID,
             EventEntry.COLUMN_SHORT_DESC
     };
@@ -49,9 +42,7 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
 
 
     public interface Callback {
-        /**
-         * EventListFragmentCallback to MainActivity for when an item has been selected.
-         */
+
         public void onItemSelected(Uri descUri);
         public void onEventEdit(Uri editUri);
     }
@@ -60,30 +51,9 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-//        setHasOptionsMenu(true);
-    }
-
 //    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.event_options_fragment, menu);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-////        if (id == R.id.action_map) {
-////            openPreferredLocationInMap();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
 //    }
 
     @Override
@@ -122,10 +92,6 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        List<String> events = new ArrayList<String>(Arrays.asList(EventData.EVENTS));
-
-//        mEventAdapter = new ArrayAdapter <String> (getActivity(), R.layout.list_item_event, R.id.list_item_event_textview, events);
-
         mEventListAdapter = new EventListAdapter(getActivity(), null, 0);
 
         // Inflate the layout for this fragment
@@ -154,29 +120,10 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
 
             public boolean onLongClick(View view) {
 
-                // Start the CAB using the ActionMode.Callback defined above
                 view.setSelected(true);
                 return true;
             }
         });
-
-//        mListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            // Called when the user long-clicks on someView
-//
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-//
-//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-//
-//                if (cursor != null) {
-//                    mUri = ScoreSheetContract.EventEntry.buildEventDesc(cursor.getString(COL_EVENT_DESC));
-//                }
-//            }
-//
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             // The listview probably hasn't even been populated yet.  Actually perform the
@@ -227,9 +174,4 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
         mEventListAdapter.swapCursor(null);
     }
-
-//    private void updateEvents(){
-//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-//    }
-
 }

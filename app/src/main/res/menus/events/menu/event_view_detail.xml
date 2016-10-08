@@ -5,9 +5,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.scoresheet.app.events.EventViewDetailActivity" >
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/title_action_settings"
-        app:showAsAction="never" />
-
 </menu>

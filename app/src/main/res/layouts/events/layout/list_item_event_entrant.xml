@@ -6,12 +6,13 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:id="@+id/list_item_event_entrant"
-    android:background="@drawable/touch_selector" >
+    android:background="@drawable/touch_selector"
+    android:id="@+id/list_item_event_entrant">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_item_event_entrant_textview" />
+        android:id="@+id/list_item_event_entrant_textview"
+        android:visibility="visible" />
 
 </LinearLayout>

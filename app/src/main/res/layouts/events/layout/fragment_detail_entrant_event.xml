@@ -4,15 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Events.EventEntrantDetailFragment">
+    tools:context=".Events.EventEntrantDetailFragment"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="36px"
+        android:layout_height="100px"
+        android:gravity="center_vertical"
         android:id="@+id/event_summary_textview"
-        android:textColor="#FF000000"
-        android:background="#f6e30d"
-        android:clickable="true" />
+        android:clickable="true"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
+        android:allowUndo="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center_vertical"
+        android:id="@+id/event_tally_textview"
+        android:clickable="true"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
+        android:allowUndo="true" />
 
     <FrameLayout
         android:layout_width="match_parent"

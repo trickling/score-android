@@ -1,9 +1,15 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
-    <item
-        android:id="@+id/action_share"
-        android:title="@string/action_share"
-        app:showAsAction="always"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+
+    <item android:id="@+id/team"
+        android:title="View Team"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/scorecard"
+        android:title="View Scorecard"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/run_scorecard"
+        android:title="Run Scorecard"
+        app:showAsAction="ifRoom" />
+
 </menu>

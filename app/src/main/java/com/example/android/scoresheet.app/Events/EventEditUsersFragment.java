@@ -45,12 +45,6 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
     private static final int EVENTUSERS_LOADER = 0;
 
     private static final String[] USER_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             UserEntry.TABLE_NAME + "." + UserEntry._ID,
             UserEntry.COLUMN_USER_DESC
     };
@@ -75,58 +69,6 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
     public EventEditUsersFragment() {
         // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-//        setHasOptionsMenu(true);
-    }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.user_options_fragment, menu);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-////        if (id == R.id.action_map) {
-////            openPreferredLocationInMap();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        MenuInflater inflater = new MenuInflater(getContext());
-//        inflater.inflate(R.menu.event_edit_users_fragment, menu);
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//        mUri = ScoreSheetContract.UserEntry.buildUserDesc(mEventUserListAdapter.getCursor().getString(COL_USER_DESC));
-//        switch (item.getItemId()) {
-//            case R.id.edit:
-//                editEventUser(mUri, info.id);
-//                return true;
-//            default:
-//                return super.onContextItemSelected(item);
-//        }
-//    }
-//
-//    private void editEventUser(Uri itemUri, long l){
-//        ((Callback) getActivity()).onEventUsersEdit(itemUri);
-//    }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -157,7 +99,6 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 CheckedTextView tt = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_users_textview);
-//                event_edit_checked = mListView.isItemChecked(position);
                 if (!tt.isChecked()){
                     mListView.setItemChecked(position, true);
                     tt.setChecked(true);
@@ -201,7 +142,6 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
 
             public boolean onLongClick(View view) {
 
-                // Start the CAB using the ActionMode.Callback defined above
                 view.setSelected(true);
                 return true;
             }
@@ -214,19 +154,7 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
 
-
-//        SparseBooleanArray lv_ids = mListView.getCheckedItemPositions();
-//
-//        for(int i=0; i<lv_ids.size(); i++) {
-//            if(lv_ids.valueAt(i)){
-//                mListView.setItemChecked(i, true);
-//            }else{
-//                mListView.setItemChecked(i, false);
-//            }
-//        }
-
         return rootView;
-
     }
 
     public static boolean checked_status(Context context, Cursor c){
@@ -234,8 +162,6 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
         long userid = c.getLong(0);
         long eventid = EventEntry.getEventIdFromUri(eventUri);
         Uri uri = UserEntry.buildUserEventIdCheckedUri(eventid, "checked");
-//        String selection = EventEntry.COLUMN_SHORT_DESC + " = ?";
-//        String[] selectionArgs = {EventEntry.getEventDescriptionFromUri(mUri)};
         Cursor cursor;
         cursor = context.getContentResolver().query(uri, USER_COLUMNS, null, null, null);
         if (!cursor.moveToFirst()) {
@@ -275,8 +201,6 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
         // CursorLoader is a loader that queries the ContentResolver and returns a Cursor.  This class implements
         // the Loader protocol in a standard way for querying cursors, building on AsyncTaskLoader to perform
         // the cursor query on a background thread.
-//        return new CursorLoader(getActivity(), UserEntry.CONTENT_URI, USER_COLUMNS, null, null, sortOrder);
-
         return new CursorLoader(getActivity(), UserEntry.CONTENT_URI, USER_COLUMNS, null, null, sortOrder);
     }
 
@@ -293,9 +217,5 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
     public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
         mEventUserListAdapter.swapCursor(null);
     }
-
-//    private void updateUsers(){
-//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-//    }
 
 }

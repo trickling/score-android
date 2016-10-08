@@ -52,8 +52,9 @@ public class ScoreSheetProvider extends ContentProvider {
     static final int EVENTENTRANTSCORECARD = 300;
     static final int EVENTENTRANTSCORECARD_WITH_ENTRANT_ID = 301;
     static final int EVENTENTRANTSCORECARD_WITH_EVENT_ID = 302;
-    static final int EVENTENTRANTSCORECARD_EVENTIDENTRANTID = 303;
-    static final int EVENTENTRANTSCORECARD_EVENTIDENTRANTIDSCORECARDID = 304;
+    static final int EVENTENTRANTSCORECARD_WITH_SCORECARD_ID = 303;
+    static final int EVENTENTRANTSCORECARD_EVENTIDENTRANTID = 304;
+    static final int EVENTENTRANTSCORECARD_EVENTIDENTRANTIDSCORECARDID = 305;
 
     static final int SCORECARD = 600;
     static final int SCORECARD_WITH_DESCR = 601;
@@ -520,6 +521,7 @@ public class ScoreSheetProvider extends ContentProvider {
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD, EVENTENTRANTSCORECARD);
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD + "/#", EVENTENTRANTSCORECARD_WITH_EVENT_ID);
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD + "/#", EVENTENTRANTSCORECARD_WITH_ENTRANT_ID);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD + "/#", EVENTENTRANTSCORECARD_WITH_SCORECARD_ID);
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD + "/#/#", EVENTENTRANTSCORECARD_EVENTIDENTRANTID);
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD + "/#/#/#", EVENTENTRANTSCORECARD_EVENTIDENTRANTIDSCORECARDID);
 
@@ -584,6 +586,8 @@ public class ScoreSheetProvider extends ContentProvider {
             case EVENTENTRANTSCORECARD_WITH_EVENT_ID:
                 return ScoreSheetContract.EventEntrantScorecardEntry.CONTENT_TYPE;
             case EVENTENTRANTSCORECARD_WITH_ENTRANT_ID:
+                return ScoreSheetContract.EventEntrantScorecardEntry.CONTENT_TYPE;
+            case EVENTENTRANTSCORECARD_WITH_SCORECARD_ID:
                 return ScoreSheetContract.EventEntrantScorecardEntry.CONTENT_TYPE;
             case EVENTENTRANTSCORECARD_EVENTIDENTRANTID:
                 return ScoreSheetContract.EventEntrantScorecardEntry.CONTENT_TYPE;

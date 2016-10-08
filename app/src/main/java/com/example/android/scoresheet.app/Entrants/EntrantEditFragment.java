@@ -1,6 +1,7 @@
 package com.example.android.scoresheet.app.Entrants;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,32 +45,6 @@ public class EntrantEditFragment extends Fragment {
         // Required empty public constructor
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        // Add this line in order for this fragment to handle menu events.
-////        setHasOptionsMenu(true);
-//    }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.event_new_fragment, menu);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-////        if (id == R.id.action_map) {
-////            openPreferredLocationInMap();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -83,17 +58,27 @@ public class EntrantEditFragment extends Fragment {
 
         mDescrEditText = (EditText) rootView.findViewById(R.id.entrantEditText);
 
-        mDescrEditText.setText(EntrantEntry.getEntrantDescFromUri(mUri));
+        String sortOrder = EntrantEntry._ID + " ASC";
+        String selection = EntrantEntry._ID + " = ?";
+        String[] selectionArgs = {Long.valueOf(EntrantEntry.getEntrantIdFromUri(mUri)).toString()};
+        String DescrText;
+
+        Cursor c = getContext().getContentResolver().query(EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
+        if(c.moveToFirst()) {
+            DescrText = c.getString(COL_ENTRANT_DESC);
+        }else{
+            DescrText = "not found";
+        }
+
+        mDescrEditText.setText(DescrText);
 
         Button save_edit_button = (Button) rootView.findViewById(R.id.entrantEditSave);
-
-//        Button dbmgr_button = (Button) rootView.findViewById(R.id.event_edit_db_mgr);
 
         View.OnClickListener edit_saveOnClickListener = new View.OnClickListener() {
             public void onClick(View v) {
                 DescrEditText = mDescrEditText.getText().toString();
 
-                if ( !(DescrEditText.equals("")) ) {
+                if ( !(DescrEditText.equals("not found")) ) {
                     editUri = EntrantEntry.buildEntrantDescUri(DescrEditText);
                     ContentValues mEditContentValues = new ContentValues();
                     mEditContentValues.put(EntrantEntry.COLUMN_TEAM_DESC, DescrEditText);

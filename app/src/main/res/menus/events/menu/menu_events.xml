@@ -11,9 +11,4 @@
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.AppCompatImageButton" />
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/title_action_settings"
-        app:showAsAction="never" />
-
 </menu>

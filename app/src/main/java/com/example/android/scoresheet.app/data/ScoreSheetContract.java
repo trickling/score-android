@@ -264,8 +264,16 @@ public final class ScoreSheetContract {
             return CONTENT_URI.buildUpon().appendPath(event_id).build();
         }
 
+        public static Uri buildEventEntrantScorecardIdUri(String scorecard_id) {
+            return CONTENT_URI.buildUpon().appendPath(scorecard_id).build();
+        }
+
         public static Uri buildIdEventEntrantScorecard(String eventid, String entrantid){
             return CONTENT_URI.buildUpon().appendPath(eventid).appendPath(entrantid).build();
+        }
+
+        public static Uri buildEventEntrantScorecardEvEnSc(String eventid, String entrantid, String scorecardid){
+            return CONTENT_URI.buildUpon().appendPath(eventid).appendPath(entrantid).appendPath(scorecardid).build();
         }
 
         public static Uri buildIdEventEntrantScorecardUri(long id) {
@@ -303,7 +311,7 @@ public final class ScoreSheetContract {
 
         public static final String TABLE_NAME = "scorecard";
 
-        public static final String COLUMN_SCORECARD_DESC = "scorecard_descr";
+        public static final String COLUMN_SCORECARD_DESC = "scorecard_desc";
 
         public static Uri buildScorecardDescUri(String scorecard_desc) {
             return CONTENT_URI.buildUpon().appendPath(scorecard_desc).build();
@@ -335,6 +343,9 @@ public final class ScoreSheetContract {
 
         public static String getScorecardEventIdFromUri(Uri uri){
             return uri.getPathSegments().get(2);
+        }
+        public static String getScorecardEventIdEntrantIdFromUri(Uri uri){
+            return uri.getPathSegments().get(3);
         }
     }
 
@@ -378,6 +389,10 @@ public final class ScoreSheetContract {
 
             public static String getTallyDescFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
+        }
+
+        public static long getTallyIdFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(1));
         }
 
         public static long getTallyEventIdFromUri(Uri uri){

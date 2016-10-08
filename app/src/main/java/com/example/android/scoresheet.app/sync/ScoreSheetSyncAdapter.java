@@ -49,6 +49,10 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
         context.getContentResolver().delete(ScoreSheetContract.EventEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.EntrantEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.UserEntry.CONTENT_URI, null, null);
+        context.getContentResolver().delete(ScoreSheetContract.EventUserEntry.CONTENT_URI, null, null);
+        context.getContentResolver().delete(ScoreSheetContract.EventEntrantScorecardEntry.CONTENT_URI, null, null);
+        context.getContentResolver().delete(ScoreSheetContract.ScorecardEntry.CONTENT_URI, null, null);
+        context.getContentResolver().delete(ScoreSheetContract.TallyEntry.CONTENT_URI, null, null);
         Log.d(LOG_TAG, "Delete Complete.");
     }
 
@@ -115,7 +119,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
      */
     public static void syncImmediately(Context context) {
 //        dropDB(context);
-//        seedEventDB(EventData.EVENTS, context);
+////        seedEventDB(EventData.EVENTS, context);
 //        seedEntrantDB(EntrantData.ENTRANTS, context);
 //        seedUserDB(UserData.USERS, context);
         Bundle bundle = new Bundle();

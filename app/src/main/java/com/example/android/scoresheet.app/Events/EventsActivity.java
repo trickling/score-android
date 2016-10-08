@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.android.scoresheet.app.OptionsActivity;
 import com.example.android.scoresheet.app.R;
 
 /**
@@ -54,8 +53,6 @@ public class EventsActivity extends AppCompatActivity implements EventListFragme
         EventListFragment eventListFragment =  ((EventListFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_list_event));
 
-//        eventFragment.setUseTodayLayout(!mTwoPane);
-//        ScoreSheetSyncAdapter.initializeSyncAdapter(this);
     }
     protected void onResume() {
         // Resume and either load unchanged data or updated data
@@ -65,10 +62,37 @@ public class EventsActivity extends AppCompatActivity implements EventListFragme
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_events, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                startActivity(new Intent(this, EventNewActivity.class));
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+    @Override
     public void onItemSelected(Uri contentUri) {
         // Callback from EventListFragment to implement data updates to EventEntrantDetailFragment
 
-//        if (contentUri.getPathSegments().get(0).equals(EntrantEntry.TABLE_NAME)) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
@@ -86,39 +110,6 @@ public class EventsActivity extends AppCompatActivity implements EventListFragme
             Intent intent = new Intent(this, EventEntrantDetailActivity.class)
                     .setData(contentUri);
             startActivity(intent);
-        }
-//        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_events, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, OptionsActivity.class));
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.action_add:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                startActivity(new Intent(this, EventNewActivity.class));
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
         }
     }
 

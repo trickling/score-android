@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:id="@+id/fragment_edit_scorecard">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:id="@+id/scorecardEditTextHeader"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/scorecardEditTextLabel" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:id="@+id/scorecardEditText"
+            android:layout_gravity="center_horizontal"
+            android:allowUndo="true"
+            android:clickable="true"
+            android:enabled="true" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:enabled="true"
+        android:gravity="center"
+        android:id="@+id/scorecardEditSave"
+        android:text="Save" />
+
+</LinearLayout>

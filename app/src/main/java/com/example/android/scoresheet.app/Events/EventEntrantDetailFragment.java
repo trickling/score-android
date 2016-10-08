@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +21,7 @@ import com.example.android.scoresheet.app.R;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetDbHelper;
 
 /**
@@ -33,12 +38,10 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     static final String EVENTENTRANTDETAIL_URI = "URI";
     private static final String EVENT_SHARE_HASHTAG = " #ScoreSheetApp";
     private Uri mUri;
+    private Uri tlyUri;
 
-    private TextView mDescriptionView;
-
-
-//    private ShareActionProvider mShareActionProvider;
-    private String mEventEntrant;
+    private TextView mEventDescriptionView;
+    private TextView mTallyDescriptionView;
 
     private static final int EVENT_DETAIL_LOADER = 0;
 
@@ -60,65 +63,79 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
             EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
             EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
     };
-
     public static final int COL_EVENTENTRANT_ID = 0;
     public static final int COL_EV_ID = 1;
     public static final int COL_EN_ID = 2;
     public static final int COL_SC_ID = 3;
 
+    private static final String[] TALLY_DETAIL_COLUMNS = {
+            TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
+            TallyEntry.COLUMN_TALLY_DESC, TallyEntry.COLUMN_EVENTID
+    };
+    public static final int COL_TALLY_ID = 0;
+    public static final int COL_TALLY_DESC = 1;
+    public static final int COL_TALLY_EVID = 2;
+
     public interface Callback {
-        /**
-         * EventDetailFragmentCallback to EventEntrantDetailActivity for when an item has been selected.
-         */
-        public void onItemSelected(Uri evDescUri);
+
+        public void onEventItemSelected(Uri evDescUri);
+        public void onTallyItemSelected(Uri tlyDescUri);
+        public void onEntrantSelected(Uri enDescUri);
+        public void onEntrantScorecardSelected(Uri scDescUri);
+        public void onEntrantScorecardSelectedtoRun(Uri scDescUri);
     }
 
     public EventEntrantDetailFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
 
-        // Add this line in order for this fragment to handle menu events.
-//        setHasOptionsMenu(true);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = new MenuInflater(getContext());
+        inflater.inflate(R.menu.event_entrant_detail_fragment, menu);
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        inflater.inflate(R.menu.event_entrant_detail_fragment, menu);
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        // Retrieve the share menu item
-//        MenuItem menuItem = menu.findItem(R.id.action_share);
+        String entrantid = Long.valueOf(mEventEntrantDetailAdapter.getCursor().getLong(COL_ENTRANT_ID)).toString();
+        String eventid = Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString();
 
-        // Get the provider and hold onto it to set/change the share intent.
-//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        String sortOrder = EventEntrantScorecardEntry._ID + " ASC";
+        String selection = EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = ?" + " AND " + EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ?";
+        String[] selectionArgs = {entrantid, eventid};
+        String scorecardid;
+        Cursor c = getContext().getContentResolver().query(EventEntrantScorecardEntry.CONTENT_URI, EVENTENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
+        if(c.moveToFirst()){
+            scorecardid = Long.valueOf(c.getLong(COL_SC_ID)).toString();
+        }else{
+            scorecardid = "not found";
+        }
 
-        // If onLoadFinished happens before this, we can go ahead and set the share intent now.
-//        if (mEvent != null) {
-//            mShareActionProvider.setShareIntent(createShareEventIntent());
-//        }
-//    }
+        Uri ScUri = EventEntrantScorecardEntry.buildEventEntrantScorecardIdUri(scorecardid);
+        Uri eNUri = EventEntrantScorecardEntry.buildEventEntrantIdScorecardUri(entrantid);
 
-    //    private Intent createShareEventIntent() {
-//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//        shareIntent.setType("text/plain");
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, mEvent + EVENT_SHARE_HASHTAG);
-//        return shareIntent;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+        switch (item.getItemId()) {
+            case R.id.team:
+                viewTeamDetail(eNUri, info.id);
+                return true;
+            case R.id.scorecard:
+                viewScorecard(ScUri, info.id);
+                return true;
+            case R.id.run_scorecard:
+                runScorecard(ScUri, info.id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,33 +154,81 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
 
         mListView.setAdapter(mEventEntrantDetailAdapter);
 
-        mDescriptionView = (TextView) rootView.findViewById(R.id.event_summary_textview);
+        registerForContextMenu(mListView);
 
-        mDescriptionView.setText(EventEntry.getEventIdDescriptionFromUri(mUri));
+        mEventDescriptionView = (TextView) rootView.findViewById(R.id.event_summary_textview);
 
-        View.OnClickListener DescOnClickListener = new View.OnClickListener() {
+        mEventDescriptionView.setText(EventEntry.getEventIdDescriptionFromUri(mUri));
+
+        String eventid = Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString();
+
+        mTallyDescriptionView = (TextView) rootView.findViewById(R.id.event_tally_textview);
+
+        String sortOrder = TallyEntry._ID + " ASC";
+        String selection = TallyEntry.COLUMN_EVENTID + " = ?";
+        String[] selectionArgs = {eventid};
+        Cursor tc = getContext().getContentResolver().query(TallyEntry.CONTENT_URI, TALLY_DETAIL_COLUMNS, selection, selectionArgs, sortOrder);
+        String tallyDescr;
+        long tallyid;
+        if (tc.moveToFirst()) {
+            tallyDescr = tc.getString(COL_TALLY_DESC);
+            tallyid = tc.getLong(COL_TALLY_ID);
+        } else {
+            tallyDescr = "not found";
+            tallyid = 0;
+        }
+
+        tlyUri = TallyEntry.buildTallyIdUri(tallyid);
+
+        mTallyDescriptionView.setText(tallyDescr);
+
+
+        View.OnClickListener EventDescOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mUri != null) {
-                    ((Callback) getActivity()).onItemSelected(mUri);
+                    ((Callback) getActivity()).onEventItemSelected(mUri);
                 }
             }
         };
+        mEventDescriptionView.setOnClickListener(EventDescOnClickListener);
 
-        mDescriptionView.setOnClickListener(DescOnClickListener);
+
+        View.OnClickListener TallyDescOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mUri != null) {
+                    ((Callback) getActivity()).onTallyItemSelected(tlyUri);
+                }
+            }
+        };
+        mTallyDescriptionView.setOnClickListener(TallyDescOnClickListener);
 
 
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-//
-//                if (cursor != null) {
-//                    ((Callback) getActivity()).onItemSelected(ScoreSheetContract.EntrantEntry.buildEntrantDesc(cursor.getString(COL_TEAM_DESC)));
-//                }
-//                mPosition = position;  //  Lesson 5.12
-//            }
-//        });
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+
+                if (cursor != null) {
+                    ((Callback) getActivity()).onEntrantSelected(EntrantEntry.buildEntrantIdUri(cursor.getLong(COL_ENTRANT_ID)));
+                }
+                mPosition = position;
+            }
+        });
+
+
+        mListView.setOnLongClickListener(new View.OnLongClickListener() {
+            // Called when the user long-clicks on someView
+
+            public boolean onLongClick(View view) {
+
+                view.setSelected(true);
+                return true;
+            }
+        });
+
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             // The listview probably hasn't even been populated yet.  Actually perform the
@@ -173,18 +238,6 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
 
         return rootView;
     }
-
-    // Lesson 5.10
-//    void onLocationChanged( String newLocation ) {
-//        // replace the uri, since the location has changed
-//        Uri uri = mUri;
-//        if (null != uri) {
-//            long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
-//            Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
-//            mUri = updatedUri;
-//            getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
-//        }
-//    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -202,8 +255,6 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
         }
         super.onSaveInstanceState(outState);
     }
-
-
 
 
     @Override
@@ -224,31 +275,23 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
             // If we don't need to restart the loader, and there's a desired position to restore to, do so now.
             mListView.smoothScrollToPosition(mPosition);
         }
-
-
-//        if (data != null && data.moveToFirst()) {
-//
-//            // Read description from cursor and update view
-//            String description = data.getString(COL_EVENT_DESC);
-//            mDescriptionView.setText(description);
-//
-//
-//            // We still need this for the share intent
-//            mEventEntrant = String.format("%s", description);
-
-            // If onCreateOptionsMenu has already happened, we need to update the share intent now.
-//            if (mShareActionProvider != null) {
-//                mShareActionProvider.setShareIntent(createShareEventIntent());
-//            }
-//        }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader){  // Lesson 5.14
+    public void onLoaderReset(Loader<Cursor> loader){
         mEventEntrantDetailAdapter.swapCursor(null);
     }
 
-//    private void updateEvents(){
-//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-//    }
+
+    private void viewTeamDetail(Uri itemUri, long l){
+        ((Callback) getActivity()).onEntrantSelected(itemUri);
+    }
+
+    private void viewScorecard(Uri itemUri, long l){
+        ((Callback) getActivity()).onEntrantScorecardSelected(itemUri);
+    }
+
+    private void runScorecard(Uri itemUri, long l){
+        ((Callback) getActivity()).onEntrantScorecardSelectedtoRun(itemUri);
+    }
 }

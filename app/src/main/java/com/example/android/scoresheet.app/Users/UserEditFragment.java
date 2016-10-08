@@ -21,12 +21,6 @@ public class UserEditFragment extends Fragment {
     public static final String LOG_TAG = UserEditFragment.class.getSimpleName();
 
     private static final String[] _COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             UserEntry.TABLE_NAME + "." + UserEntry._ID,
             UserEntry.COLUMN_USER_DESC
     };
@@ -43,32 +37,6 @@ public class UserEditFragment extends Fragment {
     public UserEditFragment() {
         // Required empty public constructor
     }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        // Add this line in order for this fragment to handle menu events.
-////        setHasOptionsMenu(true);
-//    }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.event_new_fragment, menu);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-////        if (id == R.id.action_map) {
-////            openPreferredLocationInMap();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,7 +78,6 @@ public class UserEditFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-//        getLoaderManager().initLoader(EVENT_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 

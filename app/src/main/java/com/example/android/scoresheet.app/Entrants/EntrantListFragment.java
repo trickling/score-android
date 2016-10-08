@@ -35,12 +35,6 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     private static final int ENTRANT_LOADER = 0;
 
     private static final String[] ENTRANT_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
             EntrantEntry.COLUMN_TEAM_DESC
     };
@@ -49,9 +43,6 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
 
 
     public interface Callback {
-        /**
-         * EntrantListFragmentCallback to EntrantsActivity for when an item has been selected.
-         */
         public void onItemSelected(Uri descUri);
         public void onEntrantEdit(Uri editUri);
     }
@@ -60,30 +51,9 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-//        setHasOptionsMenu(true);
-    }
-
 //    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.entrant_options_fragment, menu);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-////        if (id == R.id.action_map) {
-////            openPreferredLocationInMap();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
 //    }
 
     @Override
@@ -96,7 +66,8 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        mUri = EntrantEntry.buildEntrantDescUri(mEntrantListAdapter.getCursor().getString(COL_ENTRANT_DESC));
+        long entrantid = mEntrantListAdapter.getCursor().getLong(COL_ENTRANT_ID);
+        mUri = EntrantEntry.buildEntrantIdUri(entrantid);
         switch (item.getItemId()) {
             case R.id.edit:
                 editEntrant(mUri, info.id);
@@ -139,7 +110,7 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
 
                 if (cursor != null) {
-                    ((Callback) getActivity()).onItemSelected(EntrantEntry.buildEntrantDescUri(cursor.getString(COL_ENTRANT_DESC)));
+                    ((Callback) getActivity()).onItemSelected(EntrantEntry.buildEntrantIdUri(cursor.getLong(COL_ENTRANT_ID)));
                 }
                 mPosition = position;
             }
@@ -150,7 +121,6 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
 
             public boolean onLongClick(View view) {
 
-                // Start the CAB using the ActionMode.Callback defined above
                 view.setSelected(true);
                 return true;
             }
@@ -206,7 +176,4 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
         mEntrantListAdapter.swapCursor(null);
     }
 
-//    private void updateEntrants(){
-//        ScoreSheetSyncAdapter.syncImmediately(getActivity());
-//    }
 }
