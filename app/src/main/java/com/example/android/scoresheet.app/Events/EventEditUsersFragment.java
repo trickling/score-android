@@ -46,17 +46,29 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
 
     private static final String[] USER_COLUMNS = {
             UserEntry.TABLE_NAME + "." + UserEntry._ID,
-            UserEntry.COLUMN_USER_DESC
+            UserEntry.COLUMN_FIRST_NAME,
+            UserEntry.COLUMN_LAST_NAME,
+            UserEntry.COLUMN_ROLE,
+            UserEntry.COLUMN_APPROVED,
+            UserEntry.COLUMN_STATUS,
+            UserEntry.COLUMN_EMAIL,
+            UserEntry.COLUMN_PASSWORD
     };
     static final int COL_USER_ID = 0;
-    static final int COL_USER_DESC = 1;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ROLE = 3;
+    static final int COL_APPROVED = 4;
+    static final int COL_STATUS = 5;
+    static final int COL_EMAIL = 6;
+    static final int COL_PASSWD = 7;
 
-    private static final String[] EVENT_COLUMNS = {
-            EventEntry.TABLE_NAME + "." + EventEntry._ID,
-            EventEntry.COLUMN_SHORT_DESC
-    };
-    public static final int COL_EVENT_ID = 0;
-    public static final int COL_EVENT_DESC = 1;
+//    private static final String[] EVENT_COLUMNS = {
+//            EventEntry.TABLE_NAME + "." + EventEntry._ID,
+//            EventEntry.COLUMN_NAME
+//    };
+//    public static final int COL_EVENT_ID = 0;
+//    public static final int COL_EVENT_NAME = 1;
 
     private static final String[] EVENTUSER_COLUMNS = {
             EventUserEntry.TABLE_NAME + "." + EventUserEntry._ID,
@@ -196,7 +208,7 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = UserEntry.COLUMN_USER_DESC + " ASC";
+        String sortOrder = UserEntry.COLUMN_FIRST_NAME + " ASC";
 
         // CursorLoader is a loader that queries the ContentResolver and returns a Cursor.  This class implements
         // the Loader protocol in a standard way for querying cursors, building on AsyncTaskLoader to perform

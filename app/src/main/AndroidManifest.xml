@@ -166,8 +166,17 @@
         </activity>
 
         <activity
-            android:name=".Scorecards.ScorecardViewActivity"
+            android:name=".Scorecards.ScorecardsActivity"
             android:label="@string/title_activity_scorecards"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Scorecards.ScorecardsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEntrantDetailActivity" />
+        </activity>
+        <activity
+            android:name=".Scorecards.ScorecardViewActivity"
+            android:label="@string/title_activity_scorecard_view"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Scorecards.ScorecardViewActivity" >
             <meta-data
@@ -198,6 +207,16 @@
             android:label="@string/title_activity_tallies_edit"
             android:theme="@style/AppTheme"
             android:parentActivityName=".Tallies.TallyEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Events.EventEntrantDetailActivity" />
+        </activity>
+
+        <activity
+            android:name="ResultsActivity"
+            android:label="@string/title_activity_results"
+            android:theme="@style/AppTheme"
+            android:parentActivityName="ResultsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Events.EventEntrantDetailActivity" />

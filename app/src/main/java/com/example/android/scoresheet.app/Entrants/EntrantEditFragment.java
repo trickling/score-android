@@ -20,26 +20,35 @@ import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 public class EntrantEditFragment extends Fragment {
 
     public static final String LOG_TAG = EntrantEditFragment.class.getSimpleName();
-
-    private static final String[] ENTRANT_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
-            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
-    };
-    static final int COL_ENTRANT_ID = 0;
-    static final int COL_ENTRANT_DESC = 1;
-
     static final String ENTRANTEDIT_URI = "URI";
 
     private Uri mUri;
     private Uri editUri;
-    private EditText mDescrEditText;
-    private String DescrEditText;
+
+    private static final String[] ENTRANT_COLUMNS = {
+            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
+            EntrantEntry.COLUMN_FIRST_NAME,
+            EntrantEntry.COLUMN_LAST_NAME,
+            EntrantEntry.COLUMN_ID_NUMBER,
+            EntrantEntry.COLUMN_DOG_NAME,
+            EntrantEntry.COLUMN_DOG_ID_NUMBER,
+            EntrantEntry.COLUMN_BREED
+    };
+    static final int COL_ENTRANT_ID = 0;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ID = 3;
+    static final int COL_DOG_NAME = 4;
+    static final int COL_DOG_ID = 5;
+    static final int COL_BREED = 6;
+
+    private EditText mFirstNameEditText;
+    private EditText mLastNameEditText;
+    private EditText mIdEditText;
+    private EditText mDogNameEditText;
+    private EditText mDogIdEditText;
+    private EditText mBreedEditText;
+
 
     public EntrantEditFragment() {
         // Required empty public constructor
@@ -56,36 +65,47 @@ public class EntrantEditFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_edit_entrant, container, false);
 
-        mDescrEditText = (EditText) rootView.findViewById(R.id.entrantEditText);
+        mFirstNameEditText = (EditText) rootView.findViewById(R.id.entrant_first_name_text_edit);
+        mLastNameEditText = (EditText) rootView.findViewById(R.id.entrant_last_name_text_edit);
+        mIdEditText = (EditText) rootView.findViewById(R.id.entrant_id_text_edit);
+        mDogNameEditText = (EditText) rootView.findViewById(R.id.entrant_dog_name_text_edit);
+        mDogIdEditText = (EditText) rootView.findViewById(R.id.entrant_dog_id_text_edit);
+        mBreedEditText = (EditText) rootView.findViewById(R.id.entrant_breed_text_edit);
+
 
         String sortOrder = EntrantEntry._ID + " ASC";
         String selection = EntrantEntry._ID + " = ?";
         String[] selectionArgs = {Long.valueOf(EntrantEntry.getEntrantIdFromUri(mUri)).toString()};
-        String DescrText;
+        String FirstNameText;
 
         Cursor c = getContext().getContentResolver().query(EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
-        if(c.moveToFirst()) {
-            DescrText = c.getString(COL_ENTRANT_DESC);
-        }else{
-            DescrText = "not found";
-        }
 
-        mDescrEditText.setText(DescrText);
+        if(c.moveToFirst()) {
+            mFirstNameEditText.setText(c.getString(COL_FIRST_NAME));
+            mLastNameEditText.setText(c.getString(COL_LAST_NAME));
+            mIdEditText.setText(c.getString(COL_ID));
+            mDogNameEditText.setText(c.getString(COL_DOG_NAME));
+            mDogIdEditText.setText(c.getString(COL_DOG_ID));
+            mBreedEditText.setText(c.getString(COL_BREED));
+        }
 
         Button save_edit_button = (Button) rootView.findViewById(R.id.entrantEditSave);
 
         View.OnClickListener edit_saveOnClickListener = new View.OnClickListener() {
             public void onClick(View v) {
-                DescrEditText = mDescrEditText.getText().toString();
 
-                if ( !(DescrEditText.equals("not found")) ) {
-                    editUri = EntrantEntry.buildEntrantDescUri(DescrEditText);
-                    ContentValues mEditContentValues = new ContentValues();
-                    mEditContentValues.put(EntrantEntry.COLUMN_TEAM_DESC, DescrEditText);
-                    String selection = EntrantEntry.COLUMN_TEAM_DESC + " = ?";
-                    String[] selectionArgs = {EntrantEntry.getEntrantDescFromUri(mUri)};
-                    getContext().getContentResolver().update(EntrantEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
-                }
+                ContentValues mEditContentValues = new ContentValues();
+
+                mEditContentValues.put(EntrantEntry.COLUMN_FIRST_NAME, mFirstNameEditText.getText().toString());
+                mEditContentValues.put(EntrantEntry.COLUMN_LAST_NAME, mLastNameEditText.getText().toString());
+                mEditContentValues.put(EntrantEntry.COLUMN_ID_NUMBER, mIdEditText.getText().toString());
+                mEditContentValues.put(EntrantEntry.COLUMN_DOG_NAME, mDogNameEditText.getText().toString());
+                mEditContentValues.put(EntrantEntry.COLUMN_DOG_ID_NUMBER, mDogIdEditText.getText().toString());
+                mEditContentValues.put(EntrantEntry.COLUMN_BREED, mBreedEditText.getText().toString());
+
+                String selection = EntrantEntry._ID + " = ?";
+                String[] selectionArgs = {Long.valueOf(EntrantEntry.getEntrantIdFromUri(mUri)).toString()};
+                getContext().getContentResolver().update(EntrantEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
             }
         };
 

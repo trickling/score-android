@@ -22,18 +22,33 @@ public class EntrantNewFragment extends Fragment {
 
     private static final String[] ENTRANT_COLUMNS = {
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.COLUMN_FIRST_NAME,
+            EntrantEntry.COLUMN_LAST_NAME,
+            EntrantEntry.COLUMN_ID_NUMBER,
+            EntrantEntry.COLUMN_DOG_NAME,
+            EntrantEntry.COLUMN_DOG_ID_NUMBER,
+            EntrantEntry.COLUMN_BREED
     };
     static final int COL_ENTRANT_ID = 0;
-    static final int COL_ENTRANT_DESC = 1;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ID = 3;
+    static final int COL_DOG_NAME = 4;
+    static final int COL_DOG_ID = 5;
+    static final int COL_BREED = 6;
+
 
     static final String ENTRANTNEW_URI = "URI";
 
     private Uri mUri;
     private Uri newUri;
-    private EditText mDescrNewText;
-    private String DescrNewText;
-    private Boolean mNewTextFocus;
+    private EditText mFirstNameNewText;
+    private EditText mLastNameNewText;
+    private EditText mIdNewText;
+    private EditText mDogNameNewText;
+    private EditText mDogIdNewText;
+    private EditText mBreedNewText;
+
 
     public EntrantNewFragment() {
         // Required empty public constructor
@@ -46,19 +61,28 @@ public class EntrantNewFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_new_entrant, container, false);
 
-        mDescrNewText = (EditText) rootView.findViewById(R.id.entrantNewText);
+        mFirstNameNewText = (EditText) rootView.findViewById(R.id.entrant_first_name_text_edit);
+        mLastNameNewText = (EditText) rootView.findViewById(R.id.entrant_last_name_text_edit);
+        mIdNewText = (EditText) rootView.findViewById(R.id.entrant_id_text_edit);
+        mDogNameNewText = (EditText) rootView.findViewById(R.id.entrant_dog_name_text_edit);
+        mDogIdNewText = (EditText) rootView.findViewById(R.id.entrant_dog_id_text_edit);
+        mBreedNewText = (EditText) rootView.findViewById(R.id.entrant_breed_text_edit);
 
         Button save_new_button = (Button) rootView.findViewById(R.id.entrantNewSave);
 
         View.OnClickListener new_saveOnClickListener = new View.OnClickListener() {
             public void onClick(View v) {
-                DescrNewText = mDescrNewText.getText().toString();
-                if ( !(DescrNewText.equals("")) ) {
-                    mUri = EntrantEntry.buildEntrantDescUri(DescrNewText);
-                    ContentValues mNewContentValues = new ContentValues();
-                    mNewContentValues.put(EntrantEntry.COLUMN_TEAM_DESC,DescrNewText);
-                    newUri = getContext().getContentResolver().insert(EntrantEntry.CONTENT_URI, mNewContentValues);
-                }
+
+                ContentValues mNewContentValues = new ContentValues();
+
+                mNewContentValues.put(EntrantEntry.COLUMN_FIRST_NAME, mFirstNameNewText.getText().toString());
+                mNewContentValues.put(EntrantEntry.COLUMN_LAST_NAME, mLastNameNewText.getText().toString());
+                mNewContentValues.put(EntrantEntry.COLUMN_ID_NUMBER, mIdNewText.getText().toString());
+                mNewContentValues.put(EntrantEntry.COLUMN_DOG_NAME, mDogNameNewText.getText().toString());
+                mNewContentValues.put(EntrantEntry.COLUMN_DOG_ID_NUMBER, mDogIdNewText.getText().toString());
+                mNewContentValues.put(EntrantEntry.COLUMN_BREED, mBreedNewText.getText().toString());
+
+                newUri = getContext().getContentResolver().insert(EntrantEntry.CONTENT_URI, mNewContentValues);
             }
         };
 

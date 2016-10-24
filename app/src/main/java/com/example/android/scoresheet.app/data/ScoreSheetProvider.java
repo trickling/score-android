@@ -31,16 +31,20 @@ public class ScoreSheetProvider extends ContentProvider {
 
     static final int EVENT = 100;
     static final int EVENT_ID = 101;
-    static final int EVENT_ID_DESCR = 102;
-    static final int EVENT_DESCR = 103;
+    static final int EVENT_ID_NAME = 102;
+    static final int EVENT_NAME = 103;
 
     static final int ENTRANT = 200;
-    static final int ENTRANT_WITH_DESCR = 201;
+    static final int ENTRANT_WITH_FIRST_NAME = 201;
     static final int ENTRANT_WITH_EVENT_ID = 202;
     static final int ENTRANT_WITH_EVENT_ID_CHECKED = 203;
 
+//    static final int EVENTENTRANT = 900;
+//    static final int EVENTENTRANT_WITH_ENTRANT_ID = 901;
+//    static final int EVENTENTRANT_WITH_EVENT_ID = 902;
+
     static final int USER = 400;
-    static final int USER_WITH_DESCR = 401;
+    static final int USER_WITH_FIRST_NAME = 401;
     static final int USER_WITH_EVENT_ID = 402;
     static final int USER_WITH_EVENT_ID_CHECKED = 403;
 
@@ -57,33 +61,41 @@ public class ScoreSheetProvider extends ContentProvider {
     static final int EVENTENTRANTSCORECARD_EVENTIDENTRANTIDSCORECARDID = 305;
 
     static final int SCORECARD = 600;
-    static final int SCORECARD_WITH_DESCR = 601;
+    static final int SCORECARD_WITH_ELEMENT = 601;
     static final int SCORECARD_WITH_EVENTID = 602;
+    static final int SCORECARD_WITH_EVENTID_ENTRANTID = 603;
 
     static final int TALLY = 700;
-    static final int TALLY_WITH_DESCR = 701;
+    static final int TALLY_WITH_TITLE = 701;
     static final int TALLY_WITH_EVENT_ID = 702;
 
+    static final int EVENTENTRANTTALLY = 800;
+    static final int EVENTENTRANTTALLY_WITH_ENTRANT_ID = 801;
+    static final int EVENTENTRANTTALLY_WITH_EVENT_ID = 802;
+    static final int EVENTENTRANTTALLY_WITH_TALLY_ID = 803;
+    static final int EVENTENTRANTTALLY_EVENTIDENTRANTID = 804;
+    static final int EVENTENTRANTTALLY_EVENTIDENTRANTIDTALLYID = 805;
 
-    private static final SQLiteQueryBuilder sEventByDescriptionQueryBuilder;
+
+    // EVENT QUERY HELPERS
+
+    private static final SQLiteQueryBuilder sEventByNameQueryBuilder;
 
     static{
-        sEventByDescriptionQueryBuilder = new SQLiteQueryBuilder();
+        sEventByNameQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sEventByDescriptionQueryBuilder.setTables(
+        sEventByNameQueryBuilder.setTables(
                 ScoreSheetContract.EventEntry.TABLE_NAME);
     }
 
-    private static final String sShortDescription = ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC + " = ? ";
+    private static final String sName = ScoreSheetContract.EventEntry.COLUMN_NAME + " = ? ";
 
-    private Cursor getEventByDescription(Uri uri, String[] projection, String sortOrder) {
-        String description = ScoreSheetContract.EventEntry.getEventDescriptionFromUri(uri);
+    private Cursor getEventByName(Uri uri, String[] projection, String sortOrder) {
+        String description = ScoreSheetContract.EventEntry.getEventNameFromUri(uri);
 
-        return sEventByDescriptionQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sEventByNameQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                sShortDescription,
+                sName,
                 new String[] {description},
                 null,
                 null,
@@ -92,23 +104,21 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
-    private static final SQLiteQueryBuilder sEventByIDforDescriptionQueryBuilder;
+    private static final SQLiteQueryBuilder sEventByIDforNameQueryBuilder;
 
     static{
-        sEventByIDforDescriptionQueryBuilder = new SQLiteQueryBuilder();
+        sEventByIDforNameQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sEventByIDforDescriptionQueryBuilder.setTables(
+        sEventByIDforNameQueryBuilder.setTables(
                 ScoreSheetContract.EventEntry.TABLE_NAME);
     }
 
     private static final String sID = ScoreSheetContract.EventEntry._ID + " = ? ";
 
-    private Cursor getEventByIDforDescription(Uri uri, String[] projection, String sortOrder) {
+    private Cursor getEventByIDforName(Uri uri, String[] projection, String sortOrder) {
         long id = ScoreSheetContract.EventEntry.getEventIdFromUri(uri);
 
-        return sEventByIDforDescriptionQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sEventByIDforNameQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 sID,
                 new String[] {Long.valueOf(id).toString()},
@@ -120,27 +130,26 @@ public class ScoreSheetProvider extends ContentProvider {
 
 
 
+//     ENTRANT QUERY HELPERS
 
-    private static final SQLiteQueryBuilder sEntrantByDescriptionQueryBuilder;
+    private static final SQLiteQueryBuilder sEntrantByFirstNameQueryBuilder;
 
     static{
-        sEntrantByDescriptionQueryBuilder = new SQLiteQueryBuilder();
+        sEntrantByFirstNameQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sEntrantByDescriptionQueryBuilder.setTables(
+        sEntrantByFirstNameQueryBuilder.setTables(
                 ScoreSheetContract.EntrantEntry.TABLE_NAME);
     }
 
 
-    private static final String sTeamDescription = ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC + " = ? ";
+    private static final String sTeamFirstName = ScoreSheetContract.EntrantEntry.COLUMN_FIRST_NAME + " = ? ";
 
-    private Cursor getEntrantByDescription(Uri uri, String[] projection, String sortOrder) {
-        String description = ScoreSheetContract.EntrantEntry.getEntrantDescFromUri(uri);
+    private Cursor getEntrantByFirstName(Uri uri, String[] projection, String sortOrder) {
+        String description = ScoreSheetContract.EntrantEntry.getEntrantFirstNameFromUri(uri);
 
-        return sEntrantByDescriptionQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sEntrantByFirstNameQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                sTeamDescription,
+                sTeamFirstName,
                 new String[] {description},
                 null,
                 null,
@@ -149,47 +158,72 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
-    private static final SQLiteQueryBuilder sUserByDescriptionQueryBuilder;
+
+//     EVENTENTRANT QUERY HELPERS
+
+
+//    private static final SQLiteQueryBuilder sEntrantsByEventIDQueryBuilder;
+//
+//    static{
+//        sEntrantsByEventIDQueryBuilder = new SQLiteQueryBuilder();
+//
+//        sEntrantsByEventIDQueryBuilder.setTables(
+//                ScoreSheetContract.EntrantEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntrantEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + "_id" + " = " + ScoreSheetContract.EventEntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantEntry.COLUMN_ENTRANT_ID + " AND " + ScoreSheetContract.EventEntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantEntry.COLUMN_EVENT_ID + " = ?");
+//    }
+//
+//    private static final String sEventIdEntrantIds = null;
+//
+//    private Cursor getEntrantsByEventEntrant(Uri uri, String[] projection, String sortOrder) {
+//        String eventid = Long.valueOf(ScoreSheetContract.EventEntry.getEventIdFromUri(uri)).toString();
+//
+//        return sEntrantsByEventIDQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+//                projection,
+//                sEventIdEntrantIds,
+//                new String[] {eventid},
+//                null,
+//                null,
+//                sortOrder
+//        );
+//    }
+
+
+
+//     USER QUERY HELPERS
+
+    private static final SQLiteQueryBuilder sUserByFirstNameQueryBuilder;
 
     static{
-        sUserByDescriptionQueryBuilder = new SQLiteQueryBuilder();
+        sUserByFirstNameQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sUserByDescriptionQueryBuilder.setTables(
+        sUserByFirstNameQueryBuilder.setTables(
                 ScoreSheetContract.UserEntry.TABLE_NAME);
     }
 
 
-    private static final String sUserDescription = ScoreSheetContract.UserEntry.COLUMN_USER_DESC + " = ? ";
+    private static final String sUserFirstName = ScoreSheetContract.UserEntry.COLUMN_FIRST_NAME + " = ? ";
 
-    private Cursor getUserByDescription(Uri uri, String[] projection, String sortOrder) {
-        String description = ScoreSheetContract.UserEntry.getUserDescFromUri(uri);
+    private Cursor getUserByFirstName(Uri uri, String[] projection, String sortOrder) {
+        String description = ScoreSheetContract.UserEntry.getUserFirstNameFromUri(uri);
 
-        return sUserByDescriptionQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sUserByFirstNameQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                sUserDescription,
+                sUserFirstName,
                 new String[] {description},
                 null,
                 null,
                 sortOrder
         );
     }
-
 
 
     private static final SQLiteQueryBuilder sUsersByEventIDQueryBuilder;
 
     static{
         sUsersByEventIDQueryBuilder = new SQLiteQueryBuilder();
-//        String sEventid = new String();
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
+
         sUsersByEventIDQueryBuilder.setTables(
                 ScoreSheetContract.UserEntry.TABLE_NAME + ", " + ScoreSheetContract.EventUserEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.UserEntry.TABLE_NAME + "." + "_id" + " = " + ScoreSheetContract.EventUserEntry.TABLE_NAME + "." + ScoreSheetContract.EventUserEntry.COLUMN_USER_ID + " AND " + ScoreSheetContract.EventUserEntry.TABLE_NAME + "." + ScoreSheetContract.EventUserEntry.COLUMN_EVENT_ID + " = ?");
     }
-
-//    private static final String sEventIdUserId = ScoreSheetContract.EventUserScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventUserScorecardEntry.COLUMN_EVENT_ID + " = ?";
 
     private static final String sEventIdUserIds = null;
 
@@ -207,18 +241,17 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
+
+//     EVENTENTRANTSCORECARD QUERY HELPERS
+
     private static final SQLiteQueryBuilder sEntrantsByEventIDQueryBuilder;
 
     static{
         sEntrantsByEventIDQueryBuilder = new SQLiteQueryBuilder();
-//        String sEventid = new String();
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
+
         sEntrantsByEventIDQueryBuilder.setTables(
                 ScoreSheetContract.EntrantEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + "_id" + " = " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " AND " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ?");
     }
-
-//    private static final String sEventIdEntrantId = ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ?";
 
     private static final String sEventIdEntrantIds = null;
 
@@ -236,16 +269,11 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
-
-
-
     private static final SQLiteQueryBuilder sEventEntrantByEventQueryBuilder;
 
     static{
         sEventEntrantByEventQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
         sEventEntrantByEventQueryBuilder.setTables(
                 ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + " INNER JOIN " +
                         ScoreSheetContract.EventEntry.TABLE_NAME + "ON" +
@@ -271,15 +299,13 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
-
-
     private static final SQLiteQueryBuilder sEventEntrantByEntrantQueryBuilder;
 
     static{
         sEventEntrantByEntrantQueryBuilder = new SQLiteQueryBuilder();
         sEventEntrantByEntrantQueryBuilder.setTables(
                 ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + " INNER JOIN " +
-                        ScoreSheetContract.EntrantEntry.TABLE_NAME + "ON" +
+                        ScoreSheetContract.EntrantEntry.TABLE_NAME + " ON " +
                         ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." +
                         ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = " +
                         ScoreSheetContract.EntrantEntry.TABLE_NAME + "." +
@@ -302,12 +328,12 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
+
     private static final SQLiteQueryBuilder sIdEventEntrantQueryBuilder;
 
     static{
         sIdEventEntrantQueryBuilder = new SQLiteQueryBuilder();
             sIdEventEntrantQueryBuilder.setTables(
-//                    ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + ", " + ScoreSheetContract.EntrantEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = " + ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + "_id" + " AND " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = " + ScoreSheetContract.EventEntry.TABLE_NAME + "." + "_id");
         ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME );
     }
 
@@ -329,12 +355,12 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
+
     private static final SQLiteQueryBuilder sIdEventEntrantScorecardQueryBuilder;
 
     static{
         sIdEventEntrantScorecardQueryBuilder = new SQLiteQueryBuilder();
         sIdEventEntrantScorecardQueryBuilder.setTables(
-//                    ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + ", " + ScoreSheetContract.EntrantEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = " + ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + "_id" + " AND " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = " + ScoreSheetContract.EventEntry.TABLE_NAME + "." + "_id");
                 ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME );
     }
 
@@ -357,12 +383,15 @@ public class ScoreSheetProvider extends ContentProvider {
     }
 
 
+
+
+    // EVENTUSER QUERY HELPERS
+
     private static final SQLiteQueryBuilder sIdEventUserQueryBuilder;
 
     static{
         sIdEventUserQueryBuilder = new SQLiteQueryBuilder();
         sIdEventUserQueryBuilder.setTables(
-//                    ScoreSheetContract.EventUserEntry.TABLE_NAME + ", " + ScoreSheetContract.UserEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.EventUserEntry.TABLE_NAME + "." + ScoreSheetContract.EventUserEntry.COLUMN_ENTRANT_ID + " = " + ScoreSheetContract.UserEntry.TABLE_NAME + "." + "_id" + " AND " + ScoreSheetContract.EventUserEntry.TABLE_NAME + "." + ScoreSheetContract.EventUserEntry.COLUMN_EVENT_ID + " = " + ScoreSheetContract.EventEntry.TABLE_NAME + "." + "_id");
                 ScoreSheetContract.EventUserEntry.TABLE_NAME );
     }
 
@@ -385,25 +414,25 @@ public class ScoreSheetProvider extends ContentProvider {
 
 
 
-    private static final SQLiteQueryBuilder sScorecardByDescriptionQueryBuilder;
+    // SCORECARD QUERY HELPERS
+
+    private static final SQLiteQueryBuilder sScorecardByElementQueryBuilder;
 
     static{
-        sScorecardByDescriptionQueryBuilder = new SQLiteQueryBuilder();
+        sScorecardByElementQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sScorecardByDescriptionQueryBuilder.setTables(
+        sScorecardByElementQueryBuilder.setTables(
                 ScoreSheetContract.ScorecardEntry.TABLE_NAME);
     }
 
-    private static final String sScorecardDescription = ScoreSheetContract.ScorecardEntry.COLUMN_SCORECARD_DESC + " = ? ";
+    private static final String sScorecardElement = ScoreSheetContract.ScorecardEntry.COLUMN_ELEMENT + " = ? ";
 
-    private Cursor getScorecardByDescription(Uri uri, String[] projection, String sortOrder) {
-        String description = ScoreSheetContract.ScorecardEntry.getScorecardDescFromUri(uri);
+    private Cursor getScorecardByElement(Uri uri, String[] projection, String sortOrder) {
+        String description = ScoreSheetContract.ScorecardEntry.getScorecardElementFromUri(uri);
 
-        return sScorecardByDescriptionQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sScorecardByElementQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                sScorecardDescription,
+                sScorecardElement,
                 new String[] {description},
                 null,
                 null,
@@ -416,13 +445,11 @@ public class ScoreSheetProvider extends ContentProvider {
     static{
         sScorecardByEventIdQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
         sScorecardByEventIdQueryBuilder.setTables(
                 ScoreSheetContract.ScorecardEntry.TABLE_NAME);
     }
 
-    private static final String sScorecardEventId = ScoreSheetContract.ScorecardEntry.COLUMN_SCORECARD_DESC + " = ? ";
+    private static final String sScorecardEventId = ScoreSheetContract.ScorecardEntry.COLUMN_ELEMENT + " = ? ";
 
     private Cursor getScorecardByEventId(Uri uri, String[] projection, String sortOrder) {
         String eventid = ScoreSheetContract.ScorecardEntry.getScorecardEventIdFromUri(uri);
@@ -437,26 +464,51 @@ public class ScoreSheetProvider extends ContentProvider {
         );
     }
 
-
-    private static final SQLiteQueryBuilder sTallyByDescriptionQueryBuilder;
+    private static final SQLiteQueryBuilder sScorecardsByEventEntrantQueryBuilder;
 
     static{
-        sTallyByDescriptionQueryBuilder = new SQLiteQueryBuilder();
+        sScorecardsByEventEntrantQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sTallyByDescriptionQueryBuilder.setTables(
+        sScorecardsByEventEntrantQueryBuilder.setTables(
+                ScoreSheetContract.ScorecardEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.ScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.ScorecardEntry._ID + " = " + ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_SCORECARD_ID + " AND " + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ? AND " + ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = ?");
+    }
+
+    private static final String sEventIdEntrantId = null;
+
+    private Cursor getScorecardsByEventEntrant(Uri uri, String[] projection, String sortOrder) {
+        String eventid = ScoreSheetContract.ScorecardEntry.getScorecardsEventIdFromUri(uri);
+        String entrantid = ScoreSheetContract.ScorecardEntry.getScorecardsEntrantIdFromUri(uri);
+        return sScorecardsByEventEntrantQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sEventIdEntrantId,
+                new String[] {eventid, entrantid},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+
+
+    // TALLY QUERY HELPERS
+
+    private static final SQLiteQueryBuilder sTallyByTitleQueryBuilder;
+
+    static{
+        sTallyByTitleQueryBuilder = new SQLiteQueryBuilder();
+
+        sTallyByTitleQueryBuilder.setTables(
                 ScoreSheetContract.TallyEntry.TABLE_NAME);
     }
 
-    private static final String sTallyDescription = ScoreSheetContract.TallyEntry.COLUMN_TALLY_DESC + " = ? ";
+    private static final String sTallyTitle = ScoreSheetContract.TallyEntry.COLUMN_TITLE + " = ? ";
 
-    private Cursor getTallyByDescription(Uri uri, String[] projection, String sortOrder) {
-        String description = ScoreSheetContract.TallyEntry.getTallyDescFromUri(uri);
+    private Cursor getTallyByTitle(Uri uri, String[] projection, String sortOrder) {
+        String description = ScoreSheetContract.TallyEntry.getTallyTitleFromUri(uri);
 
-        return sTallyByDescriptionQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sTallyByTitleQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                sTallyDescription,
+                sTallyTitle,
                 new String[] {description},
                 null,
                 null,
@@ -469,13 +521,11 @@ public class ScoreSheetProvider extends ContentProvider {
     static{
         sTallyByEventIdQueryBuilder = new SQLiteQueryBuilder();
 
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
         sTallyByEventIdQueryBuilder.setTables(
                 ScoreSheetContract.TallyEntry.TABLE_NAME);
     }
 
-    private static final String sTallyEventId = ScoreSheetContract.TallyEntry.COLUMN_EVENTID + " = ? ";
+    private static final String sTallyEventId = ScoreSheetContract.TallyEntry.COLUMN_TITLE + " = ? ";
 
     private Cursor getTallyByEventId(Uri uri, String[] projection, String sortOrder) {
         String eventid = Long.valueOf(ScoreSheetContract.TallyEntry.getTallyEventIdFromUri(uri)).toString();
@@ -493,6 +543,115 @@ public class ScoreSheetProvider extends ContentProvider {
 
 
 
+    // EVENTENTRANTTALLY QUERY HELPERS
+
+    private static final SQLiteQueryBuilder sEntrantsByEventIDTlyQueryBuilder;
+
+    static{
+        sEntrantsByEventIDTlyQueryBuilder = new SQLiteQueryBuilder();
+
+        sEntrantsByEventIDTlyQueryBuilder.setTables(
+                ScoreSheetContract.EntrantEntry.TABLE_NAME + ", " + ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + " WHERE " + ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + "_id" + " = " + ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantTallyEntry.COLUMN_ENTRANT_ID + " AND " + ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantTallyEntry.COLUMN_EVENT_ID + " = ?");
+    }
+
+    private static final String sEventIdEntrantIdsTly = null;
+
+    private Cursor getEntrantsByEventEntrantTly(Uri uri, String[] projection, String sortOrder) {
+        String eventid = Long.valueOf(ScoreSheetContract.EventEntry.getEventIdFromUri(uri)).toString();
+
+        return sEntrantsByEventIDTlyQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sEventIdEntrantIdsTly,
+                new String[] {eventid},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private static final SQLiteQueryBuilder sEventEntrantByEntrantTlyQueryBuilder;
+
+    static{
+        sEventEntrantByEntrantTlyQueryBuilder = new SQLiteQueryBuilder();
+        sEventEntrantByEntrantTlyQueryBuilder.setTables(
+                ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + " INNER JOIN " +
+                        ScoreSheetContract.EntrantEntry.TABLE_NAME + "ON" +
+                        ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." +
+                        ScoreSheetContract.EventEntrantTallyEntry.COLUMN_EVENT_ID + " = " +
+                        ScoreSheetContract.EntrantEntry.TABLE_NAME + "." +
+                        ScoreSheetContract.EntrantEntry._ID);
+    }
+
+    private static final String sEntrant_IDTly = ScoreSheetContract.EntrantEntry.TABLE_NAME + "." + ScoreSheetContract.EntrantEntry._ID + " =? ";
+
+    private Cursor getEventEntrantIdTly(Uri uri, String[] projection, String sortOrder) {
+        String entrantid = ScoreSheetContract.EventEntrantTallyEntry.getEventIdFromUri(uri);
+
+        return sEventEntrantByEntrantTlyQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sEntrant_IDTly,
+                new String[] {entrantid},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+
+
+    private static final SQLiteQueryBuilder sIdEventEntrantTlyQueryBuilder;
+
+    static{
+        sIdEventEntrantTlyQueryBuilder = new SQLiteQueryBuilder();
+        sIdEventEntrantQueryBuilder.setTables(
+                ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME );
+    }
+
+    private static final String sIdEventEntrantTly = ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantTallyEntry.COLUMN_EVENT_ID + " = ? " + " AND " +
+            ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantTallyEntry.COLUMN_ENTRANT_ID + " = ? ";
+
+    private Cursor getIdEventEntrantTly(Uri uri, String[] projection, String sortOrder) {
+        String eventid = ScoreSheetContract.EventEntrantTallyEntry.getEventIdFromUri(uri);
+        String entrantid = ScoreSheetContract.EventEntrantTallyEntry.getEntrantIdWithEventIdFromUri(uri);
+        String[] selectionArgs = {eventid, entrantid};
+        return sIdEventEntrantQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sIdEventEntrant,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private static final SQLiteQueryBuilder sIdEventEntrantTallyQueryBuilder;
+
+    static{
+        sIdEventEntrantTallyQueryBuilder = new SQLiteQueryBuilder();
+        sIdEventEntrantTallyQueryBuilder.setTables(
+                ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME );
+    }
+
+    private static final String sIdEventEntrantTally = ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantTallyEntry.COLUMN_EVENT_ID + " = ? " + " AND " +
+            ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantTallyEntry.COLUMN_ENTRANT_ID + " = ? ";
+
+    private Cursor getIdEventEntrantTally(Uri uri, String[] projection, String sortOrder) {
+        String eventid = ScoreSheetContract.EventEntrantTallyEntry.getEventIdFromUri(uri);
+        String entrantid = ScoreSheetContract.EventEntrantTallyEntry.getEntrantIdWithEventIdFromUri(uri);
+        String tallyid = ScoreSheetContract.EventEntrantTallyEntry.getTallyIdWithEventIdEntrantIdFromUri(uri);
+        String[] selectionArgs = {eventid, entrantid};
+        return sIdEventEntrantTallyQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sIdEventEntrantTally,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+
+
     static UriMatcher buildUriMatcher() {
         // 1) The code passed into the constructor represents the code to return for the root
         // URI.  It's common to use NO_MATCH as the code for this case. Add the constructor below.
@@ -500,18 +659,22 @@ public class ScoreSheetProvider extends ContentProvider {
         final String authority = ScoreSheetContract.CONTENT_AUTHORITY;
 
         // 2) Use the addURI function to match each of the types.  Use the constants from
-        // WeatherContract to help define the types to the UriMatcher.
+        // Contract to help define the types to the UriMatcher.
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENT, EVENT);
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENT + "/#", EVENT_ID);
-        matcher.addURI(authority, ScoreSheetContract.PATH_EVENT + "/short_desc", EVENT_DESCR);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENT + "/short_desc", EVENT_NAME);
 
         matcher.addURI(authority, ScoreSheetContract.PATH_ENTRANT, ENTRANT);
-        matcher.addURI(authority, ScoreSheetContract.PATH_ENTRANT + "/team_desc", ENTRANT_WITH_DESCR);
+        matcher.addURI(authority, ScoreSheetContract.PATH_ENTRANT + "/team_desc", ENTRANT_WITH_FIRST_NAME);
         matcher.addURI(authority, ScoreSheetContract.PATH_ENTRANT + "/#", ENTRANT_WITH_EVENT_ID);
         matcher.addURI(authority, ScoreSheetContract.PATH_ENTRANT + "/#/checked", ENTRANT_WITH_EVENT_ID_CHECKED);
 
+//        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANT, EVENTENTRANT);
+//        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANT + "/#", EVENTENTRANT_WITH_EVENT_ID);
+//        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANT + "/#", EVENTENTRANT_WITH_ENTRANT_ID);
+
         matcher.addURI(authority, ScoreSheetContract.PATH_USER, USER);
-        matcher.addURI(authority, ScoreSheetContract.PATH_USER + "/user_desc", USER_WITH_DESCR);
+        matcher.addURI(authority, ScoreSheetContract.PATH_USER + "/user_desc", USER_WITH_FIRST_NAME);
         matcher.addURI(authority, ScoreSheetContract.PATH_USER + "/#", USER_WITH_EVENT_ID);
         matcher.addURI(authority, ScoreSheetContract.PATH_USER + "/#/checked", USER_WITH_EVENT_ID_CHECKED);
 
@@ -526,12 +689,20 @@ public class ScoreSheetProvider extends ContentProvider {
         matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTSCORECARD + "/#/#/#", EVENTENTRANTSCORECARD_EVENTIDENTRANTIDSCORECARDID);
 
         matcher.addURI(authority, ScoreSheetContract.PATH_SCORECARD, SCORECARD);
-        matcher.addURI(authority, ScoreSheetContract.PATH_SCORECARD + "/scorecard_desc", SCORECARD_WITH_DESCR);
+        matcher.addURI(authority, ScoreSheetContract.PATH_SCORECARD + "/scorecard_desc", SCORECARD_WITH_ELEMENT);
         matcher.addURI(authority, ScoreSheetContract.PATH_SCORECARD + "/#", SCORECARD_WITH_EVENTID);
+        matcher.addURI(authority, ScoreSheetContract.PATH_SCORECARD + "/#/#", SCORECARD_WITH_EVENTID_ENTRANTID);
 
         matcher.addURI(authority, ScoreSheetContract.PATH_TALLY, TALLY);
-        matcher.addURI(authority, ScoreSheetContract.PATH_TALLY + "/tally_desc", TALLY_WITH_DESCR);
+        matcher.addURI(authority, ScoreSheetContract.PATH_TALLY + "/tally_desc", TALLY_WITH_TITLE);
         matcher.addURI(authority, ScoreSheetContract.PATH_TALLY + "/#", TALLY_WITH_EVENT_ID);
+
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTTALLY, EVENTENTRANTTALLY);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTTALLY + "/#", EVENTENTRANTTALLY_WITH_EVENT_ID);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTTALLY + "/#", EVENTENTRANTTALLY_WITH_ENTRANT_ID);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTTALLY + "/#", EVENTENTRANTTALLY_WITH_TALLY_ID);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTTALLY + "/#/#", EVENTENTRANTTALLY_EVENTIDENTRANTID);
+        matcher.addURI(authority, ScoreSheetContract.PATH_EVENTENTRANTTALLY + "/#/#/#", EVENTENTRANTTALLY_EVENTIDENTRANTIDTALLYID);
 
         return matcher;
     }
@@ -553,12 +724,19 @@ public class ScoreSheetProvider extends ContentProvider {
                 return ScoreSheetContract.EventEntry.CONTENT_TYPE;
             case EVENT_ID:
                 return ScoreSheetContract.EventEntry.CONTENT_TYPE;
-            case EVENT_DESCR:
+            case EVENT_NAME:
                 return ScoreSheetContract.EventEntry.CONTENT_TYPE;
+
+//            case EVENTENTRANT:
+//                return ScoreSheetContract.EventEntrantEntry.CONTENT_TYPE;
+//            case EVENTENTRANT_WITH_EVENT_ID:
+//                return ScoreSheetContract.EventEntrantEntry.CONTENT_TYPE;
+//            case EVENTENTRANT_WITH_ENTRANT_ID:
+//                return ScoreSheetContract.EventEntrantEntry.CONTENT_TYPE;
 
             case ENTRANT:
                 return ScoreSheetContract.EntrantEntry.CONTENT_TYPE;
-            case ENTRANT_WITH_DESCR:
+            case ENTRANT_WITH_FIRST_NAME:
                 return ScoreSheetContract.EntrantEntry.CONTENT_TYPE;
             case ENTRANT_WITH_EVENT_ID:
                 return ScoreSheetContract.EntrantEntry.CONTENT_TYPE;
@@ -567,7 +745,7 @@ public class ScoreSheetProvider extends ContentProvider {
 
             case USER:
                 return ScoreSheetContract.UserEntry.CONTENT_TYPE;
-            case USER_WITH_DESCR:
+            case USER_WITH_FIRST_NAME:
                 return ScoreSheetContract.UserEntry.CONTENT_TYPE;
             case USER_WITH_EVENT_ID:
                 return ScoreSheetContract.UserEntry.CONTENT_TYPE;
@@ -596,17 +774,32 @@ public class ScoreSheetProvider extends ContentProvider {
 
             case SCORECARD:
                 return ScoreSheetContract.ScorecardEntry.CONTENT_TYPE;
-            case SCORECARD_WITH_DESCR:
+            case SCORECARD_WITH_ELEMENT:
                 return ScoreSheetContract.ScorecardEntry.CONTENT_TYPE;
             case SCORECARD_WITH_EVENTID:
+                return ScoreSheetContract.ScorecardEntry.CONTENT_TYPE;
+            case SCORECARD_WITH_EVENTID_ENTRANTID:
                 return ScoreSheetContract.ScorecardEntry.CONTENT_TYPE;
 
             case TALLY:
                 return ScoreSheetContract.TallyEntry.CONTENT_TYPE;
-            case TALLY_WITH_DESCR:
+            case TALLY_WITH_TITLE:
                 return ScoreSheetContract.TallyEntry.CONTENT_TYPE;
             case TALLY_WITH_EVENT_ID:
                 return ScoreSheetContract.TallyEntry.CONTENT_TYPE;
+
+            case EVENTENTRANTTALLY:
+                return ScoreSheetContract.TallyEntry.CONTENT_TYPE;
+            case EVENTENTRANTTALLY_WITH_EVENT_ID:
+                return ScoreSheetContract.EventEntrantTallyEntry.CONTENT_TYPE;
+            case EVENTENTRANTTALLY_WITH_ENTRANT_ID:
+                return ScoreSheetContract.EventEntrantTallyEntry.CONTENT_TYPE;
+            case EVENTENTRANTTALLY_WITH_TALLY_ID:
+                return ScoreSheetContract.EventEntrantTallyEntry.CONTENT_TYPE;
+            case EVENTENTRANTTALLY_EVENTIDENTRANTID:
+                return ScoreSheetContract.EventEntrantTallyEntry.CONTENT_TYPE;
+            case EVENTENTRANTTALLY_EVENTIDENTRANTIDTALLYID:
+                return ScoreSheetContract.EventEntrantTallyEntry.CONTENT_TYPE;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -633,13 +826,15 @@ public class ScoreSheetProvider extends ContentProvider {
                 break;
             }
             case EVENT_ID: {
-                retCursor = getEventByIDforDescription(uri, projection, sortOrder);
+                retCursor = getEventByIDforName(uri, projection, sortOrder);
                 break;
             }
-            case EVENT_DESCR: {
-                retCursor = getEventByDescription(uri, projection, sortOrder);
+            case EVENT_NAME: {
+                retCursor = getEventByName(uri, projection, sortOrder);
                 break;
             }
+
+
             case ENTRANT: {
 
                 retCursor = mOpenHelper.getReadableDatabase().query(
@@ -655,18 +850,45 @@ public class ScoreSheetProvider extends ContentProvider {
                 break;
             }
 
-            case ENTRANT_WITH_DESCR: {
-                retCursor = getEntrantByDescription(uri, projection, sortOrder);
+            case ENTRANT_WITH_FIRST_NAME: {
+                retCursor = getEntrantByFirstName(uri, projection, sortOrder);
                 break;
             }
             case ENTRANT_WITH_EVENT_ID: {
-                retCursor = getEntrantsByEventEntrant(uri, projection, sortOrder);
+                retCursor = getEntrantsByEventEntrantTly(uri, projection, sortOrder);
                 break;
             }
             case ENTRANT_WITH_EVENT_ID_CHECKED:{
-                retCursor = getEntrantsByEventEntrant(uri, projection, sortOrder);
+                retCursor = getEntrantsByEventEntrantTly(uri, projection, sortOrder);
                 break;
             }
+
+
+
+//            case EVENTENTRANT: {
+//
+//                retCursor = mOpenHelper.getReadableDatabase().query(
+//                        ScoreSheetContract.EventEntrantEntry.TABLE_NAME,
+//                        projection,
+//                        selection,
+//                        selectionArgs,
+//                        null,
+//                        null,
+//                        sortOrder
+//                );
+//
+//                break;
+//            }
+//
+//            case EVENTENTRANT_WITH_EVENT_ID: {
+//                retCursor = getIdEventEntrant(uri, projection, sortOrder);
+//                break;
+//            }
+//            case EVENTENTRANT_WITH_ENTRANT_ID: {
+//                retCursor = getIdEventEntrant(uri, projection, sortOrder);
+//                break;
+//            }
+
 
 
             case USER: {
@@ -683,8 +905,8 @@ public class ScoreSheetProvider extends ContentProvider {
 
                 break;
             }
-            case USER_WITH_DESCR: {
-                retCursor = getUserByDescription(uri, projection, sortOrder);
+            case USER_WITH_FIRST_NAME: {
+                retCursor = getUserByFirstName(uri, projection, sortOrder);
                 break;
             }
             case USER_WITH_EVENT_ID: {
@@ -717,6 +939,8 @@ public class ScoreSheetProvider extends ContentProvider {
                 break;
             }
 
+
+
             case EVENTENTRANTSCORECARD: {
 
                 retCursor = mOpenHelper.getReadableDatabase().query(
@@ -731,7 +955,6 @@ public class ScoreSheetProvider extends ContentProvider {
 
                 break;
             }
-
 
 
             case EVENTENTRANTSCORECARD_EVENTIDENTRANTID: {
@@ -760,12 +983,16 @@ public class ScoreSheetProvider extends ContentProvider {
                 break;
             }
 
-            case SCORECARD_WITH_DESCR: {
-                retCursor = getScorecardByDescription(uri, projection, sortOrder);
+            case SCORECARD_WITH_ELEMENT: {
+                retCursor = getScorecardByElement(uri, projection, sortOrder);
                 break;
             }
             case SCORECARD_WITH_EVENTID: {
                 retCursor = getScorecardByEventId(uri, projection, sortOrder);
+                break;
+            }
+            case SCORECARD_WITH_EVENTID_ENTRANTID: {
+                retCursor = getScorecardsByEventEntrant(uri, projection, sortOrder);
                 break;
             }
 
@@ -783,12 +1010,36 @@ public class ScoreSheetProvider extends ContentProvider {
 
                 break;
             }
-            case TALLY_WITH_DESCR: {
-                retCursor = getTallyByDescription(uri, projection, sortOrder);
+            case TALLY_WITH_TITLE: {
+                retCursor = getTallyByTitle(uri, projection, sortOrder);
                 break;
             }
             case TALLY_WITH_EVENT_ID: {
                 retCursor = getTallyByEventId(uri, projection, sortOrder);
+                break;
+            }
+
+
+
+            case EVENTENTRANTTALLY: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+
+                break;
+            }
+            case EVENTENTRANTTALLY_EVENTIDENTRANTID: {
+                retCursor = getIdEventEntrantTly(uri, projection, sortOrder);
+                break;
+            }
+            case EVENTENTRANTTALLY_EVENTIDENTRANTIDTALLYID: {
+                retCursor = getIdEventEntrantTally(uri, projection, sortOrder);
                 break;
             }
 
@@ -816,7 +1067,7 @@ public class ScoreSheetProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
-            case EVENT_DESCR: {
+            case EVENT_NAME: {
                 long _id = db.insert(ScoreSheetContract.EventEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = ScoreSheetContract.EventEntry.buildEventIdUri(_id);
@@ -833,7 +1084,7 @@ public class ScoreSheetProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
-            case ENTRANT_WITH_DESCR: {
+            case ENTRANT_WITH_FIRST_NAME: {
                 long _id = db.insert(ScoreSheetContract.EntrantEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = ScoreSheetContract.EntrantEntry.buildEntrantIdUri(_id);
@@ -850,7 +1101,7 @@ public class ScoreSheetProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
-            case USER_WITH_DESCR: {
+            case USER_WITH_FIRST_NAME: {
                 long _id = db.insert(ScoreSheetContract.UserEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = ScoreSheetContract.UserEntry.buildUserIdUri(_id);
@@ -885,7 +1136,7 @@ public class ScoreSheetProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
-            case SCORECARD_WITH_DESCR: {
+            case SCORECARD_WITH_ELEMENT: {
                 long _id = db.insert(ScoreSheetContract.ScorecardEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = ScoreSheetContract.ScorecardEntry.buildScorecardIdUri(_id);
@@ -902,10 +1153,19 @@ public class ScoreSheetProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
-            case TALLY_WITH_DESCR: {
+            case TALLY_WITH_TITLE: {
                 long _id = db.insert(ScoreSheetContract.TallyEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = ScoreSheetContract.TallyEntry.buildTallyIdUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+
+            case EVENTENTRANTTALLY: {
+                long _id = db.insert(ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME, null, values);
+                if ( _id > 0 )
+                    returnUri = ScoreSheetContract.EventEntrantTallyEntry.buildIdEventEntrantTallyUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -916,7 +1176,7 @@ public class ScoreSheetProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-//        db.close();
+
         return returnUri;
     }
 
@@ -938,7 +1198,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsDeleted = db.delete(ScoreSheetContract.EventEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case EVENT_DESCR: {
+            case EVENT_NAME: {
                 rowsDeleted = db.delete(ScoreSheetContract.EventEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
@@ -947,7 +1207,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsDeleted = db.delete(ScoreSheetContract.EntrantEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case ENTRANT_WITH_DESCR: {
+            case ENTRANT_WITH_FIRST_NAME: {
                 rowsDeleted = db.delete(ScoreSheetContract.EntrantEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
@@ -956,7 +1216,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsDeleted = db.delete(ScoreSheetContract.UserEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case USER_WITH_DESCR: {
+            case USER_WITH_FIRST_NAME: {
                 rowsDeleted = db.delete(ScoreSheetContract.UserEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
@@ -983,7 +1243,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsDeleted = db.delete(ScoreSheetContract.ScorecardEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case SCORECARD_WITH_DESCR: {
+            case SCORECARD_WITH_ELEMENT: {
                 rowsDeleted = db.delete(ScoreSheetContract.ScorecardEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
@@ -992,8 +1252,13 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsDeleted = db.delete(ScoreSheetContract.TallyEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case TALLY_WITH_DESCR: {
+            case TALLY_WITH_TITLE: {
                 rowsDeleted = db.delete(ScoreSheetContract.TallyEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            }
+
+            case EVENTENTRANTTALLY: {
+                rowsDeleted = db.delete(ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
 
@@ -1030,7 +1295,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsUpdated = db.update(ScoreSheetContract.EventEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
-            case EVENT_DESCR: {
+            case EVENT_NAME: {
                 rowsUpdated = db.update(ScoreSheetContract.EventEntry.TABLE_NAME, values, selection, selectionArgs);
 //                db.execSQL("UPDATE event SET " + selection + "=" + values + " WHERE " + );
 
@@ -1041,7 +1306,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsUpdated = db.update(ScoreSheetContract.EntrantEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
-            case ENTRANT_WITH_DESCR: {
+            case ENTRANT_WITH_FIRST_NAME: {
                 rowsUpdated = db.update(ScoreSheetContract.EntrantEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
@@ -1050,7 +1315,7 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsUpdated = db.update(ScoreSheetContract.UserEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
-            case USER_WITH_DESCR: {
+            case USER_WITH_FIRST_NAME: {
                 rowsUpdated = db.update(ScoreSheetContract.UserEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
@@ -1064,20 +1329,12 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsUpdated = db.update(ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
-//            case EVENTENTRANTSCORECARD_WITH_EVENT_ID: {
-//                rowsUpdated = db.update(ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME, values, selection, selectionArgs);
-//                break;
-//            }
-//            case EVENTENTRANTSCORECARD_WITH_ENTRANT_ID: {
-//                rowsUpdated = db.update(ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME, values, selection, selectionArgs);
-//                break;
-//            }
 
             case SCORECARD: {
                 rowsUpdated = db.update(ScoreSheetContract.ScorecardEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
-            case SCORECARD_WITH_DESCR: {
+            case SCORECARD_WITH_ELEMENT: {
                 rowsUpdated = db.update(ScoreSheetContract.ScorecardEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
@@ -1086,8 +1343,13 @@ public class ScoreSheetProvider extends ContentProvider {
                 rowsUpdated = db.update(ScoreSheetContract.TallyEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
-            case TALLY_WITH_DESCR: {
+            case TALLY_WITH_TITLE: {
                 rowsUpdated = db.update(ScoreSheetContract.TallyEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            }
+
+            case EVENTENTRANTTALLY: {
+                rowsUpdated = db.update(ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
 
@@ -1208,6 +1470,22 @@ public class ScoreSheetProvider extends ContentProvider {
                 try {
                     for (ContentValues value : values) {
                         long _id = db.insert(ScoreSheetContract.TallyEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            case EVENTENTRANTTALLY:
+                db.beginTransaction();
+                returnCount = 0;
+                try {
+                    for (ContentValues value : values) {
+                        long _id = db.insert(ScoreSheetContract.EventEntrantTallyEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
                         }

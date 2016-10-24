@@ -1,18 +1,151 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    tools:context=".Tallies.TallyViewFragment">
-
-    <TextView
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:gravity="center_vertical"
-        android:id="@+id/tally_text_view"
-        android:layout_gravity="center_horizontal"
-        style="@style/Base.TextAppearance.AppCompat.Medium" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        tools:context=".Tallies.TallyViewFragment">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/tallyTotalTimeHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tallyTotalTimeLabel" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/tally_total_time_text_view"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/tallyTotalFaultsHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tallyTotalFaultsLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/tally_total_faults_text_view"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/tallyTotalPointsHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tallyTotalPointsLabel" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/tally_total_points_text_view"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/tallyTitleHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tallyTitleLabel" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/tally_title_text_view"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/tallyQualScoreHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tallyQualScoreLabel" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/tally_qualifying_score_text_view"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/tallyQualScoresHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tallyQualScoresLabel" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/tally_qualifying_scores_text_view"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

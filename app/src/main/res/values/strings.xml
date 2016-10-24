@@ -19,24 +19,80 @@
     <string name="title_activity_users_new">New User</string>
     <string name="title_activity_users_edit">Edit User</string>
 
-    <string name="title_activity_scorecards">View Scorecard</string>
+    <string name="title_activity_scorecards">Scorecards</string>
+    <string name="title_activity_scorecard_view">View Scorecard</string>
     <string name="title_activity_scorecards_edit">Edit Scorecard</string>
 
     <string name="title_activity_tallies">View Tally</string>
     <string name="title_activity_tallies_edit">Edit Tally</string>
 
+    <string name="title_activity_results">Results</string>
+
     <string name="action_add">Add</string>
 
-    <string name="eventNewTextLabel">Description:</string>
-    <string name="eventEditTextLabel">Description:</string>
-    <string name="entrantNewTextLabel">Description:</string>
-    <string name="entrantEditTextLabel">Description:</string>
-    <string name="userNewTextLabel">Description:</string>
-    <string name="userEditTextLabel">Description:</string>
-    <string name="scorecardNewTextLabel">Description:</string>
-    <string name="scorecardEditTextLabel">Description:</string>
-    <string name="tallyNewTextLabel">Description:</string>
-    <string name="tallyEditTextLabel">Description:</string>
+    <string name="eventNameLabel">Name: </string>
+    <string name="eventLocLabel">Location: </string>
+    <string name="eventDateLabel">Date: </string>
+    <string name="eventHostLabel">Host: </string>
+    <string name="eventStatusLabel">Status: </string>
+    <string name="eventDivLabel">Division: </string>
+    <string name="eventIntSaLabel">Interior Search Areas: </string>
+    <string name="eventExtSaLabel">Exterior Search Areas: </string>
+    <string name="eventContSaLabel">Container Search Areas: </string>
+    <string name="eventVehSaLabel">Vehicle Search Areas: </string>
+    <string name="eventEliteSaLabel">Elite Search Areas: </string>
+    <string name="eventIntHdLabel">Interior Hides: </string>
+    <string name="eventExtHdLabel">Exterior Hides: </string>
+    <string name="eventContHdLabel">Container Hides: </string>
+    <string name="eventVehHdLabel">Vehicle Hides: </string>
+    <string name="eventEliteHdLabel">Elite Hides: </string>
+
+    <string name="entrantFirstNameLabel">First Name: </string>
+    <string name="entrantLastNameLabel">Last Name: </string>
+    <string name="entrantIdLabel">ID: </string>
+    <string name="entrantDogNameLabel">Dog Name: </string>
+    <string name="entrantDogIdLabel">Dog ID: </string>
+    <string name="entrantBreedLabel">Breed: </string>
+
+    <string name="userFirstNameLabel">First Name: </string>
+    <string name="userLastNameLabel">Last Name: </string>
+    <string name="userRoleLabel">Role: </string>
+    <string name="userApprovedLabel">Approved: </string>
+    <string name="userStatusLabel">Status: </string>
+    <string name="userEmailLabel">Email: </string>
+    <string name="userPasswordLabel">Password: </string>
+
+    <string name="scorecardElementLabel">Element: </string>
+    <string name="scorecardMaxTimeMLabel">Maximum Time minutes: </string>
+    <string name="scorecardMaxTimeSLabel">Maximum Time seconds: </string>
+    <string name="scorecardFinishCallLabel">Finish Call: </string>
+    <string name="scorecardFalseAlertFringeLabel">False Alert/Fringe: </string>
+    <string name="scorecardTimedOutLabel">Timed Out: </string>
+    <string name="scorecardDismissedLabel">Dismissed: </string>
+    <string name="scorecardExcusedLabel">Excused: </string>
+    <string name="scorecardAbsentLabel">Absent: </string>
+    <string name="scorecardEliminatedDuringSearchLabel">Eliminated during search: </string>
+    <string name="scorecardOtherFaultsDescLabel">Other Faults Description: </string>
+    <string name="scorecardOtherFaultsCountLabel">Other Faults Count: </string>
+    <string name="scorecardCommentsLabel">Comments: </string>
+    <string name="scorecardTotalTimeLabel">Total Time: </string>
+    <string name="scorecardPronouncedLabel">Pronounced: </string>
+    <string name="scorecardJudgeSignatureLabel">Judge\'s Signature: </string>
+    <string name="scorecardSearchAreaLabel">Search Area: </string>
+    <string name="scorecardHidesMaxLabel">Maximum Hides: </string>
+    <string name="scorecardHidesFoundLabel">Hides Found: </string>
+    <string name="scorecardHidesMissedLabel">Hides Missed: </string>
+    <string name="scorecardTotalFaultsLabel">Total Faults: </string>
+    <string name="scorecardMaxPointsLabel">Maximum Points: </string>
+    <string name="scorecardTotalPointsLabel">Points: </string>
+
+
+    <string name="tallyTotalTimeLabel">Total Time: </string>
+    <string name="tallyTotalFaultsLabel">Total Faults: </string>
+    <string name="tallyTotalPointsLabel">Total Points: </string>
+    <string name="tallyTitleLabel">Title: </string>
+    <string name="tallyQualScoreLabel">Qualifying Score: </string>
+    <string name="tallyQualScoresLabel">Qualifying Scores: </string>
 
     <string name="nav_list_key">Nav</string>
     <string name="nav_events">Events</string>

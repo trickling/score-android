@@ -19,7 +19,7 @@ public class EntrantListAdapter extends CursorAdapter {
         public final TextView entrantdescriptionView;
 
         public ViewHolder(View view) {
-            entrantdescriptionView = (TextView) view.findViewById(R.id.list_item_entrant_textview);
+            entrantdescriptionView = (TextView) view.findViewById(R.id.list_item_first_name_textview);
         }
     }
 
@@ -43,7 +43,7 @@ public class EntrantListAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        String description = cursor.getString(EntrantListFragment.COL_ENTRANT_DESC);
+        String description = cursor.getString(EntrantListFragment.COL_FIRST_NAME);
 
         viewHolder.entrantdescriptionView.setText(description);
     }

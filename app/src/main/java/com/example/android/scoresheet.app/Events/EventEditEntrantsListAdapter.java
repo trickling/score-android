@@ -19,10 +19,10 @@ public class EventEditEntrantsListAdapter extends CursorAdapter{
 
     // A ViewHolder describes an item view and metadata about its place within RecyclerView
     public static class ViewHolder {
-        public final CheckedTextView entrantDescriptionView;
+        public final CheckedTextView entrantFirstNameView;
 
         public ViewHolder(View view) {
-            entrantDescriptionView = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_entrants_textview);
+            entrantFirstNameView = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_entrants_textview);
         }
     }
 
@@ -47,16 +47,16 @@ public class EventEditEntrantsListAdapter extends CursorAdapter{
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        String description = cursor.getString(EventEditEntrantsFragment.COL_ENTRANT_DESC);
+        String first_name = cursor.getString(EventEditEntrantsFragment.COL_FIRST_NAME);
 
-        viewHolder.entrantDescriptionView.setText(description);
+        viewHolder.entrantFirstNameView.setText(first_name);
 
         if (EventEditEntrantsFragment.checked_status(context, cursor)){
-            viewHolder.entrantDescriptionView.setChecked(true);
-            viewHolder.entrantDescriptionView.setCheckMarkDrawable(android.R.drawable.checkbox_on_background);
+            viewHolder.entrantFirstNameView.setChecked(true);
+            viewHolder.entrantFirstNameView.setCheckMarkDrawable(android.R.drawable.checkbox_on_background);
         }else{
-            viewHolder.entrantDescriptionView.setChecked(false);
-            viewHolder.entrantDescriptionView.setCheckMarkDrawable(android.R.drawable.checkbox_off_background);
+            viewHolder.entrantFirstNameView.setChecked(false);
+            viewHolder.entrantFirstNameView.setCheckMarkDrawable(android.R.drawable.checkbox_off_background);
         }
     }
 }

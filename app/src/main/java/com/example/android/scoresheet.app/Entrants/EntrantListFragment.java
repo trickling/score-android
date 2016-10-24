@@ -36,10 +36,20 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
 
     private static final String[] ENTRANT_COLUMNS = {
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.COLUMN_FIRST_NAME,
+            EntrantEntry.COLUMN_LAST_NAME,
+            EntrantEntry.COLUMN_ID_NUMBER,
+            EntrantEntry.COLUMN_DOG_NAME,
+            EntrantEntry.COLUMN_DOG_ID_NUMBER,
+            EntrantEntry.COLUMN_BREED
     };
     static final int COL_ENTRANT_ID = 0;
-    static final int COL_ENTRANT_DESC = 1;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ID = 3;
+    static final int COL_DOG_NAME = 4;
+    static final int COL_DOG_ID = 5;
+    static final int COL_BREED = 6;
 
 
     public interface Callback {
@@ -81,8 +91,8 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     }
 
     private void deleteEntrant(Uri itemUri, long l){
-        String selection = EntrantEntry.COLUMN_TEAM_DESC + " = ?";
-        String[] selectionArgs = {EntrantEntry.getEntrantDescFromUri(mUri)};
+        String selection = EntrantEntry._ID + " = ?";
+        String[] selectionArgs = {Long.valueOf(EntrantEntry.getEntrantIdFromUri(mUri)).toString()};
         getContext().getContentResolver().delete(EntrantEntry.CONTENT_URI, selection, selectionArgs);
     }
 
@@ -157,7 +167,7 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = EntrantEntry.COLUMN_TEAM_DESC + " ASC";
+        String sortOrder = EntrantEntry.COLUMN_FIRST_NAME + " ASC";
         return new CursorLoader(getActivity(), EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, null, null, sortOrder);
     }
 

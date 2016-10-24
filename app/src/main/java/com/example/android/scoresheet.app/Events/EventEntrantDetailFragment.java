@@ -17,11 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.android.scoresheet.app.Entrants.EntrantListAdapter;
 import com.example.android.scoresheet.app.R;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantTallyEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetDbHelper;
 
 /**
@@ -30,7 +33,8 @@ import com.example.android.scoresheet.app.data.ScoreSheetDbHelper;
 public class EventEntrantDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks <Cursor>{
 
     private static final String LOG_TAG = EventEntrantDetailFragment.class.getSimpleName();
-    private EventEntrantDetailAdapter mEventEntrantDetailAdapter;
+
+    private EntrantListAdapter mEventEntrantDetailAdapter;
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
@@ -38,51 +42,63 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     static final String EVENTENTRANTDETAIL_URI = "URI";
     private static final String EVENT_SHARE_HASHTAG = " #ScoreSheetApp";
     private Uri mUri;
-    private Uri tlyUri;
+    private Uri resultsUri;
 
-    private TextView mEventDescriptionView;
-    private TextView mTallyDescriptionView;
+    private TextView mEventNameView;
+    private TextView mResultsDescriptionView;
 
     private static final int EVENT_DETAIL_LOADER = 0;
 
-    private static final String[] EVENT_DETAIL_COLUMNS = {
-            EventEntry.TABLE_NAME + "." + EventEntry._ID,
-            EventEntry.COLUMN_SHORT_DESC
-    };
-    public static final int COL_EVENT_ID = 0;
-    public static final int COL_EVENT_DESC = 1;
+//    private static final String[] EVENT_DETAIL_COLUMNS = {
+//            EventEntry.TABLE_NAME + "." + EventEntry._ID,
+//            EventEntry.COLUMN_NAME
+//    };
+//    public static final int COL_EVENT_ID = 0;
+//    public static final int COL_NAME = 1;
 
     private static final String[] ENTRANT_DETAIL_COLUMNS = {
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.COLUMN_FIRST_NAME,
+            EntrantEntry.COLUMN_LAST_NAME,
+            EntrantEntry.COLUMN_ID_NUMBER,
+            EntrantEntry.COLUMN_DOG_NAME,
+            EntrantEntry.COLUMN_DOG_ID_NUMBER,
+            EntrantEntry.COLUMN_BREED
     };
-    public static final int COL_ENTRANT_ID = 0;
-    public static final int COL_TEAM_DESC = 1;
+    static final int COL_ENTRANT_ID = 0;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ID = 3;
+    static final int COL_DOG_NAME = 4;
+    static final int COL_DOG_ID = 5;
+    static final int COL_BREED = 6;
 
-    private static final String[] EVENTENTRANT_COLUMNS = {
+    private static final String[] EVENTENTRANTSCORECARD_COLUMNS = {
             EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
             EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
     };
-    public static final int COL_EVENTENTRANT_ID = 0;
-    public static final int COL_EV_ID = 1;
-    public static final int COL_EN_ID = 2;
+    public static final int COL_EVENTENTRANTSCORECARD_ID = 0;
+    public static final int COL_EVSC_ID = 1;
+    public static final int COL_ENSC_ID = 2;
     public static final int COL_SC_ID = 3;
 
-    private static final String[] TALLY_DETAIL_COLUMNS = {
-            TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
-            TallyEntry.COLUMN_TALLY_DESC, TallyEntry.COLUMN_EVENTID
+
+    private static final String[] EVENTENTRANTTALLY_COLUMNS = {
+            EventEntrantTallyEntry.TABLE_NAME + "." + EventEntrantTallyEntry._ID,
+            EventEntrantTallyEntry.COLUMN_EVENT_ID, EventEntrantTallyEntry.COLUMN_ENTRANT_ID, EventEntrantTallyEntry.COLUMN_TALLY_ID
     };
-    public static final int COL_TALLY_ID = 0;
-    public static final int COL_TALLY_DESC = 1;
-    public static final int COL_TALLY_EVID = 2;
+    public static final int COL_EVENTENTRANTTALLY_ID = 0;
+    public static final int COL_EVTLY_ID = 1;
+    public static final int COL_ENTLY_ID = 2;
+    public static final int COL_TLY_ID = 3;
 
     public interface Callback {
 
-        public void onEventItemSelected(Uri evDescUri);
-        public void onTallyItemSelected(Uri tlyDescUri);
-        public void onEntrantSelected(Uri enDescUri);
-        public void onEntrantScorecardSelected(Uri scDescUri);
-        public void onEntrantScorecardSelectedtoRun(Uri scDescUri);
+        public void onEventItemSelected(Uri evNameUri);
+        public void onResultsItemSelected(Uri resultsDescUri);
+        public void onEntrantSelected(Uri enFirstNameUri);
+        public void onEntrantScorecardSelected(Uri scElementUri);
+        public void onEntrantTallySelected(Uri tlyTitleUri);
     }
 
     public EventEntrantDetailFragment() {
@@ -112,25 +128,39 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
         String selection = EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = ?" + " AND " + EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ?";
         String[] selectionArgs = {entrantid, eventid};
         String scorecardid;
-        Cursor c = getContext().getContentResolver().query(EventEntrantScorecardEntry.CONTENT_URI, EVENTENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
+        Cursor c = getContext().getContentResolver().query(EventEntrantScorecardEntry.CONTENT_URI, EVENTENTRANTSCORECARD_COLUMNS, selection, selectionArgs, sortOrder);
         if(c.moveToFirst()){
             scorecardid = Long.valueOf(c.getLong(COL_SC_ID)).toString();
         }else{
             scorecardid = "not found";
         }
-
-        Uri ScUri = EventEntrantScorecardEntry.buildEventEntrantScorecardIdUri(scorecardid);
-        Uri eNUri = EventEntrantScorecardEntry.buildEventEntrantIdScorecardUri(entrantid);
+        c.close();
+        String tlySortOrder = EventEntrantTallyEntry._ID + " ASC";
+        String tlySelection = EventEntrantTallyEntry.COLUMN_ENTRANT_ID + " = ?" + " AND " + EventEntrantTallyEntry.COLUMN_EVENT_ID + " = ?";
+        String[] tlySelectionArgs = {entrantid, eventid};
+        String tallyid;
+        Cursor cTly = getContext().getContentResolver().query(EventEntrantTallyEntry.CONTENT_URI, EVENTENTRANTTALLY_COLUMNS, tlySelection, tlySelectionArgs, tlySortOrder);
+        if(cTly.moveToFirst()){
+            tallyid = Long.valueOf(cTly.getLong(COL_TLY_ID)).toString();
+        }else{
+            tallyid = "not found";
+        }
+        cTly.close();
+        Uri ScUri = ScorecardEntry.buildScorecardIdUri(Long.parseLong(scorecardid));
+        Uri EnUri = EntrantEntry.buildEntrantIdUri(Long.parseLong(entrantid));
+        Uri TlyUri = TallyEntry.buildTallyIdUri(Long.parseLong(tallyid));
+        Uri EvEnUri = ScorecardEntry.buildScorecardEventIdEntrantIdUri(eventid, entrantid);
 
         switch (item.getItemId()) {
             case R.id.team:
-                viewTeamDetail(eNUri, info.id);
+                viewTeamDetail(EnUri, info.id);
                 return true;
             case R.id.scorecard:
-                viewScorecard(ScUri, info.id);
+                // TODO: needs to go to a list of scorecards for event entrant, user will select scorecard from there to view or run
+                viewScorecard(EvEnUri, info.id);
                 return true;
-            case R.id.run_scorecard:
-                runScorecard(ScUri, info.id);
+            case R.id.view_tally:
+                viewTally(TlyUri, info.id);
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -141,7 +171,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mEventEntrantDetailAdapter = new EventEntrantDetailAdapter(getActivity(), null, 0);
+        mEventEntrantDetailAdapter = new EntrantListAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_detail_entrant_event, container, false);
 
@@ -156,34 +186,39 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
 
         registerForContextMenu(mListView);
 
-        mEventDescriptionView = (TextView) rootView.findViewById(R.id.event_summary_textview);
+        mEventNameView = (TextView) rootView.findViewById(R.id.event_name_textview);
 
-        mEventDescriptionView.setText(EventEntry.getEventIdDescriptionFromUri(mUri));
+        String eventName = EventEntry.getEventIdNameFromUri(mUri);
+
+        mEventNameView.setText(eventName);
 
         String eventid = Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString();
 
-        mTallyDescriptionView = (TextView) rootView.findViewById(R.id.event_tally_textview);
+        mResultsDescriptionView = (TextView) rootView.findViewById(R.id.event_results_textview);
 
-        String sortOrder = TallyEntry._ID + " ASC";
-        String selection = TallyEntry.COLUMN_EVENTID + " = ?";
+        String sortOrder = EventEntrantTallyEntry._ID + " ASC";
+        String selection = EventEntrantTallyEntry.COLUMN_EVENT_ID + " = ?";
         String[] selectionArgs = {eventid};
-        Cursor tc = getContext().getContentResolver().query(TallyEntry.CONTENT_URI, TALLY_DETAIL_COLUMNS, selection, selectionArgs, sortOrder);
-        String tallyDescr;
-        long tallyid;
-        if (tc.moveToFirst()) {
-            tallyDescr = tc.getString(COL_TALLY_DESC);
-            tallyid = tc.getLong(COL_TALLY_ID);
+        Cursor tlyc = getContext().getContentResolver().query(EventEntrantTallyEntry.CONTENT_URI, EVENTENTRANTTALLY_COLUMNS, selection, selectionArgs, sortOrder);
+        String resultsDescr;
+        long resultsid;
+        if (tlyc.moveToFirst()) {
+            resultsDescr = tlyc.getString(COL_EVTLY_ID);
+            resultsid = tlyc.getLong(COL_ENTLY_ID);
         } else {
-            tallyDescr = "not found";
-            tallyid = 0;
+            resultsDescr = "not found";
+            resultsid = 0;
         }
 
-        tlyUri = TallyEntry.buildTallyIdUri(tallyid);
+        resultsUri = EventEntrantTallyEntry.buildEventEntrantTallyIdUri(eventid);
 
-        mTallyDescriptionView.setText(tallyDescr);
+        mResultsDescriptionView.setText(resultsDescr);
 
+        mResultsDescriptionView = (TextView) rootView.findViewById(R.id.event_results_textview);
 
-        View.OnClickListener EventDescOnClickListener = new View.OnClickListener() {
+        mResultsDescriptionView.setText(eventName + " Results");
+
+        View.OnClickListener EventNameOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mUri != null) {
@@ -191,18 +226,18 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
                 }
             }
         };
-        mEventDescriptionView.setOnClickListener(EventDescOnClickListener);
+        mEventNameView.setOnClickListener(EventNameOnClickListener);
 
 
-        View.OnClickListener TallyDescOnClickListener = new View.OnClickListener() {
+        View.OnClickListener ResultsDescOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mUri != null) {
-                    ((Callback) getActivity()).onTallyItemSelected(tlyUri);
+                    ((Callback) getActivity()).onResultsItemSelected(resultsUri);
                 }
             }
         };
-        mTallyDescriptionView.setOnClickListener(TallyDescOnClickListener);
+        mResultsDescriptionView.setOnClickListener(ResultsDescOnClickListener);
 
 
 
@@ -260,7 +295,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
-        String sortOrder = EntrantEntry.COLUMN_TEAM_DESC + " ASC";
+        String sortOrder = EntrantEntry.COLUMN_FIRST_NAME + " ASC";
 
         Uri event_entrantUri = EntrantEntry.buildEntrantIdUri(EventEntry.getEventIdFromUri(mUri));
 
@@ -291,7 +326,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
         ((Callback) getActivity()).onEntrantScorecardSelected(itemUri);
     }
 
-    private void runScorecard(Uri itemUri, long l){
-        ((Callback) getActivity()).onEntrantScorecardSelectedtoRun(itemUri);
+    private void viewTally(Uri itemUri, long l){
+        ((Callback) getActivity()).onEntrantTallySelected(itemUri);
     }
 }

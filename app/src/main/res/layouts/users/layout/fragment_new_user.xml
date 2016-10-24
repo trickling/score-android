@@ -1,45 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:id="@+id/fragment_new_user">
-
+    android:layout_height="match_parent">
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/fragment_new_user">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="100px"
-            android:id="@+id/userNewTextHeader"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:text="@string/userNewTextLabel" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <EditText
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/userFirstNameHeader"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/userFirstNameLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/user_first_name_text_edit"
+                android:layout_gravity="center_horizontal"
+                android:allowUndo="true"
+                android:clickable="true"
+                android:enabled="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/userLastNameHeader"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/userLastNameLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/user_last_name_text_edit"
+                android:layout_gravity="center_horizontal"
+                android:allowUndo="true"
+                android:clickable="true"
+                android:enabled="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/userRoleHeader"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/userRoleLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/user_role_text_edit"
+                android:layout_gravity="center_horizontal"
+                android:allowUndo="true"
+                android:clickable="true"
+                android:enabled="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/userStatusHeader"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/userStatusLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/user_status_text_edit"
+                android:layout_gravity="center_horizontal"
+                android:allowUndo="true"
+                android:clickable="true"
+                android:enabled="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/userEmailHeader"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/userEmailLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/user_email_text_edit"
+                android:layout_gravity="center_horizontal"
+                android:allowUndo="true"
+                android:clickable="true"
+                android:enabled="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/userPasswordHeader"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/userPasswordLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/user_password_text_edit"
+                android:layout_gravity="center_horizontal"
+                android:allowUndo="true"
+                android:clickable="true"
+                android:enabled="true" />
+
+        </LinearLayout>
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:id="@+id/userNewText"
-            android:layout_gravity="center_horizontal"
-            android:allowUndo="true"
             android:clickable="true"
-            android:enabled="true" />
+            android:enabled="true"
+            android:gravity="center"
+            android:id="@+id/userNewSave"
+            android:text="Save" />
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:enabled="true"
-        android:gravity="center"
-        android:id="@+id/userNewSave"
-        android:text="Save" />
-
-</LinearLayout>
+</ScrollView>

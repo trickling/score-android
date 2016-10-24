@@ -6,10 +6,10 @@
         android:title="View Team"
         app:showAsAction="ifRoom" />
     <item android:id="@+id/scorecard"
-        android:title="View Scorecard"
+        android:title="View Scorecards"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/run_scorecard"
-        android:title="Run Scorecard"
+    <item android:id="@+id/view_tally"
+        android:title="View Tally"
         app:showAsAction="ifRoom" />
 
 </menu>

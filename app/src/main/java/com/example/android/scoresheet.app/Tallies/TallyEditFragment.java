@@ -22,18 +22,31 @@ public class TallyEditFragment extends Fragment{
 
     private static final String[] TALLY_COLUMNS = {
             TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
-            TallyEntry.COLUMN_TALLY_DESC, TallyEntry.COLUMN_EVENTID
+            TallyEntry.COLUMN_TOTAL_TIME,
+            TallyEntry.COLUMN_TOTAL_FAULTS,
+            TallyEntry.COLUMN_TOTAL_POINTS,
+            TallyEntry.COLUMN_TITLE,
+            TallyEntry.COLUMN_QUALIFYING_SCORE,
+            TallyEntry.COLUMN_QUALIFYING_SCORES
     };
     public static final int COL_TALLY_ID = 0;
-    public static final int COL_TALLY_DESC = 1;
-    public static final int COL_TALLY_EVID = 2;
+    public static final int COL_TOTAL_TIME = 1;
+    public static final int COL_TOTAL_FAULTS = 2;
+    public static final int COL_TOTAL_POINTS = 3;
+    public static final int COL_TITLE = 4;
+    public static final int COL_QSCORE = 5;
+    public static final int COL_QSCORES = 6;
 
     static final String TALLYEDIT_URI = "URI";
 
     private Uri mUri;
     private Uri editUri;
-    private EditText mDescrEditText;
-    private String DescrEditText;
+    private EditText mTotalTimeEditText;
+    private EditText mTotalFaultsEditText;
+    private EditText mTotalPointsEditText;
+    private EditText mTitleEditText;
+    private EditText mQualifyingScoreEditText;
+    private EditText mQualifyingScoresEditText;
 
     public TallyEditFragment() {
         // Required empty public constructor
@@ -50,36 +63,47 @@ public class TallyEditFragment extends Fragment{
 
         View rootView = inflater.inflate(R.layout.fragment_edit_tally, container, false);
 
-        mDescrEditText = (EditText) rootView.findViewById(R.id.tallyEditText);
+        mTotalTimeEditText = (EditText) rootView.findViewById(R.id.tally_total_time_text_edit);
+        mTotalFaultsEditText = (EditText) rootView.findViewById(R.id.tally_total_faults_text_edit);
+        mTotalPointsEditText = (EditText) rootView.findViewById(R.id.tally_total_points_text_edit);
+        mTitleEditText = (EditText) rootView.findViewById(R.id.tally_title_text_edit);
+        mQualifyingScoreEditText = (EditText) rootView.findViewById(R.id.tally_qualifying_score_text_edit);
+        mQualifyingScoresEditText = (EditText) rootView.findViewById(R.id.tally_qualifying_scores_text_edit);
 
         String sortOrder = TallyEntry._ID + " ASC";
         String selection = TallyEntry._ID + " = ?";
         String[] selectionArgs = {Long.valueOf(TallyEntry.getTallyIdFromUri(mUri)).toString()};
-        String DescrText;
 
         Cursor c = getContext().getContentResolver().query(TallyEntry.CONTENT_URI, TALLY_COLUMNS, selection, selectionArgs, sortOrder);
 
         if(c.moveToFirst()) {
-            DescrText = c.getString(COL_TALLY_DESC);
-            mDescrEditText.setText(DescrText);
-        }else {
-            mDescrEditText.setText("not found");
+
+            mTotalTimeEditText.setText(c.getString(COL_TOTAL_TIME));
+            mTotalFaultsEditText.setText(c.getString(COL_TOTAL_FAULTS));
+            mTotalPointsEditText.setText(c.getString(COL_TOTAL_POINTS));
+            mTitleEditText.setText(c.getString(COL_TITLE));
+            mQualifyingScoreEditText.setText(c.getString(COL_QSCORE));
+            mQualifyingScoresEditText.setText(c.getString(COL_QSCORES));
         }
 
         Button save_edit_button = (Button) rootView.findViewById(R.id.tallyEditSave);
 
         View.OnClickListener edit_saveOnClickListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                DescrEditText = mDescrEditText.getText().toString();
 
-                if ( !(DescrEditText.equals("")) ) {
-                    editUri = TallyEntry.buildTallyDescUri(DescrEditText);
-                    ContentValues mEditContentValues = new ContentValues();
-                    mEditContentValues.put(TallyEntry.COLUMN_TALLY_DESC, DescrEditText);
-                    String selection = TallyEntry.COLUMN_TALLY_DESC + " = ?";
-                    String[] selectionArgs = {TallyEntry.getTallyDescFromUri(mUri)};
-                    getContext().getContentResolver().update(TallyEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
-                }
+            public void onClick(View v) {
+
+                ContentValues mEditContentValues = new ContentValues();
+
+                mEditContentValues.put(TallyEntry.COLUMN_TOTAL_TIME, mTotalTimeEditText.getText().toString());
+                mEditContentValues.put(TallyEntry.COLUMN_TOTAL_FAULTS, mTotalFaultsEditText.getText().toString());
+                mEditContentValues.put(TallyEntry.COLUMN_TOTAL_POINTS, mTotalPointsEditText.getText().toString());
+                mEditContentValues.put(TallyEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
+                mEditContentValues.put(TallyEntry.COLUMN_QUALIFYING_SCORE, mQualifyingScoreEditText.getText().toString());
+                mEditContentValues.put(TallyEntry.COLUMN_QUALIFYING_SCORES, mQualifyingScoresEditText.getText().toString());
+
+                String selection = TallyEntry._ID + " = ?";
+                String[] selectionArgs = {Long.valueOf(TallyEntry.getTallyIdFromUri(mUri)).toString()};
+                getContext().getContentResolver().update(TallyEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
             }
         };
 

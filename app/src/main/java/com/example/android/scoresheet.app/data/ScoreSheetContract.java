@@ -31,13 +31,14 @@ public final class ScoreSheetContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_EVENT = "event";
+//    public static final String PATH_EVENTENTRANT = "evententrant";
     public static final String PATH_ENTRANT = "entrant";
     public static final String PATH_USER = "user";
     public static final String PATH_EVENTUSER = "eventuser";
     public static final String PATH_EVENTENTRANTSCORECARD = "evententrantscorecard";
     public static final String PATH_SCORECARD = "scorecard";
     public static final String PATH_TALLY = "tally";
-
+    public static final String PATH_EVENTENTRANTTALLY = "evententranttally";
 
 
 
@@ -53,10 +54,25 @@ public final class ScoreSheetContract {
 
         public static final String TABLE_NAME = "event";
 
-        public static final String COLUMN_SHORT_DESC = "short_desc";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_LOCATION = "location";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_HOST = "host";
+        public static final String COLUMN_STATUS = "status";
+        public static final String COLUMN_DIVISION = "division";
+        public static final String COLUMN_INT_SEARCH_AREAS = "int_search_areas";
+        public static final String COLUMN_EXT_SEARCH_AREAS = "ext_search_areas";
+        public static final String COLUMN_CONT_SEARCH_AREAS = "cont_search_areas";
+        public static final String COLUMN_VEH_SEARCH_AREAS = "veh_search_areas";
+        public static final String COLUMN_ELITE_SEARCH_AREAS = "elite_search_areas";
+        public static final String COLUMN_INT_HIDES = "int_hides";
+        public static final String COLUMN_EXT_HIDES = "ext_hides";
+        public static final String COLUMN_CONT_HIDES = "cont_hides";
+        public static final String COLUMN_VEH_HIDES = "veh_hides";
+        public static final String COLUMN_ELITE_HIDES = "elite_hides";
 
-        public static Uri buildEventDescUri(String short_desc) {
-            return CONTENT_URI.buildUpon().appendPath(short_desc).build();
+        public static Uri buildEventNameUri(String name) {
+            return CONTENT_URI.buildUpon().appendPath(name).build();
         }
 
         public static Uri buildEventidUri(String _id) {
@@ -71,15 +87,15 @@ public final class ScoreSheetContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildEventIdDescUri(long id, String short_desc) {
-            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(short_desc).build();
+        public static Uri buildEventIdNameUri(long id, String name) {
+            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(name).build();
         }
 
-        public static String getEventDescriptionFromUri(Uri uri) {
+        public static String getEventNameFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
-        public static String getEventIdDescriptionFromUri(Uri uri) {
+        public static String getEventIdNameFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
 
@@ -103,10 +119,15 @@ public final class ScoreSheetContract {
 
         public static final String TABLE_NAME = "entrant";
 
-        public static final String COLUMN_TEAM_DESC = "team_descr";
+        public static final String COLUMN_FIRST_NAME = "first_name";
+        public static final String COLUMN_LAST_NAME = "last_name";
+        public static final String COLUMN_ID_NUMBER = "id_number";
+        public static final String COLUMN_DOG_NAME = "dog_name";
+        public static final String COLUMN_DOG_ID_NUMBER = "dog_id_number";
+        public static final String COLUMN_BREED = "breed";
 
-        public static Uri buildEntrantDescUri(String team_desc) {
-            return CONTENT_URI.buildUpon().appendPath(team_desc).build();
+        public static Uri buildEntrantFirstNameUri(String first_name) {
+            return CONTENT_URI.buildUpon().appendPath(first_name).build();
         }
 
         public static Uri buildEntrantUri() {
@@ -125,7 +146,7 @@ public final class ScoreSheetContract {
             return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
         }
 
-        public static String getEntrantDescFromUri(Uri uri) {
+        public static String getEntrantFirstNameFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
@@ -137,6 +158,49 @@ public final class ScoreSheetContract {
             return uri.getPathSegments().get(2);
         }
     }
+
+
+
+//    public static final class EventEntrantEntry implements BaseColumns {
+//
+//        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTENTRANT).build();
+//
+//        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANT;
+//        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANT;
+//
+//        public static final String TABLE_NAME = "evententrant";
+//
+//        public static final String COLUMN_EVENT_ID= "event_id";
+//        public static final String COLUMN_ENTRANT_ID = "entrant_id";
+//
+//        public static Uri buildEventEntrantUri() {
+//            return CONTENT_URI;
+//        }
+//
+//        public static Uri buildEventEntrantIdUri(String entrant_id) {
+//            return CONTENT_URI.buildUpon().appendPath(entrant_id).build();
+//        }
+//
+//        public static Uri buildEventIdEntrantUri(String event_id) {
+//            return CONTENT_URI.buildUpon().appendPath(event_id).build();
+//        }
+//
+//        public static Uri buildIdEventEntrantUri(long id) {
+//            return ContentUris.withAppendedId(CONTENT_URI, id);
+//        }
+//
+//        public static String getEntrantIdFromUri(Uri uri) {
+//            return uri.getPathSegments().get(1);
+//        }
+//
+//        public static String getEventIdFromUri(Uri uri){
+//            return uri.getPathSegments().get(1);
+//        }
+//
+//        public static String getEntrantIdWithEventIdFromUri(Uri uri){
+//            return uri.getPathSegments().get(2);
+//        }
+//    }
 
 
 
@@ -152,10 +216,16 @@ public final class ScoreSheetContract {
 
         public static final String TABLE_NAME = "user";
 
-        public static final String COLUMN_USER_DESC = "user_descr";
+        public static final String COLUMN_FIRST_NAME = "first_name";
+        public static final String COLUMN_LAST_NAME = "last_name";
+        public static final String COLUMN_ROLE = "role";
+        public static final String COLUMN_APPROVED = "approved";
+        public static final String COLUMN_STATUS = "status";
+        public static final String COLUMN_EMAIL = "email";
+        public static final String COLUMN_PASSWORD = "password";
 
-        public static Uri buildUserDescUri(String user_desc) {
-            return CONTENT_URI.buildUpon().appendPath(user_desc).build();
+        public static Uri buildUserFirstNameUri(String first_name) {
+            return CONTENT_URI.buildUpon().appendPath(first_name).build();
         }
 
         public static Uri buildUserUri() {
@@ -174,7 +244,7 @@ public final class ScoreSheetContract {
             return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
         }
 
-        public static String getUserDescFromUri(Uri uri) {
+        public static String getUserFirstNameFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
@@ -311,10 +381,32 @@ public final class ScoreSheetContract {
 
         public static final String TABLE_NAME = "scorecard";
 
-        public static final String COLUMN_SCORECARD_DESC = "scorecard_desc";
+        public static final String COLUMN_ELEMENT = "element";
+        public static final String COLUMN_MAXTIME_M = "maxtime_m";
+        public static final String COLUMN_MAXTIME_S = "maxtime_s";
+        public static final String COLUMN_FINISH_CALL = "finish_call";
+        public static final String COLUMN_FALSE_ALERT_FRINGE = "false_alert_fringe";
+        public static final String COLUMN_TIMED_OUT = "timed_out";
+        public static final String COLUMN_DISMISSED = "dismissed";
+        public static final String COLUMN_EXCUSED = "excused";
+        public static final String COLUMN_ABSENT = "absent";
+        public static final String COLUMN_ELIMINATED_DURING_SEARCH = "eliminated_during_search";
+        public static final String COLUMN_OTHER_FAULTS_DESCR = "other_faults_descr";
+        public static final String COLUMN_OTHER_FAULTS_COUNT = "other_faults_count";
+        public static final String COLUMN_COMMENTS = "comments";
+        public static final String COLUMN_TOTAL_TIME = "total_time";
+        public static final String COLUMN_PRONOUNCED = "pronounced";
+        public static final String COLUMN_JUDGE_SIGNATURE = "judge_signature";
+        public static final String COLUMN_SEARCH_AREA = "search_area";
+        public static final String COLUMN_HIDES_MAX = "hides_max";
+        public static final String COLUMN_HIDES_FOUND = "hides_found";
+        public static final String COLUMN_HIDES_MISSED = "hides_missed";
+        public static final String COLUMN_TOTAL_FAULTS = "total_faults";
+        public static final String COLUMN_MAXPOINT = "maxpoint";
+        public static final String COLUMN_TOTAL_POINTS = "total_points";
 
-        public static Uri buildScorecardDescUri(String scorecard_desc) {
-            return CONTENT_URI.buildUpon().appendPath(scorecard_desc).build();
+        public static Uri buildScorecardElementUri(String element) {
+            return CONTENT_URI.buildUpon().appendPath(element).build();
         }
 
         public static Uri buildScorecardUri() {
@@ -325,15 +417,15 @@ public final class ScoreSheetContract {
             return CONTENT_URI.buildUpon().appendPath(_id).build();
         }
 
+        public static Uri buildScorecardEventIdEntrantIdUri(String eventid, String entrantid) {
+            return CONTENT_URI.buildUpon().appendPath(eventid).appendPath(entrantid).build();
+        }
+
         public static Uri buildScorecardIdUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildEventIdCheckedUri(long id, String path){
-            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
-        }
-
-        public static String getScorecardDescFromUri(Uri uri) {
+        public static String getScorecardElementFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
@@ -344,6 +436,14 @@ public final class ScoreSheetContract {
         public static String getScorecardEventIdFromUri(Uri uri){
             return uri.getPathSegments().get(2);
         }
+
+        public static String getScorecardsEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(1);
+        }
+        public static String getScorecardsEntrantIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+
         public static String getScorecardEventIdEntrantIdFromUri(Uri uri){
             return uri.getPathSegments().get(3);
         }
@@ -363,12 +463,15 @@ public final class ScoreSheetContract {
 
         public static final String TABLE_NAME = "tally";
 
-        public static final String COLUMN_TALLY_DESC = "tally_descr";
+        public static final String COLUMN_TOTAL_TIME = "total_time";
+        public static final String COLUMN_TOTAL_FAULTS = "total_faults";
+        public static final String COLUMN_TOTAL_POINTS = "total_points";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_QUALIFYING_SCORE = "qualifying_score";
+        public static final String COLUMN_QUALIFYING_SCORES = "qualifying_scores";
 
-        public static final String COLUMN_EVENTID = "event_id";
-
-        public static Uri buildTallyDescUri(String tally_desc) {
-            return CONTENT_URI.buildUpon().appendPath(tally_desc).build();
+        public static Uri buildTallyTitleUri(String title) {
+            return CONTENT_URI.buildUpon().appendPath(title).build();
         }
 
         public static Uri buildTallyUri() {
@@ -383,11 +486,8 @@ public final class ScoreSheetContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildTallyEventIdCheckedUri(long id, String path){
-            return ContentUris.withAppendedId(CONTENT_URI, id).buildUpon().appendPath(path).build();
-        }
 
-            public static String getTallyDescFromUri(Uri uri) {
+        public static String getTallyTitleFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
@@ -397,6 +497,67 @@ public final class ScoreSheetContract {
 
         public static long getTallyEventIdFromUri(Uri uri){
             return Long.parseLong(uri.getPathSegments().get(1));
+        }
+    }
+
+
+
+    public static final class EventEntrantTallyEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTENTRANTTALLY).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANTTALLY;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTENTRANTTALLY;
+
+        public static final String TABLE_NAME = "evententranttally";
+
+        public static final String COLUMN_EVENT_ID = "event_id";
+
+        public static final String COLUMN_ENTRANT_ID = "entrant_id";
+
+        public static final String COLUMN_TALLY_ID = "tally_id";
+
+        public static Uri buildEventEntrantTallyUri() {
+            return CONTENT_URI;
+        }
+
+        public static Uri buildEventEntrantTallyidUri(String _id) {
+            return CONTENT_URI.buildUpon().appendPath(_id).build();
+        }
+
+        public static Uri buildIdEventEntrantTally(String eventid, String entrantid){
+            return CONTENT_URI.buildUpon().appendPath(eventid).appendPath(entrantid).build();
+        }
+
+        public static Uri buildEventEntrantTallyIdUri(String tally_id) {
+            return CONTENT_URI.buildUpon().appendPath(tally_id).build();
+        }
+
+        public static Uri buildIdEventEntrantTallyUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static long getEventEntrantTallyIdFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
+        public static String getEntrantIdFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String getEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String getEntrantIdWithEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+
+        public static String getTallyIdWithEventIdEntrantIdFromUri(Uri uri){
+            return uri.getPathSegments().get(3);
         }
     }
 }

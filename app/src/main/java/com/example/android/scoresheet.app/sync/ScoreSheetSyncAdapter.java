@@ -27,7 +27,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
     private static final int EVENT_NOTIFICATION_ID = 3004;
 
     private static final String[] NOTIFY_EVENT_PROJECTION = new String[] {
-            ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC
+            ScoreSheetContract.EventEntry.COLUMN_NAME
     };
 
     // these indices must match the projection
@@ -50,6 +50,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
         context.getContentResolver().delete(ScoreSheetContract.EntrantEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.UserEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.EventUserEntry.CONTENT_URI, null, null);
+        context.getContentResolver().delete(ScoreSheetContract.EventEntrantTallyEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.EventEntrantScorecardEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.ScorecardEntry.CONTENT_URI, null, null);
         context.getContentResolver().delete(ScoreSheetContract.TallyEntry.CONTENT_URI, null, null);
@@ -61,7 +62,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
 
         ContentValues eventValue = new ContentValues();
         for (String item : event_seed){
-            eventValue.put(ScoreSheetContract.EventEntry.COLUMN_SHORT_DESC, item);
+            eventValue.put(ScoreSheetContract.EventEntry.COLUMN_NAME, item);
             context.getContentResolver().insert(ScoreSheetContract.EventEntry.CONTENT_URI, eventValue);
         }
 
@@ -72,7 +73,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
 
         ContentValues entrantValue = new ContentValues();
         for (String item : entrant_seed){
-            entrantValue.put(ScoreSheetContract.EntrantEntry.COLUMN_TEAM_DESC, item);
+            entrantValue.put(ScoreSheetContract.EntrantEntry.COLUMN_FIRST_NAME, item);
             context.getContentResolver().insert(ScoreSheetContract.EntrantEntry.CONTENT_URI, entrantValue);
         }
 
@@ -83,7 +84,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
 
         ContentValues userValue = new ContentValues();
         for (String item : user_seed){
-            userValue.put(ScoreSheetContract.UserEntry.COLUMN_USER_DESC, item);
+            userValue.put(ScoreSheetContract.UserEntry.COLUMN_FIRST_NAME, item);
             context.getContentResolver().insert(ScoreSheetContract.UserEntry.CONTENT_URI, userValue);
         }
 

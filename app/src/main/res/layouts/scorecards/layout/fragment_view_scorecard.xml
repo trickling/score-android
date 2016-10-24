@@ -1,18 +1,497 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    tools:context=".Scorecards.ScorecardViewFragment">
-
-    <TextView
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:gravity="center_vertical"
-        android:id="@+id/scorecard_text_view"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        tools:context=".Scorecards.ScorecardViewFragment">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardElementHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardElementLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_element_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecarMaxTimeMHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardMaxTimeMLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_max_time_m_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardMaxTimeSHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardMaxTimeSLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_max_time_s_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardFinishCallHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardFinishCallLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_finish_call_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardFalseAlertFringeHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardFalseAlertFringeLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_false_alert_fringe_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardTimedOutHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardTimedOutLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_timed_out_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardDismissedHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardDismissedLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_dismissed_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardExcusedHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardExcusedLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_excused_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardAbsentHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardAbsentLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_absent_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardEliminatedDuringSearchHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardEliminatedDuringSearchLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_elim_during_search_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardOtherFaultsDescHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardOtherFaultsDescLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_other_faults_desc_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardOtherFaultsCountHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardOtherFaultsCountLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_other_faults_count_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardCommentsHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardCommentsLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_comments_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardTotalTimeHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardTotalTimeLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_total_time_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardPronouncedHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardPronouncedLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_pronounced_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardJudgeSignatureHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardJudgeSignatureLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_judge_signature_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardSearchAreaHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardSearchAreaLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_search_area_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardHidesMaxHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardHidesMaxLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_hides_max_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardHidesFoundHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardHidesFoundLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_hides_found_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardHidesMissedHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardHidesMissedLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_hides_missed_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardTotalFaultsHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardTotalFaultsLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_total_faults_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardMaxPointsHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardMaxPointsLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_max_points_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/scorecardTotalPointsHeader"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/scorecardTotalPointsLabel" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/scorecard_total_points_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

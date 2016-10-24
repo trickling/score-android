@@ -21,15 +21,31 @@ public class EntrantViewDetailFragment extends Fragment {
 
     private static final String[] ENTRANT_COLUMNS = {
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
+            EntrantEntry.COLUMN_FIRST_NAME,
+            EntrantEntry.COLUMN_LAST_NAME,
+            EntrantEntry.COLUMN_ID_NUMBER,
+            EntrantEntry.COLUMN_DOG_NAME,
+            EntrantEntry.COLUMN_DOG_ID_NUMBER,
+            EntrantEntry.COLUMN_BREED
     };
     static final int COL_ENTRANT_ID = 0;
-    static final int COL_ENTRANT_DESC = 1;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ID = 3;
+    static final int COL_DOG_NAME = 4;
+    static final int COL_DOG_ID = 5;
+    static final int COL_BREED = 6;
 
     static final String ENTRANTVIEW_URI = "URI";
 
     private Uri mUri;
-    private TextView mDescrViewText;
+    private TextView mFirstNameViewText;
+    private TextView mLastNameViewText;
+    private TextView mIdViewText;
+    private TextView mDogNameViewText;
+    private TextView mDogIdViewText;
+    private TextView mBreedViewText;
+
 
     public EntrantViewDetailFragment() {
         // Required empty public constructor
@@ -47,22 +63,27 @@ public class EntrantViewDetailFragment extends Fragment {
             mUri = arguments.getParcelable(EntrantViewDetailFragment.ENTRANTVIEW_URI);
         }
 
-        mDescrViewText = (TextView) rootView.findViewById(R.id.entrant_text_view);
+        mFirstNameViewText = (TextView) rootView.findViewById(R.id.entrant_first_name_text_view);
+        mLastNameViewText = (TextView) rootView.findViewById(R.id.entrant_last_name_text_view);
+        mIdViewText = (TextView) rootView.findViewById(R.id.entrant_id_text_view);
+        mDogNameViewText = (TextView) rootView.findViewById(R.id.entrant_dog_name_text_view);
+        mDogIdViewText = (TextView) rootView.findViewById(R.id.entrant_dog_id_text_view);
+        mBreedViewText = (TextView) rootView.findViewById(R.id.entrant_breed_text_view);
 
         String sortOrder = EntrantEntry._ID + " ASC";
         String selection = EntrantEntry._ID + " = ?";
         String[] selectionArgs = {Long.valueOf(EntrantEntry.getEntrantIdFromUri(mUri)).toString()};
-        String DescrText;
 
         Cursor c = getContext().getContentResolver().query(EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
+
         if(c.moveToFirst()) {
-            DescrText = c.getString(COL_ENTRANT_DESC);
-        }else{
-            DescrText = "not found";
+            mFirstNameViewText.setText(c.getString(COL_FIRST_NAME));
+            mLastNameViewText.setText(c.getString(COL_LAST_NAME));
+            mIdViewText.setText(c.getString(COL_ID));
+            mDogNameViewText.setText(c.getString(COL_DOG_NAME));
+            mDogIdViewText.setText(c.getString(COL_DOG_ID));
+            mBreedViewText.setText(c.getString(COL_BREED));
         }
-
-
-        mDescrViewText.setText(DescrText);
 
         return rootView;
 

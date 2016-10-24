@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantTallyEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventUserEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 14;
 
     public static final String DATABASE_NAME = "scoresheet.db";
 
@@ -49,35 +50,130 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // TODO:  Add uniqueness constraints to join tables at least.
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        final String SQL_CREATE_EVENT_TABLE = "CREATE TABLE " + EventEntry.TABLE_NAME + " (" + EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventEntry.COLUMN_SHORT_DESC + " TEXT NOT NULL);";
+        final String SQL_CREATE_EVENT_TABLE = "CREATE TABLE " +
+                EventEntry.TABLE_NAME + " (" + EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EventEntry.COLUMN_NAME + " TEXT DEFAULT 'NAME', " +
+                EventEntry.COLUMN_LOCATION + " TEXT DEFAULT 'LOCATION', " +
+                EventEntry.COLUMN_DATE + " TEXT DEFAULT 'DATE', " +
+                EventEntry.COLUMN_HOST + " TEXT DEFAULT 'HOST', " +
+                EventEntry.COLUMN_STATUS + " TEXT DEFAULT 'STATUS', " +
+                EventEntry.COLUMN_DIVISION + " TEXT DEFAULT 'DIVISION', " +
+                EventEntry.COLUMN_INT_SEARCH_AREAS + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_EXT_SEARCH_AREAS + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_CONT_SEARCH_AREAS + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_VEH_SEARCH_AREAS + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_ELITE_SEARCH_AREAS + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_INT_HIDES + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_EXT_HIDES + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_CONT_HIDES + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_VEH_HIDES + " TEXT DEFAULT '0', " +
+                EventEntry.COLUMN_ELITE_HIDES + " TEXT DEFAULT '0' " +
+                ")";
         db.execSQL(SQL_CREATE_EVENT_TABLE);
 
 
-        final String SQL_CREATE_ENTRANT_TABLE = "CREATE TABLE " + EntrantEntry.TABLE_NAME + " (" + EntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EntrantEntry.COLUMN_TEAM_DESC + " TEXT NOT NULL)";
+        final String SQL_CREATE_ENTRANT_TABLE = "CREATE TABLE " +
+                EntrantEntry.TABLE_NAME + " (" + EntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EntrantEntry.COLUMN_FIRST_NAME + " TEXT DEFAULT 'FIRST NAME', " +
+                EntrantEntry.COLUMN_LAST_NAME + " TEXT DEFAULT 'LAST NAME', " +
+                EntrantEntry.COLUMN_ID_NUMBER + " TEXT DEFAULT '0', " +
+                EntrantEntry.COLUMN_DOG_NAME + " TEXT DEFAULT 'DOG NAME', " +
+                EntrantEntry.COLUMN_DOG_ID_NUMBER + " TEXT DEFAULT '0', " +
+                EntrantEntry.COLUMN_BREED + " TEXT DEFAULT 'BREED' " +
+                ")";
         db.execSQL(SQL_CREATE_ENTRANT_TABLE);
 
 
-        final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + UserEntry.TABLE_NAME + " (" + UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + UserEntry.COLUMN_USER_DESC + " TEXT NOT NULL)";
+//        final String SQL_CREATE_EVENTENTRANT_TABLE = "CREATE TABLE " +
+//                EventEntrantEntry.TABLE_NAME + " (" + EventEntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                EventEntrantEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL, " +
+//                EventEntrantEntry.COLUMN_ENTRANT_ID + " INTEGER NOT NULL, " +
+//                ")";
+//        db.execSQL(SQL_CREATE_EVENTENTRANT_TABLE);
+
+
+        final String SQL_CREATE_USER_TABLE = "CREATE TABLE " +
+                UserEntry.TABLE_NAME + " (" + UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                UserEntry.COLUMN_FIRST_NAME + " TEXT DEFAULT 'FIRST NAME', " +
+                UserEntry.COLUMN_LAST_NAME + " TEXT DEFAULT 'LAST NAME', " +
+                UserEntry.COLUMN_ROLE + " TEXT DEFAULT 'ROLE', " +
+                UserEntry.COLUMN_APPROVED + " TEXT DEFAULT 'APPROVED', " +
+                UserEntry.COLUMN_STATUS + " TEXT DEFAULT 'ACTIVE/INACTIVE', " +
+                UserEntry.COLUMN_EMAIL + " TEXT DEFAULT 'EMAIL', " +
+                UserEntry.COLUMN_PASSWORD + " TEXT DEFAULT 'PASSWORD' " +
+                ")";
         db.execSQL(SQL_CREATE_USER_TABLE);
 
 
-        final String SQL_CREATE_EVENTUSER_TABLE = "CREATE TABLE " + EventUserEntry.TABLE_NAME + " (" + EventUserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventUserEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL," + EventUserEntry.COLUMN_USER_ID + " INTEGER NOT NULL)";
+        final String SQL_CREATE_EVENTUSER_TABLE = "CREATE TABLE " +
+                EventUserEntry.TABLE_NAME + " (" + EventUserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EventUserEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL, " +
+                EventUserEntry.COLUMN_USER_ID + " INTEGER NOT NULL" +
+                ")";
         db.execSQL(SQL_CREATE_EVENTUSER_TABLE);
 
 
-        final String SQL_CREATE_EVENTENTRANTSCORECARD_TABLE = "CREATE TABLE " + EventEntrantScorecardEntry.TABLE_NAME + " (" + EventEntrantScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + EventEntrantScorecardEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL," + EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " INTEGER NOT NULL," + EventEntrantScorecardEntry.COLUMN_SCORECARD_ID + " INTEGER)";
+        final String SQL_CREATE_EVENTENTRANTSCORECARD_TABLE = "CREATE TABLE " +
+                EventEntrantScorecardEntry.TABLE_NAME + " (" + EventEntrantScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EventEntrantScorecardEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL, " +
+                EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " INTEGER NOT NULL, " +
+                EventEntrantScorecardEntry.COLUMN_SCORECARD_ID + " INTEGER NOT NULL " +
+                ")";
         db.execSQL(SQL_CREATE_EVENTENTRANTSCORECARD_TABLE);
 
 
-        final String SQL_CREATE_SCORECARD_TABLE = "CREATE TABLE " + ScorecardEntry.TABLE_NAME + " (" + ScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + ScorecardEntry.COLUMN_SCORECARD_DESC + " TEXT NOT NULL)";
+        final String SQL_CREATE_SCORECARD_TABLE = "CREATE TABLE " +
+                ScorecardEntry.TABLE_NAME + " (" + ScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ScorecardEntry.COLUMN_ELEMENT + " TEXT DEFAULT 'ELEMENT', " +
+                ScorecardEntry.COLUMN_MAXTIME_M + " TEXT DEFAULT 'MAX TIME MINUTES', " +
+                ScorecardEntry.COLUMN_MAXTIME_S + " TEXT DEFAULT 'MAX TIME SECONDS', " +
+                ScorecardEntry.COLUMN_FINISH_CALL + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_FALSE_ALERT_FRINGE + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_TIMED_OUT + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_DISMISSED + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_EXCUSED + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_ABSENT + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_ELIMINATED_DURING_SEARCH + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_OTHER_FAULTS_DESCR + " TEXT DEFAULT 'DESCRIBE OTHER FAULTS', " +
+                ScorecardEntry.COLUMN_OTHER_FAULTS_COUNT + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_COMMENTS + " TEXT DEFAULT 'COMMENTS', " +
+                ScorecardEntry.COLUMN_TOTAL_TIME + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_PRONOUNCED + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_JUDGE_SIGNATURE + " TEXT DEFAULT 'YES/NO', " +
+                ScorecardEntry.COLUMN_SEARCH_AREA + " TEXT DEFAULT 'SEARCH AREA', " +
+                ScorecardEntry.COLUMN_HIDES_MAX + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_HIDES_FOUND + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_HIDES_MISSED + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_TOTAL_FAULTS + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_MAXPOINT + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_TOTAL_POINTS + " TEXT DEFAULT '0' " +
+                ")";
         db.execSQL(SQL_CREATE_SCORECARD_TABLE);
 
 
-        final String SQL_CREATE_TALLY_TABLE = "CREATE TABLE " + TallyEntry.TABLE_NAME + " (" + TallyEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TallyEntry.COLUMN_TALLY_DESC + " TEXT NOT NULL," + TallyEntry.COLUMN_EVENTID + " INTEGER NOT NULL)";
+        final String SQL_CREATE_TALLY_TABLE = "CREATE TABLE " +
+                TallyEntry.TABLE_NAME + " (" + TallyEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TallyEntry.COLUMN_TOTAL_TIME + " TEXT DEFAULT '0', " +
+                TallyEntry.COLUMN_TOTAL_FAULTS + " TEXT DEFAULT '0', " +
+                TallyEntry.COLUMN_TOTAL_POINTS + " TEXT DEFAULT '0', " +
+                TallyEntry.COLUMN_TITLE + " TEXT DEFAULT 'YES/NO', " +
+                TallyEntry.COLUMN_QUALIFYING_SCORE + " TEXT DEFAULT '0', " +
+                TallyEntry.COLUMN_QUALIFYING_SCORES + " TEXT DEFAULT '0' " +
+                ")";
         db.execSQL(SQL_CREATE_TALLY_TABLE);
+
+        final String SQL_CREATE_EVENTENTRANTTALLY_TABLE = "CREATE TABLE " +
+                EventEntrantTallyEntry.TABLE_NAME + " (" + EventEntrantTallyEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EventEntrantTallyEntry.COLUMN_EVENT_ID + " INTEGER NOT NULL, " +
+                EventEntrantTallyEntry.COLUMN_ENTRANT_ID + " INTEGER NOT NULL, " +
+                EventEntrantTallyEntry.COLUMN_TALLY_ID + " INTEGER NOT NULL" +
+                ")";
+        db.execSQL(SQL_CREATE_EVENTENTRANTTALLY_TABLE);
     }
 
     @Override
@@ -95,6 +191,7 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + EventEntrantScorecardEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ScorecardEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TallyEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + EventEntrantTallyEntry.TABLE_NAME);
         onCreate(db);
     }
 

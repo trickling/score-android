@@ -16,10 +16,10 @@ import com.example.android.scoresheet.app.R;
 public class EventListAdapter extends CursorAdapter {
 
     public static class ViewHolder {
-        public final TextView descriptionView;
+        public final TextView eventNameView;
 
         public ViewHolder(View view) {
-            descriptionView = (TextView) view.findViewById(R.id.list_item_event_textview);
+            eventNameView = (TextView) view.findViewById(R.id.list_item_event_textview);
         }
     }
 
@@ -43,9 +43,9 @@ public class EventListAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        String description = cursor.getString(EventListFragment.COL_EVENT_DESC);
+        String name = cursor.getString(EventListFragment.COL_NAME);
 
-        viewHolder.descriptionView.setText(description);
+        viewHolder.eventNameView.setText(name);
     }
 
 }

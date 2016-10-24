@@ -19,17 +19,31 @@ public class TallyViewFragment extends Fragment{
     public static final String LOG_TAG = TallyViewFragment.class.getSimpleName();
 
     private static final String[] TALLY_COLUMNS = {
-            TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
-            TallyEntry.COLUMN_TALLY_DESC, TallyEntry.COLUMN_EVENTID
+        TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
+        TallyEntry.COLUMN_TOTAL_TIME,
+        TallyEntry.COLUMN_TOTAL_FAULTS,
+        TallyEntry.COLUMN_TOTAL_POINTS,
+        TallyEntry.COLUMN_TITLE,
+        TallyEntry.COLUMN_QUALIFYING_SCORE,
+        TallyEntry.COLUMN_QUALIFYING_SCORES
     };
     public static final int COL_TALLY_ID = 0;
-    public static final int COL_TALLY_DESC = 1;
-    public static final int COL_TALLY_EVID = 2;
+    public static final int COL_TOTAL_TIME = 1;
+    public static final int COL_TOTAL_FAULTS = 2;
+    public static final int COL_TOTAL_POINTS = 3;
+    public static final int COL_TITLE = 4;
+    public static final int COL_QSCORE = 5;
+    public static final int COL_QSCORES = 6;
 
     static final String TALLYVIEW_URI = "URI";
 
     private Uri mUri;
-    private TextView mDescrViewText;
+    private TextView mTotalTimeViewText;
+    private TextView mTotalFaultsViewText;
+    private TextView mTotalPointsViewText;
+    private TextView mTitleViewText;
+    private TextView mQualifyingScoreViewText;
+    private TextView mQualifyingScoresViewText;
 
     public TallyViewFragment() {
         // Required empty public constructor
@@ -47,20 +61,26 @@ public class TallyViewFragment extends Fragment{
             mUri = arguments.getParcelable(TallyViewFragment.TALLYVIEW_URI);
         }
 
-        mDescrViewText = (TextView) rootView.findViewById(R.id.tally_text_view);
+        mTotalTimeViewText = (TextView) rootView.findViewById(R.id.tally_total_time_text_view);
+        mTotalFaultsViewText = (TextView) rootView.findViewById(R.id.tally_total_faults_text_view);
+        mTotalPointsViewText = (TextView) rootView.findViewById(R.id.tally_total_points_text_view);
+        mTitleViewText = (TextView) rootView.findViewById(R.id.tally_title_text_view);
+        mQualifyingScoreViewText = (TextView) rootView.findViewById(R.id.tally_qualifying_score_text_view);
+        mQualifyingScoresViewText = (TextView) rootView.findViewById(R.id.tally_qualifying_scores_text_view);
 
         String sortOrder = TallyEntry._ID + " ASC";
         String selection = TallyEntry._ID + " = ?";
         String[] selectionArgs = {Long.valueOf(TallyEntry.getTallyIdFromUri(mUri)).toString()};
-        String DescrText;
 
         Cursor c = getContext().getContentResolver().query(TallyEntry.CONTENT_URI, TALLY_COLUMNS, selection, selectionArgs, sortOrder);
 
         if(c.moveToFirst()) {
-            DescrText = c.getString(COL_TALLY_DESC);
-            mDescrViewText.setText(DescrText);
-        }else {
-            mDescrViewText.setText("not found");
+            mTotalTimeViewText.setText(c.getString(COL_TOTAL_TIME));
+            mTotalFaultsViewText.setText(c.getString(COL_TOTAL_FAULTS));
+            mTotalPointsViewText.setText(c.getString(COL_TOTAL_POINTS));
+            mTitleViewText.setText(c.getString(COL_TITLE));
+            mQualifyingScoreViewText.setText(c.getString(COL_QSCORE));
+            mQualifyingScoresViewText.setText(c.getString(COL_QSCORES));
         }
 
         return rootView;

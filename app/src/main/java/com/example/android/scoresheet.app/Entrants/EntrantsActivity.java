@@ -29,6 +29,7 @@ public class EntrantsActivity extends AppCompatActivity  implements EntrantListF
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
         if (findViewById(R.id.entrant_view_detail_container) != null) {
             // android.support.v7.app.AppCompatActivity
 

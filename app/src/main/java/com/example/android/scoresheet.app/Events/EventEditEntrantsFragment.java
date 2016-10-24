@@ -20,8 +20,15 @@ import com.example.android.scoresheet.app.R;
 import com.example.android.scoresheet.app.data.ScoreSheetContract;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
+//import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantTallyEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by Kari Stromsland on 9/19/2016.
@@ -39,35 +46,99 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
     private long eventid;
     private long entrantid;
     private long scorecardid;
+    private long tallyid;
     private Boolean event_edit_checked;
     static final String EVENTEDITENTRANTS_URI = "URI";
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
+    private static final String intSAelmt = "Interior";
+    private static final String extSAelmt = "Exterior";
+    private static final String contSAelmt = "Containers";
+    private static final String vehSAelmt = "Vehicles";
+    private static final String eliteSAelmt = "Elite";
 
     private static final int EVENTENTRANTS_LOADER = 0;
 
-    private static final String[] ENTRANT_COLUMNS = {
-            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
-            EntrantEntry.COLUMN_TEAM_DESC
-    };
-    static final int COL_ENTRANT_ID = 0;
-    static final int COL_ENTRANT_DESC = 1;
-
     private static final String[] EVENT_COLUMNS = {
-            EventEntry.TABLE_NAME + "." + EventEntry._ID,
-            EventEntry.COLUMN_SHORT_DESC
+            ScoreSheetContract.EventEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntry._ID,
+            EventEntry.COLUMN_NAME,
+            EventEntry.COLUMN_LOCATION,
+            EventEntry.COLUMN_DATE,
+            EventEntry.COLUMN_HOST,
+            EventEntry.COLUMN_STATUS,
+            EventEntry.COLUMN_DIVISION,
+            EventEntry.COLUMN_INT_SEARCH_AREAS,
+            EventEntry.COLUMN_EXT_SEARCH_AREAS,
+            EventEntry.COLUMN_CONT_SEARCH_AREAS,
+            EventEntry.COLUMN_VEH_SEARCH_AREAS,
+            EventEntry.COLUMN_ELITE_SEARCH_AREAS,
+            EventEntry.COLUMN_INT_HIDES,
+            EventEntry.COLUMN_EXT_HIDES,
+            EventEntry.COLUMN_CONT_HIDES,
+            EventEntry.COLUMN_VEH_HIDES,
+            EventEntry.COLUMN_ELITE_HIDES
     };
     public static final int COL_EVENT_ID = 0;
-    public static final int COL_EVENT_DESC = 1;
+    public static final int COL_NAME = 1;
+    public static final int COL_LOC = 2;
+    public static final int COL_DATE = 3;
+    public static final int COL_HOST = 4;
+    public static final int COL_STATUS = 5;
+    public static final int COL_DIV = 6;
+    public static final int COL_INT_SA = 7;
+    public static final int COL_EXT_SA = 8;
+    public static final int COL_CONT_SA = 9;
+    public static final int COL_VEH_SA = 10;
+    public static final int COL_ELITE_SA = 11;
+    public static final int COL_INT_HD = 12;
+    public static final int COL_EXT_HD = 13;
+    public static final int COL_CONT_HD = 14;
+    public static final int COL_VEH_HD = 15;
+    public static final int COL_ELITE_HD = 16;
 
-    private static final String[] EVENTENTRANT_COLUMNS = {
-            EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
-            EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID
+    private static final String[] ENTRANT_COLUMNS = {
+            EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
+            EntrantEntry.COLUMN_FIRST_NAME,
+            EntrantEntry.COLUMN_LAST_NAME,
+            EntrantEntry.COLUMN_ID_NUMBER,
+            EntrantEntry.COLUMN_DOG_NAME,
+            EntrantEntry.COLUMN_DOG_ID_NUMBER,
+            EntrantEntry.COLUMN_BREED
     };
-    public static final int COL_EVENTENTRANT_ID = 0;
-    public static final int COL_EV_ID = 1;
-    public static final int COL_EN_ID = 2;
+    static final int COL_ENTRANT_ID = 0;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ID = 3;
+    static final int COL_DOG_NAME = 4;
+    static final int COL_DOG_ID = 5;
+    static final int COL_BREED = 6;
+
+
+//    private static final String[] EVENTENTRANT_COLUMNS = {
+//            EventEntrantEntry.TABLE_NAME + "." + EventEntrantEntry._ID,
+//            EventEntrantEntry.COLUMN_EVENT_ID, EventEntrantEntry.COLUMN_ENTRANT_ID
+//    };
+//    public static final int COL_EVENTENTRANT = 0;
+//    public static final int COL_EV_ID = 1;
+//    public static final int COL_EN_ID = 2;
+
+    private static final String[] EVENTENTRANTSCORECARD_COLUMNS = {
+            EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
+            EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
+    };
+    public static final int COL_EVENTENTRANTSCORECARD_ID = 0;
+    public static final int COL_EVSC_ID = 1;
+    public static final int COL_ENSC_ID = 2;
     public static final int COL_SC_ID = 3;
+
+    private static final String[] EVENTENTRANTTALLY_COLUMNS = {
+            EventEntrantTallyEntry.TABLE_NAME + "." + EventEntrantTallyEntry._ID,
+            EventEntrantTallyEntry.COLUMN_EVENT_ID, EventEntrantTallyEntry.COLUMN_ENTRANT_ID, EventEntrantTallyEntry.COLUMN_TALLY_ID
+    };
+    public static final int COL_EVENTENTRANTTALLY_ID = 0;
+    public static final int COL_EVTLY_ID = 1;
+    public static final int COL_ENTLY_ID = 2;
+    public static final int COL_TLY_ID = 3;
 
     public EventEditEntrantsFragment() {
         // Required empty public constructor
@@ -118,32 +189,116 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
                     entrantid = EntrantEntry.getEntrantIdFromUri(mUri);
                     eventid = EventEntry.getEventIdFromUri(eventUri);
                     if (event_edit_checked) {
-                        ContentValues mSCContentValues = new ContentValues();
-                        String scorecardDesc = eventid + " " + entrantid;
-                        mSCContentValues.put(ScorecardEntry.COLUMN_SCORECARD_DESC, scorecardDesc);
-                        Uri scUri = getContext().getContentResolver().insert(ScorecardEntry.buildScorecardUri(), mSCContentValues);
-                        scorecardid = ScorecardEntry.getScorecardIdFromUri(scUri);
-                        ContentValues mEditContentValues = new ContentValues();
-                        mEditContentValues.put(EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, entrantid);
-                        mEditContentValues.put(EventEntrantScorecardEntry.COLUMN_EVENT_ID, eventid);
-                        mEditContentValues.put(EventEntrantScorecardEntry.COLUMN_SCORECARD_ID, scorecardid);
-                        Uri uri = EventEntrantScorecardEntry.buildEventEntrantScorecardUri();
-                        getContext().getContentResolver().insert(EventEntrantScorecardEntry.buildEventEntrantScorecardUri(), mEditContentValues);
+                        // For each type and number of search areas, create a scorecard
+                        // Get search area count and hide info from Event
+                        String sortOrder = EventEntry._ID + " ASC";
+                        String selection = EventEntry._ID + " = ?";
+                        String[] selectionArgs = {Long.valueOf(eventid).toString()};
+                        Cursor c = getContext().getContentResolver().query(EventEntry.CONTENT_URI, EVENT_COLUMNS, selection, selectionArgs, sortOrder);
+
+                        Hashtable<String, Integer> searchAreas = new Hashtable<String, Integer>();
+
+                        if (c.moveToFirst()) {
+                            searchAreas.put(intSAelmt, Integer.decode(c.getString(COL_INT_SA)));
+                            searchAreas.put(extSAelmt, Integer.decode(c.getString(COL_EXT_SA)));
+                            searchAreas.put(contSAelmt, Integer.decode(c.getString(COL_CONT_SA)));
+                            searchAreas.put(vehSAelmt, Integer.decode(c.getString(COL_VEH_SA)));
+                            searchAreas.put(eliteSAelmt, Integer.decode(c.getString(COL_ELITE_SA)));
+
+                        }
+                        Set<String> keys = searchAreas.keySet();
+
+                        Iterator<String> itr = keys.iterator();
+
+                        while (itr.hasNext()){
+                            String keySA = itr.next();
+                            ContentValues mSCContentValues = new ContentValues();
+                            if(searchAreas.get(keySA)>0) {
+                                switch (keySA) {
+                                    case intSAelmt:
+                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, intSAelmt + " " + searchAreas.get(keySA));
+                                        break;
+                                    case extSAelmt:
+                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, extSAelmt + " " + searchAreas.get(keySA));
+                                        break;
+                                    case contSAelmt:
+                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, contSAelmt + " " + searchAreas.get(keySA));
+                                        break;
+                                    case vehSAelmt:
+                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, vehSAelmt + " " + searchAreas.get(keySA));
+                                        break;
+                                    case eliteSAelmt:
+                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, eliteSAelmt + " " + searchAreas.get(keySA));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                Uri scUri = getContext().getContentResolver().insert(ScorecardEntry.buildScorecardUri(), mSCContentValues);
+                                scorecardid = ScorecardEntry.getScorecardIdFromUri(scUri);
+                                ContentValues mscEditContentValues = new ContentValues();
+                                mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, entrantid);
+                                mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_EVENT_ID, eventid);
+                                mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_SCORECARD_ID, scorecardid);
+//                                Uri uri_SC = EventEntrantScorecardEntry.buildEventEntrantScorecardUri();
+                                getContext().getContentResolver().insert(EventEntrantScorecardEntry.buildEventEntrantScorecardUri(), mscEditContentValues);
+                            }
+                        }
+
+                        ContentValues mTLYContentValues = new ContentValues();
+                        String tallyTitle = eventid + " " + entrantid + " tally";
+                        mTLYContentValues.put(TallyEntry.COLUMN_TITLE, tallyTitle);
+                        Uri tlyUri = getContext().getContentResolver().insert(TallyEntry.buildTallyUri(), mTLYContentValues);
+                        tallyid = TallyEntry.getTallyIdFromUri(tlyUri);
+                        ContentValues mtlyEditContentValues = new ContentValues();
+                        mtlyEditContentValues.put(EventEntrantTallyEntry.COLUMN_ENTRANT_ID, entrantid);
+                        mtlyEditContentValues.put(EventEntrantTallyEntry.COLUMN_EVENT_ID, eventid);
+                        mtlyEditContentValues.put(EventEntrantTallyEntry.COLUMN_TALLY_ID, tallyid);
+                        Uri uri_TLY = EventEntrantTallyEntry.buildEventEntrantTallyUri();
+                        getContext().getContentResolver().insert(EventEntrantTallyEntry.buildEventEntrantTallyUri(), mtlyEditContentValues);
+//                        ContentValues mevenEditContentValues = new ContentValues();
+//                        mevenEditContentValues.put(EventEntrantEntry.COLUMN_EVENT_ID, eventid);
+//                        mevenEditContentValues.put(EventEntrantEntry.COLUMN_ENTRANT_ID, entrantid);
+
+
                     }else{
+
                         String sortOrder = EventEntrantScorecardEntry._ID + " ASC";
                         String selection = EventEntrantScorecardEntry.COLUMN_ENTRANT_ID + " = ?" + " AND " + EventEntrantScorecardEntry.COLUMN_EVENT_ID + " = ?";
-                        Uri uri = EventEntrantScorecardEntry.buildIdEventEntrantScorecard(Long.valueOf(eventid).toString(), Long.valueOf(entrantid).toString());
+                        Uri evenScUri = EventEntrantScorecardEntry.buildIdEventEntrantScorecard(Long.valueOf(eventid).toString(), Long.valueOf(entrantid).toString());
                         String[] selectionArgs = {Long.valueOf(entrantid).toString(), Long.valueOf(eventid).toString()};
-                        Cursor c = getContext().getContentResolver().query(uri, EVENTENTRANT_COLUMNS, selection, selectionArgs, sortOrder);
-                        if(c.moveToFirst()) {
-                            long scorecard_id = c.getLong(COL_SC_ID);
-                            long evententrant_id = c.getLong(COL_EVENTENTRANT_ID);
-                            String scSelection = ScorecardEntry._ID + " = ?";
-                            String[] scSelectionArgs = {Long.valueOf(scorecard_id).toString()};
-                            String dSelection = EventEntrantScorecardEntry._ID + " = ?";
-                            String[] dSelectionArgs = {Long.valueOf(evententrant_id).toString()};
-                            getContext().getContentResolver().delete(ScorecardEntry.CONTENT_URI, scSelection, scSelectionArgs);
-                            getContext().getContentResolver().delete(EventEntrantScorecardEntry.CONTENT_URI, dSelection, dSelectionArgs);
+                        Cursor cScd = getContext().getContentResolver().query(EventEntrantScorecardEntry.CONTENT_URI, EVENTENTRANTSCORECARD_COLUMNS, selection, selectionArgs, sortOrder);
+
+                        if(cScd.moveToFirst()) {
+                            do {
+                                long scorecard_id = cScd.getLong(COL_SC_ID);
+                                long evententrant_id = cScd.getLong(COL_EVENTENTRANTSCORECARD_ID);
+                                String scSelection = ScorecardEntry._ID + " = ?";
+                                String[] scSelectionArgs = {Long.valueOf(scorecard_id).toString()};
+                                String dSelection = EventEntrantScorecardEntry._ID + " = ?";
+                                String[] dSelectionArgs = {Long.valueOf(evententrant_id).toString()};
+                                getContext().getContentResolver().delete(ScorecardEntry.CONTENT_URI, scSelection, scSelectionArgs);
+                                getContext().getContentResolver().delete(EventEntrantScorecardEntry.CONTENT_URI, dSelection, dSelectionArgs);
+                                cScd.moveToNext();
+                            }while(!cScd.isAfterLast());
+                        }
+
+                        String tlySortOrder = EventEntrantTallyEntry._ID + " ASC";
+                        String evenTlySelection = EventEntrantTallyEntry.COLUMN_ENTRANT_ID + " = ?" + " AND " + EventEntrantTallyEntry.COLUMN_EVENT_ID + " = ?";
+                        Uri evenTlyUri = EventEntrantTallyEntry.buildIdEventEntrantTally(Long.valueOf(eventid).toString(), Long.valueOf(entrantid).toString());
+                        String[] evenTlySelectionArgs = {Long.valueOf(entrantid).toString(), Long.valueOf(eventid).toString()};
+                        Cursor cTly = getContext().getContentResolver().query(EventEntrantTallyEntry.CONTENT_URI, EVENTENTRANTTALLY_COLUMNS, evenTlySelection, evenTlySelectionArgs, sortOrder);
+                        if(cTly.moveToFirst()) {
+                            do {
+                                long tally_id = cTly.getLong(COL_TLY_ID);
+                                long evententrant_id = cTly.getLong(COL_EVENTENTRANTTALLY_ID);
+                                String tlySelection = TallyEntry._ID + " = ?";
+                                String[] tlySelectionArgs = {Long.valueOf(tally_id).toString()};
+                                String dtlySelection = EventEntrantTallyEntry._ID + " = ?";
+                                String[] dtlySelectionArgs = {Long.valueOf(evententrant_id).toString()};
+                                getContext().getContentResolver().delete(TallyEntry.CONTENT_URI, tlySelection, tlySelectionArgs);
+                                getContext().getContentResolver().delete(EventEntrantTallyEntry.CONTENT_URI, dtlySelection, dtlySelectionArgs);
+                                cTly.moveToNext();
+                            } while (!cTly.isAfterLast());
                         }
                     }
                 }
@@ -211,7 +366,7 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = EntrantEntry.COLUMN_TEAM_DESC + " ASC";
+        String sortOrder = EntrantEntry.COLUMN_FIRST_NAME + " ASC";
 
         // CursorLoader is a loader that queries the ContentResolver and returns a Cursor.  This class implements
         // the Loader protocol in a standard way for querying cursors, building on AsyncTaskLoader to perform

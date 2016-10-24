@@ -8,8 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.android.scoresheet.app.Entrants.EntrantViewDetailActivity;
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.Scorecards.ScorecardEditActivity;
-import com.example.android.scoresheet.app.Scorecards.ScorecardViewActivity;
+import com.example.android.scoresheet.app.ResultsActivity;
+import com.example.android.scoresheet.app.Scorecards.ScorecardsActivity;
 import com.example.android.scoresheet.app.Tallies.TallyViewActivity;
 
 /**
@@ -85,9 +85,9 @@ public class EventEntrantDetailActivity extends AppCompatActivity implements Eve
     }
 
     @Override
-    public void onTallyItemSelected(Uri contentUri) {
+    public void onResultsItemSelected(Uri contentUri) {
         // Callback from EventEntrantDetailFragment to implement data updates to EventViewDetailFragment
-        Intent intent = new Intent(this, TallyViewActivity.class)
+        Intent intent = new Intent(this, ResultsActivity.class)
                 .setData(contentUri);
         startActivity(intent);
     }
@@ -102,17 +102,24 @@ public class EventEntrantDetailActivity extends AppCompatActivity implements Eve
 
     @Override
     public void onEntrantScorecardSelected(Uri contentUri){
-        Intent intent = new Intent(this, ScorecardViewActivity.class)
+        Intent intent = new Intent(this, ScorecardsActivity.class)
                 .setData(contentUri);
         startActivity(intent);
     }
 
     @Override
-    public void onEntrantScorecardSelectedtoRun(Uri contentUri){
-        Intent intent = new Intent(this, ScorecardEditActivity.class)
+    public void onEntrantTallySelected(Uri contentUri){
+        Intent intent = new Intent(this, TallyViewActivity.class)
                 .setData(contentUri);
-        startActivity(intent);
 
+        startActivity(intent);
     }
+
+//    @Override
+//    public void onEntrantScorecardSelectedtoRun(Uri contentUri){
+//        Intent intent = new Intent(this, ScorecardEditActivity.class)
+//                .setData(contentUri);
+//        startActivity(intent);
+//    }
 
 }

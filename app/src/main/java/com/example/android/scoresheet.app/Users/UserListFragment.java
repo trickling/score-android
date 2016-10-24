@@ -27,7 +27,6 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     private UserListAdapter mUserListAdapter;
     private ListView mListView;
     private Uri mUri;
-    private String DescrText = new String("");
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
 
@@ -35,10 +34,22 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
 
     private static final String[] USER_COLUMNS = {
             UserEntry.TABLE_NAME + "." + UserEntry._ID,
-            UserEntry.COLUMN_USER_DESC
+            UserEntry.COLUMN_FIRST_NAME,
+            UserEntry.COLUMN_LAST_NAME,
+            UserEntry.COLUMN_ROLE,
+            UserEntry.COLUMN_APPROVED,
+            UserEntry.COLUMN_STATUS,
+            UserEntry.COLUMN_EMAIL,
+            UserEntry.COLUMN_PASSWORD
     };
     static final int COL_USER_ID = 0;
-    static final int COL_USER_DESC = 1;
+    static final int COL_FIRST_NAME = 1;
+    static final int COL_LAST_NAME = 2;
+    static final int COL_ROLE = 3;
+    static final int COL_APPROVED = 4;
+    static final int COL_STATUS = 5;
+    static final int COL_EMAIL = 6;
+    static final int COL_PASSWD = 7;
 
 
     public interface Callback {
@@ -66,7 +77,7 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        mUri = UserEntry.buildUserDescUri(mUserListAdapter.getCursor().getString(COL_USER_DESC));
+        mUri = UserEntry.buildUserIdUri(mUserListAdapter.getCursor().getLong(COL_USER_ID));
         switch (item.getItemId()) {
             case R.id.edit:
                 editUser(mUri, info.id);
@@ -80,8 +91,8 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void deleteUser(Uri itemUri, long l){
-        String selection = UserEntry.COLUMN_USER_DESC + " = ?";
-        String[] selectionArgs = {UserEntry.getUserDescFromUri(mUri)};
+        String selection = UserEntry._ID + " = ?";
+        String[] selectionArgs = {Long.valueOf(UserEntry.getUserIdFromUri(mUri)).toString()};
         getContext().getContentResolver().delete(UserEntry.CONTENT_URI, selection, selectionArgs);
     }
 
@@ -109,7 +120,7 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
 
                 if (cursor != null) {
-                    ((Callback) getActivity()).onItemSelected(UserEntry.buildUserDescUri(cursor.getString(COL_USER_DESC)));
+                    ((Callback) getActivity()).onItemSelected(UserEntry.buildUserIdUri(cursor.getLong(COL_USER_ID)));
                 }
                 mPosition = position;
             }
@@ -156,7 +167,7 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = UserEntry.COLUMN_USER_DESC + " ASC";
+        String sortOrder = UserEntry.COLUMN_FIRST_NAME + " ASC";
         return new CursorLoader(getActivity(), UserEntry.CONTENT_URI, USER_COLUMNS, null, null, sortOrder);
     }
 
