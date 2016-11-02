@@ -42,7 +42,7 @@ import java.util.ArrayList;
 public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 14;
+    public static final int DATABASE_VERSION = 17;
 
     public static final String DATABASE_NAME = "scoresheet.db";
 
@@ -57,12 +57,12 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_EVENT_TABLE = "CREATE TABLE " +
                 EventEntry.TABLE_NAME + " (" + EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                EventEntry.COLUMN_NAME + " TEXT DEFAULT 'NAME', " +
-                EventEntry.COLUMN_LOCATION + " TEXT DEFAULT 'LOCATION', " +
-                EventEntry.COLUMN_DATE + " TEXT DEFAULT 'DATE', " +
-                EventEntry.COLUMN_HOST + " TEXT DEFAULT 'HOST', " +
-                EventEntry.COLUMN_STATUS + " TEXT DEFAULT 'STATUS', " +
-                EventEntry.COLUMN_DIVISION + " TEXT DEFAULT 'DIVISION', " +
+                EventEntry.COLUMN_NAME + " TEXT DEFAULT 'Name', " +
+                EventEntry.COLUMN_LOCATION + " TEXT DEFAULT 'Location', " +
+                EventEntry.COLUMN_DATE + " TEXT DEFAULT 'Date', " +
+                EventEntry.COLUMN_HOST + " TEXT DEFAULT 'Host', " +
+                EventEntry.COLUMN_STATUS + " TEXT DEFAULT 'active', " +
+                EventEntry.COLUMN_DIVISION + " TEXT DEFAULT 'NW', " +
                 EventEntry.COLUMN_INT_SEARCH_AREAS + " TEXT DEFAULT '0', " +
                 EventEntry.COLUMN_EXT_SEARCH_AREAS + " TEXT DEFAULT '0', " +
                 EventEntry.COLUMN_CONT_SEARCH_AREAS + " TEXT DEFAULT '0', " +
@@ -79,12 +79,12 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_ENTRANT_TABLE = "CREATE TABLE " +
                 EntrantEntry.TABLE_NAME + " (" + EntrantEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                EntrantEntry.COLUMN_FIRST_NAME + " TEXT DEFAULT 'FIRST NAME', " +
-                EntrantEntry.COLUMN_LAST_NAME + " TEXT DEFAULT 'LAST NAME', " +
+                EntrantEntry.COLUMN_FIRST_NAME + " TEXT DEFAULT 'First Name', " +
+                EntrantEntry.COLUMN_LAST_NAME + " TEXT DEFAULT 'Last Name', " +
                 EntrantEntry.COLUMN_ID_NUMBER + " TEXT DEFAULT '0', " +
-                EntrantEntry.COLUMN_DOG_NAME + " TEXT DEFAULT 'DOG NAME', " +
+                EntrantEntry.COLUMN_DOG_NAME + " TEXT DEFAULT 'Dog Name', " +
                 EntrantEntry.COLUMN_DOG_ID_NUMBER + " TEXT DEFAULT '0', " +
-                EntrantEntry.COLUMN_BREED + " TEXT DEFAULT 'BREED' " +
+                EntrantEntry.COLUMN_BREED + " TEXT DEFAULT 'Breed' " +
                 ")";
         db.execSQL(SQL_CREATE_ENTRANT_TABLE);
 
@@ -99,13 +99,13 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_USER_TABLE = "CREATE TABLE " +
                 UserEntry.TABLE_NAME + " (" + UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                UserEntry.COLUMN_FIRST_NAME + " TEXT DEFAULT 'FIRST NAME', " +
-                UserEntry.COLUMN_LAST_NAME + " TEXT DEFAULT 'LAST NAME', " +
-                UserEntry.COLUMN_ROLE + " TEXT DEFAULT 'ROLE', " +
-                UserEntry.COLUMN_APPROVED + " TEXT DEFAULT 'APPROVED', " +
-                UserEntry.COLUMN_STATUS + " TEXT DEFAULT 'ACTIVE/INACTIVE', " +
-                UserEntry.COLUMN_EMAIL + " TEXT DEFAULT 'EMAIL', " +
-                UserEntry.COLUMN_PASSWORD + " TEXT DEFAULT 'PASSWORD' " +
+                UserEntry.COLUMN_FIRST_NAME + " TEXT DEFAULT 'First Name', " +
+                UserEntry.COLUMN_LAST_NAME + " TEXT DEFAULT 'Last Name', " +
+                UserEntry.COLUMN_ROLE + " TEXT DEFAULT 'Role', " +
+                UserEntry.COLUMN_APPROVED + " TEXT DEFAULT 'Approved', " +
+                UserEntry.COLUMN_STATUS + " TEXT DEFAULT 'active', " +
+                UserEntry.COLUMN_EMAIL + " TEXT DEFAULT 'email', " +
+                UserEntry.COLUMN_PASSWORD + " TEXT DEFAULT 'password' " +
                 ")";
         db.execSQL(SQL_CREATE_USER_TABLE);
 
@@ -129,24 +129,24 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_SCORECARD_TABLE = "CREATE TABLE " +
                 ScorecardEntry.TABLE_NAME + " (" + ScorecardEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ScorecardEntry.COLUMN_ELEMENT + " TEXT DEFAULT 'ELEMENT', " +
-                ScorecardEntry.COLUMN_MAXTIME_M + " TEXT DEFAULT 'MAX TIME MINUTES', " +
-                ScorecardEntry.COLUMN_MAXTIME_S + " TEXT DEFAULT 'MAX TIME SECONDS', " +
-                ScorecardEntry.COLUMN_FINISH_CALL + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_FALSE_ALERT_FRINGE + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_TIMED_OUT + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_DISMISSED + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_EXCUSED + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_ABSENT + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_ELIMINATED_DURING_SEARCH + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_OTHER_FAULTS_DESCR + " TEXT DEFAULT 'DESCRIBE OTHER FAULTS', " +
+                ScorecardEntry.COLUMN_ELEMENT + " TEXT DEFAULT 'Element', " +
+                ScorecardEntry.COLUMN_MAXTIME_M + " TEXT DEFAULT '00', " +
+                ScorecardEntry.COLUMN_MAXTIME_S + " TEXT DEFAULT '00', " +
+                ScorecardEntry.COLUMN_FINISH_CALL + " TEXT DEFAULT 'yes', " +
+                ScorecardEntry.COLUMN_FALSE_ALERT_FRINGE + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_TIMED_OUT + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_DISMISSED + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_EXCUSED + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_ABSENT + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_ELIMINATED_DURING_SEARCH + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_OTHER_FAULTS_DESCR + " TEXT DEFAULT 'Describe...', " +
                 ScorecardEntry.COLUMN_OTHER_FAULTS_COUNT + " TEXT DEFAULT '0', " +
-                ScorecardEntry.COLUMN_COMMENTS + " TEXT DEFAULT 'COMMENTS', " +
+                ScorecardEntry.COLUMN_COMMENTS + " TEXT DEFAULT 'Comments...', " +
                 ScorecardEntry.COLUMN_TOTAL_TIME + " TEXT DEFAULT '0', " +
-                ScorecardEntry.COLUMN_PRONOUNCED + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_JUDGE_SIGNATURE + " TEXT DEFAULT 'YES/NO', " +
-                ScorecardEntry.COLUMN_SEARCH_AREA + " TEXT DEFAULT 'SEARCH AREA', " +
-                ScorecardEntry.COLUMN_HIDES_MAX + " TEXT DEFAULT '0', " +
+                ScorecardEntry.COLUMN_PRONOUNCED + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_JUDGE_SIGNATURE + " TEXT DEFAULT 'no', " +
+                ScorecardEntry.COLUMN_SEARCH_AREA + " TEXT DEFAULT '1', " +
+                ScorecardEntry.COLUMN_HIDES_MAX + " TEXT DEFAULT '1', " +
                 ScorecardEntry.COLUMN_HIDES_FOUND + " TEXT DEFAULT '0', " +
                 ScorecardEntry.COLUMN_HIDES_MISSED + " TEXT DEFAULT '0', " +
                 ScorecardEntry.COLUMN_TOTAL_FAULTS + " TEXT DEFAULT '0', " +
@@ -161,7 +161,7 @@ public class ScoreSheetDbHelper extends SQLiteOpenHelper {
                 TallyEntry.COLUMN_TOTAL_TIME + " TEXT DEFAULT '0', " +
                 TallyEntry.COLUMN_TOTAL_FAULTS + " TEXT DEFAULT '0', " +
                 TallyEntry.COLUMN_TOTAL_POINTS + " TEXT DEFAULT '0', " +
-                TallyEntry.COLUMN_TITLE + " TEXT DEFAULT 'YES/NO', " +
+                TallyEntry.COLUMN_TITLE + " TEXT DEFAULT 'no', " +
                 TallyEntry.COLUMN_QUALIFYING_SCORE + " TEXT DEFAULT '0', " +
                 TallyEntry.COLUMN_QUALIFYING_SCORES + " TEXT DEFAULT '0' " +
                 ")";

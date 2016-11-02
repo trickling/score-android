@@ -21,15 +21,15 @@
                 android:layout_height="100px"
                 android:id="@+id/tallyTotalTimeHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/tallyTotalTimeLabel" />
+                android:text="@string/tallyTotalTimeLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/tally_total_time_text_edit"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -46,15 +46,15 @@
                 android:layout_height="100px"
                 android:id="@+id/tallyTotalFaultsHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/tallyTotalFaultsLabel" />
+                android:text="@string/tallyTotalFaultsLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/tally_total_faults_text_edit"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -71,15 +71,15 @@
                 android:layout_height="100px"
                 android:id="@+id/tallyTotalPointsHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/tallyTotalPointsLabel" />
+                android:text="@string/tallyTotalPointsLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/tally_total_points_text_edit"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -96,15 +96,15 @@
                 android:layout_height="100px"
                 android:id="@+id/tallyTitleHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/tallyTitleLabel" />
+                android:text="@string/tallyTitleLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/tally_title_text_edit"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -121,15 +121,15 @@
                 android:layout_height="100px"
                 android:id="@+id/tallyQualScoreHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/tallyQualScoreLabel" />
+                android:text="@string/tallyQualScoreLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/tally_qualifying_score_text_edit"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -146,15 +146,15 @@
                 android:layout_height="100px"
                 android:id="@+id/tallyQualScoresHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/tallyQualScoresLabel" />
+                android:text="@string/tallyQualScoresLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/tally_qualifying_scores_text_edit"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />

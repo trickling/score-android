@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/Base.TextAppearance.AppCompat.Medium">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,307 +21,320 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_gravity="center_horizontal" />
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:gravity="center_vertical"
+                android:id="@+id/event_loc_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_date_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300px" >
+            <ListView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical"
-                    android:id="@+id/event_loc_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_date_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:id="@+id/listview_user_events" />
+        </FrameLayout>
 
-            </LinearLayout>
-
-            <FrameLayout
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditHostHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventHostLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="300px" >
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/listview_user_events" />
-            </FrameLayout>
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_host_text_view"
+                android:text="test"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditStatusHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventStatusLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditHostHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventHostLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_host_text_view"
-                    android:text="test"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_status_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventDivisionHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventDivLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditStatusHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventStatusLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_status_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_division_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditIntSaHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/eventIntSaLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventDivisionHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventDivLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_division_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_int_sa_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditExtSaHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/eventExtSaLabel" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditIntSaHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventIntSaLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_int_sa_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_ext_sa_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditContSaHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventContSaLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditExtSaHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventExtSaLabel" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_cont_sa_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_ext_sa_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+        </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditVehSaHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventVehSaLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditContSaHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventContSaLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_cont_sa_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_veh_sa_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditEliteSaHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventEliteSaLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditVehSaHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventVehSaLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_veh_sa_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_elite_sa_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditIntHdHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventIntHdLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditEliteSaHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventEliteSaLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_elite_sa_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_int_hd_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditExtHdHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventExtHdLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditIntHdHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventIntHdLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_int_hd_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_ext_hd_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditContHdHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventContHdLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditExtHdHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventExtHdLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_ext_hd_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_cont_hd_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditVehHdHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:text="@string/eventVehHdLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditContHdHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventContHdLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_cont_hd_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_veh_hd_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:id="@+id/eventEditEliteHdHeader"
+                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
+                android:text="@string/eventEliteHdLabel" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditVehHdHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventVehHdLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_veh_hd_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100px"
-                    android:id="@+id/eventEditEliteHdHeader"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:text="@string/eventEliteHdLabel" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/event_elite_hd_text_view"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
+                android:layout_height="100px"
+                android:gravity="center_vertical|right"
+                android:id="@+id/event_elite_hd_text_view"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
 
     </LinearLayout>
 

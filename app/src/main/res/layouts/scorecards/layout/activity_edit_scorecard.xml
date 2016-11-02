@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/scorecard_edit_container"
     tools:ignore="MergeRootFrame" >
@@ -16,5 +17,14 @@
         android:titleTextColor="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+    <!--<fragment-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/fragment_stopwatch"-->
+        <!--android:name="com.example.android.scoresheet.app.Scorecards.StopwatchFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--tools:context=".Scorecards.StopwatchFragment"-->
+        <!--tools:layout="@layout/fragment_edit_scorecard" />-->
 
 </LinearLayout>

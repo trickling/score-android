@@ -16,10 +16,12 @@ import com.example.android.scoresheet.app.R;
 public class EntrantListAdapter extends CursorAdapter {
 
     public static class ViewHolder {
-        public final TextView entrantdescriptionView;
+        public final TextView entrantfirstnameView;
+        public final TextView entrantlastnameView;
 
         public ViewHolder(View view) {
-            entrantdescriptionView = (TextView) view.findViewById(R.id.list_item_first_name_textview);
+            entrantfirstnameView = (TextView) view.findViewById(R.id.list_item_first_name_textview);
+            entrantlastnameView = (TextView) view.findViewById(R.id.list_item_last_name_textview);
         }
     }
 
@@ -43,8 +45,10 @@ public class EntrantListAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        String description = cursor.getString(EntrantListFragment.COL_FIRST_NAME);
+        String firstname = cursor.getString(EntrantListFragment.COL_FIRST_NAME);
+        String lastname = cursor.getString(EntrantListFragment.COL_LAST_NAME);
 
-        viewHolder.entrantdescriptionView.setText(description);
+        viewHolder.entrantfirstnameView.setText(firstname);
+        viewHolder.entrantlastnameView.setText(lastname);
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.scoresheet.app.R;
+import com.example.android.scoresheet.app.Utilities;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
 
 /**
@@ -17,6 +18,8 @@ import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
  */
 public class TallyViewFragment extends Fragment{
     public static final String LOG_TAG = TallyViewFragment.class.getSimpleName();
+    static final String TALLYVIEW_URI = "URI";
+    private Uri mUri;
 
     private static final String[] TALLY_COLUMNS = {
         TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
@@ -35,9 +38,6 @@ public class TallyViewFragment extends Fragment{
     public static final int COL_QSCORE = 5;
     public static final int COL_QSCORES = 6;
 
-    static final String TALLYVIEW_URI = "URI";
-
-    private Uri mUri;
     private TextView mTotalTimeViewText;
     private TextView mTotalFaultsViewText;
     private TextView mTotalPointsViewText;
@@ -67,6 +67,8 @@ public class TallyViewFragment extends Fragment{
         mTitleViewText = (TextView) rootView.findViewById(R.id.tally_title_text_view);
         mQualifyingScoreViewText = (TextView) rootView.findViewById(R.id.tally_qualifying_score_text_view);
         mQualifyingScoresViewText = (TextView) rootView.findViewById(R.id.tally_qualifying_scores_text_view);
+
+        Utilities.getTally(getContext(), Long.valueOf(TallyEntry.getTallyIdFromUri(mUri)).toString());
 
         String sortOrder = TallyEntry._ID + " ASC";
         String selection = TallyEntry._ID + " = ?";

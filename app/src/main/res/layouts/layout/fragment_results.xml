@@ -8,11 +8,11 @@
     android:paddingRight="20dp"
     tools:context="ResultsFragment">
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:id="@+id/results_textview"
-        android:layout_gravity="center_horizontal"
+        android:id="@+id/placing_list_view"
         style="@style/Base.TextAppearance.AppCompat.Medium" />
+
 </LinearLayout>

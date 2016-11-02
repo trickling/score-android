@@ -18,6 +18,9 @@ public class EntrantViewDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_view_entrant);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setElevation(0f);
@@ -36,4 +39,15 @@ public class EntrantViewDetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // Respond to the action bar's Up/Home button
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

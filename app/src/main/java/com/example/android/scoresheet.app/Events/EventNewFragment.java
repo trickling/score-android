@@ -1,6 +1,7 @@
 package com.example.android.scoresheet.app.Events;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ public class EventNewFragment extends Fragment{
     public static final String LOG_TAG = EventNewFragment.class.getSimpleName();
     private Uri mUri;
     private Uri newUri;
+    static final String EVENTNEW_URI = "URI";
 
 //    private static final int EVENT_LOADER = 0;
 
@@ -63,8 +65,6 @@ public class EventNewFragment extends Fragment{
     public static final int COL_VEH_HD = 15;
     public static final int COL_ELITE_HD = 16;
 
-    static final String EVENTNEW_URI = "URI";
-
     private TextView mNameNewText;
     private TextView mLocationNewText;
     private TextView mDateNewText;
@@ -90,6 +90,10 @@ public class EventNewFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mUri = arguments.getParcelable(EventNewFragment.EVENTNEW_URI);
+        }
 
         View rootView = inflater.inflate(R.layout.fragment_new_event, container, false);
 
@@ -126,7 +130,7 @@ public class EventNewFragment extends Fragment{
                 mNewContentValues.put(EventEntry.COLUMN_INT_SEARCH_AREAS, mIntSearchAreasNewText.getText().toString());
                 mNewContentValues.put(EventEntry.COLUMN_EXT_SEARCH_AREAS, mExtSearchAreasNewText.getText().toString());
                 mNewContentValues.put(EventEntry.COLUMN_CONT_SEARCH_AREAS, mContSearchAreasNewText.getText().toString());
-                mNewContentValues.put(EventEntry.COLUMN_VEH_SEARCH_AREAS, mContSearchAreasNewText.getText().toString());
+                mNewContentValues.put(EventEntry.COLUMN_VEH_SEARCH_AREAS, mVehSearchAreasNewText.getText().toString());
                 mNewContentValues.put(EventEntry.COLUMN_ELITE_SEARCH_AREAS, mEliteSearchAreasNewText.getText().toString());
                 mNewContentValues.put(EventEntry.COLUMN_INT_HIDES, mIntHidesNewText.getText().toString());
                 mNewContentValues.put(EventEntry.COLUMN_EXT_HIDES, mExtHidesNewText.getText().toString());
@@ -135,6 +139,8 @@ public class EventNewFragment extends Fragment{
                 mNewContentValues.put(EventEntry.COLUMN_ELITE_HIDES, mEliteHidesNewText.getText().toString());
                 newUri = getContext().getContentResolver().insert(EventEntry.CONTENT_URI, mNewContentValues);
 
+                Intent intent = new Intent(getContext(), EventViewDetailActivity.class).setData(newUri);
+                startActivity(intent);
             }
         };
 

@@ -73,6 +73,74 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
     static final int COL_DOG_ID = 5;
     static final int COL_BREED = 6;
 
+    private static final String[] SCORECARD_COLUMNS = {
+            ScorecardEntry.TABLE_NAME + "." + ScorecardEntry._ID,
+            ScorecardEntry.COLUMN_ELEMENT,
+            ScorecardEntry.COLUMN_MAXTIME_M,
+            ScorecardEntry.COLUMN_MAXTIME_S,
+            ScorecardEntry.COLUMN_FINISH_CALL,
+            ScorecardEntry.COLUMN_FALSE_ALERT_FRINGE,
+            ScorecardEntry.COLUMN_TIMED_OUT,
+            ScorecardEntry.COLUMN_DISMISSED,
+            ScorecardEntry.COLUMN_EXCUSED,
+            ScorecardEntry.COLUMN_ABSENT,
+            ScorecardEntry.COLUMN_ELIMINATED_DURING_SEARCH,
+            ScorecardEntry.COLUMN_OTHER_FAULTS_DESCR,
+            ScorecardEntry.COLUMN_OTHER_FAULTS_COUNT,
+            ScorecardEntry.COLUMN_COMMENTS,
+            ScorecardEntry.COLUMN_TOTAL_TIME,
+            ScorecardEntry.COLUMN_PRONOUNCED,
+            ScorecardEntry.COLUMN_JUDGE_SIGNATURE,
+            ScorecardEntry.COLUMN_SEARCH_AREA,
+            ScorecardEntry.COLUMN_HIDES_MAX,
+            ScorecardEntry.COLUMN_HIDES_FOUND,
+            ScorecardEntry.COLUMN_HIDES_MISSED,
+            ScorecardEntry.COLUMN_TOTAL_FAULTS,
+            ScorecardEntry.COLUMN_MAXPOINT,
+            ScorecardEntry.COLUMN_TOTAL_POINTS
+    };
+    static final int COL_SCORECARD_ID = 0;
+    static final int COL_ELEMENT = 1;
+    static final int COL_MAXTM = 2;
+    static final int COL_MAXTS = 3;
+    static final int COL_FINCALL = 4;
+    static final int COL_FAF = 5;
+    static final int COL_TIMEOUT = 6;
+    static final int COL_DISMISSED = 7;
+    static final int COL_EXCUSED = 8;
+    static final int COL_ABSENT = 9;
+    static final int COL_EDS = 10;
+    static final int COL_OFD = 11;
+    static final int COL_OFC = 12;
+    static final int COL_COMMENTS = 13;
+    static final int COL_TOTALT = 14;
+    static final int COL_PRON = 15;
+    static final int COL_JS = 16;
+    static final int COL_SA = 17;
+    static final int COL_HDMAX = 18;
+    static final int COL_HDFOUND = 19;
+    static final int COL_HDMISSED = 20;
+    static final int COL_TOTALFLTS = 21;
+    static final int COL_MAXPT = 22;
+    static final int COL_TOTALPTS = 23;
+
+    private static final String[] TALLY_COLUMNS = {
+            TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
+            TallyEntry.COLUMN_TOTAL_TIME,
+            TallyEntry.COLUMN_TOTAL_FAULTS,
+            TallyEntry.COLUMN_TOTAL_POINTS,
+            TallyEntry.COLUMN_TITLE,
+            TallyEntry.COLUMN_QUALIFYING_SCORE,
+            TallyEntry.COLUMN_QUALIFYING_SCORES
+    };
+    public static final int COL_TALLY_ID = 0;
+    public static final int COL_TOTAL_TIME = 1;
+    public static final int COL_TOTAL_FAULTS = 2;
+    public static final int COL_TOTAL_POINTS = 3;
+    public static final int COL_TITLE = 4;
+    public static final int COL_QSCORE = 5;
+    public static final int COL_QSCORES = 6;
+
     private static final String[] EVENTENTRANTSCORECARD_COLUMNS = {
             EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
             EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
@@ -156,7 +224,6 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
                 viewTeamDetail(EnUri, info.id);
                 return true;
             case R.id.scorecard:
-                // TODO: needs to go to a list of scorecards for event entrant, user will select scorecard from there to view or run
                 viewScorecard(EvEnUri, info.id);
                 return true;
             case R.id.view_tally:
@@ -190,7 +257,7 @@ public class EventEntrantDetailFragment extends Fragment implements LoaderManage
 
         String eventName = EventEntry.getEventIdNameFromUri(mUri);
 
-        mEventNameView.setText(eventName);
+        mEventNameView.setText(eventName + " Details");
 
         String eventid = Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString();
 

@@ -31,6 +31,8 @@ public class EventEntrantDetailActivity extends AppCompatActivity implements Eve
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (findViewById(R.id.event_view_detail_container) != null) {
             // android.support.v7.app.AppCompatActivity
 
@@ -67,6 +69,17 @@ public class EventEntrantDetailActivity extends AppCompatActivity implements Eve
                     .commit();
         }
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // Respond to the action bar's Up/Home button
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 //    protected void onResume() {
         // Resume and either load unchanged data or updated data

@@ -208,7 +208,7 @@ public class EventEditUsersFragment extends Fragment implements LoaderManager.Lo
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = UserEntry.COLUMN_FIRST_NAME + " ASC";
+        String sortOrder = UserEntry.COLUMN_LAST_NAME + " ASC";
 
         // CursorLoader is a loader that queries the ContentResolver and returns a Cursor.  This class implements
         // the Loader protocol in a standard way for querying cursors, building on AsyncTaskLoader to perform

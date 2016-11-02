@@ -16,10 +16,12 @@ import com.example.android.scoresheet.app.R;
 public class UserListAdapter extends CursorAdapter {
     public static class ViewHolder {
         public final TextView userFirstNameView;
+        public final TextView userLastNameView;
         public final TextView userRoleView;
 
         public ViewHolder(View view) {
             userFirstNameView = (TextView) view.findViewById(R.id.list_item_first_name_textview);
+            userLastNameView = (TextView) view.findViewById(R.id.list_item_last_name_textview);
             userRoleView = (TextView) view.findViewById(R.id.list_item_role_textview);
         }
     }
@@ -45,9 +47,11 @@ public class UserListAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         String first_name = cursor.getString(UserListFragment.COL_FIRST_NAME);
+        String last_name = cursor.getString(UserListFragment.COL_LAST_NAME);
         String role = cursor.getString(UserListFragment.COL_ROLE);
 
         viewHolder.userFirstNameView.setText(first_name);
+        viewHolder.userLastNameView.setText(last_name);
         viewHolder.userRoleView.setText(role);
     }
 }

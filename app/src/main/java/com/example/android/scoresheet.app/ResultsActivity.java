@@ -21,15 +21,17 @@ public class ResultsActivity extends AppCompatActivity{
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setElevation(0f);
 
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putParcelable(ResultsFragment.EVENTENTRANTTALLY_URI, getIntent().getData());
+            arguments.putParcelable(ResultsFragment.RESULTS_URI, getIntent().getData());
 
-            mUri = arguments.getParcelable(ResultsFragment.EVENTENTRANTTALLY_URI);
+            mUri = arguments.getParcelable(ResultsFragment.RESULTS_URI);
 
             ResultsFragment fragment = new ResultsFragment();
             fragment.setArguments(arguments);
@@ -39,4 +41,15 @@ public class ResultsActivity extends AppCompatActivity{
                     .commit();
         }
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // Respond to the action bar's Up/Home button
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

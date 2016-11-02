@@ -28,6 +28,8 @@ public class TallyViewActivity extends AppCompatActivity{
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setElevation(0f);
 
         if (savedInstanceState == null) {
@@ -68,6 +70,9 @@ public class TallyViewActivity extends AppCompatActivity{
                 startActivity(intent);
                 return true;
 
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

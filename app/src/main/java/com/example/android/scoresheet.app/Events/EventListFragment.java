@@ -311,7 +311,7 @@ public class EventListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = EventEntry.COLUMN_NAME + " ASC";
+        String sortOrder = EventEntry.COLUMN_DATE + " ASC";
         return new CursorLoader(getActivity(), EventEntry.CONTENT_URI, EVENT_COLUMNS, null, null, sortOrder);
     }
 

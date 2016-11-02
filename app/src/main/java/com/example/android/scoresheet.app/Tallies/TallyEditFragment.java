@@ -1,6 +1,7 @@
 package com.example.android.scoresheet.app.Tallies;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.scoresheet.app.R;
+import com.example.android.scoresheet.app.Utilities;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
 
 /**
@@ -19,6 +21,9 @@ import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
  */
 public class TallyEditFragment extends Fragment{
     public static final String LOG_TAG = TallyEditFragment.class.getSimpleName();
+    static final String TALLYEDIT_URI = "URI";
+    private Uri mUri;
+    private Uri editUri;
 
     private static final String[] TALLY_COLUMNS = {
             TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
@@ -37,10 +42,6 @@ public class TallyEditFragment extends Fragment{
     public static final int COL_QSCORE = 5;
     public static final int COL_QSCORES = 6;
 
-    static final String TALLYEDIT_URI = "URI";
-
-    private Uri mUri;
-    private Uri editUri;
     private EditText mTotalTimeEditText;
     private EditText mTotalFaultsEditText;
     private EditText mTotalPointsEditText;
@@ -69,6 +70,8 @@ public class TallyEditFragment extends Fragment{
         mTitleEditText = (EditText) rootView.findViewById(R.id.tally_title_text_edit);
         mQualifyingScoreEditText = (EditText) rootView.findViewById(R.id.tally_qualifying_score_text_edit);
         mQualifyingScoresEditText = (EditText) rootView.findViewById(R.id.tally_qualifying_scores_text_edit);
+
+        Utilities.getTally(getContext(), Long.valueOf(TallyEntry.getTallyIdFromUri(mUri)).toString());
 
         String sortOrder = TallyEntry._ID + " ASC";
         String selection = TallyEntry._ID + " = ?";
@@ -104,6 +107,9 @@ public class TallyEditFragment extends Fragment{
                 String selection = TallyEntry._ID + " = ?";
                 String[] selectionArgs = {Long.valueOf(TallyEntry.getTallyIdFromUri(mUri)).toString()};
                 getContext().getContentResolver().update(TallyEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
+
+                Intent intent = new Intent(getContext(), TallyViewActivity.class).setData(mUri);
+                startActivity(intent);
             }
         };
 

@@ -21,16 +21,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/userFirstNameHeader"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:text="@string/userFirstNameLabel" />
+                android:text="@string/userFirstNameLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/user_first_name_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -45,16 +47,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/userLastNameHeader"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:text="@string/userLastNameLabel" />
+                android:text="@string/userLastNameLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/user_last_name_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -68,16 +72,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/userRoleHeader"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:text="@string/userRoleLabel" />
+                android:text="@string/userRoleLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/user_role_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -91,16 +97,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/userStatusHeader"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:text="@string/userStatusLabel" />
+                android:text="@string/userStatusLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/user_status_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -112,18 +120,20 @@
             android:layout_height="match_parent">
             <TextView
                 android:layout_width="wrap_content"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_height="100px"
                 android:id="@+id/userEmailHeader"
-                android:layout_gravity="center_horizontal"
                 android:gravity="center_vertical"
-                android:text="@string/userEmailLabel" />
+                android:text="@string/userEmailLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/user_email_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -137,16 +147,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/userPasswordHeader"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:text="@string/userPasswordLabel" />
+                android:text="@string/userPasswordLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/user_password_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />

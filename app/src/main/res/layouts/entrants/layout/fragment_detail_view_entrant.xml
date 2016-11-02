@@ -19,6 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantFirstNameHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/entrantFirstNameLabel" />
@@ -40,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantLastNameHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/entrantLastNameLabel" />
@@ -62,6 +64,7 @@
                 android:layout_height="100px"
                 android:id="@+id/entrantIdHeader"
                 android:gravity="center_vertical"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/entrantIdLabel" />
             <TextView
@@ -82,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantDogNameHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/entrantDogNameLabel" />
@@ -103,6 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantDogIdHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/entrantDogIdLabel" />
@@ -126,6 +131,7 @@
                 android:id="@+id/entrantBreedHeader"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="@string/entrantBreedLabel" />
             <TextView
                 android:layout_width="match_parent"

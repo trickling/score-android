@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.scoresheet.app.R;
-import com.example.android.scoresheet.app.data.ScoreSheetContract;
+import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
 
 /**
@@ -83,8 +83,8 @@ public class ScorecardListFragment extends Fragment implements LoaderManager.Loa
     static final int COL_TOTALPTS = 23;
 
     private static final String[] EVENTENTRANTSCORECARD_COLUMNS = {
-            ScoreSheetContract.EventEntrantScorecardEntry.TABLE_NAME + "." + ScoreSheetContract.EventEntrantScorecardEntry._ID,
-            ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_EVENT_ID, ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, ScoreSheetContract.EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
+            EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
+            EventEntrantScorecardEntry.COLUMN_EVENT_ID, EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, EventEntrantScorecardEntry.COLUMN_SCORECARD_ID
     };
     public static final int COL_EVENTENTRANTSCORECARD_ID = 0;
     public static final int COL_EVSC_ID = 1;

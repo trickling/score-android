@@ -1,6 +1,7 @@
 package com.example.android.scoresheet.app.Entrants;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,9 @@ import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 public class EntrantNewFragment extends Fragment {
 
     public static final String LOG_TAG = EntrantNewFragment.class.getSimpleName();
+    static final String ENTRANTNEW_URI = "URI";
+    private Uri mUri;
+    private Uri newUri;
 
     private static final String[] ENTRANT_COLUMNS = {
             EntrantEntry.TABLE_NAME + "." + EntrantEntry._ID,
@@ -37,11 +41,6 @@ public class EntrantNewFragment extends Fragment {
     static final int COL_DOG_ID = 5;
     static final int COL_BREED = 6;
 
-
-    static final String ENTRANTNEW_URI = "URI";
-
-    private Uri mUri;
-    private Uri newUri;
     private EditText mFirstNameNewText;
     private EditText mLastNameNewText;
     private EditText mIdNewText;
@@ -58,6 +57,10 @@ public class EntrantNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mUri = arguments.getParcelable(EntrantNewFragment.ENTRANTNEW_URI);
+        }
 
         View rootView = inflater.inflate(R.layout.fragment_new_entrant, container, false);
 
@@ -83,6 +86,9 @@ public class EntrantNewFragment extends Fragment {
                 mNewContentValues.put(EntrantEntry.COLUMN_BREED, mBreedNewText.getText().toString());
 
                 newUri = getContext().getContentResolver().insert(EntrantEntry.CONTENT_URI, mNewContentValues);
+
+                Intent intent = new Intent(getContext(), EntrantViewDetailActivity.class).setData(newUri);
+                startActivity(intent);
             }
         };
 

@@ -22,6 +22,7 @@
     <string name="title_activity_scorecards">Scorecards</string>
     <string name="title_activity_scorecard_view">View Scorecard</string>
     <string name="title_activity_scorecards_edit">Edit Scorecard</string>
+    <string name="title_activity_stopwatch">Stopwatch</string>
 
     <string name="title_activity_tallies">View Tally</string>
     <string name="title_activity_tallies_edit">Edit Tally</string>
@@ -63,7 +64,7 @@
     <string name="userPasswordLabel">Password: </string>
 
     <string name="scorecardElementLabel">Element: </string>
-    <string name="scorecardMaxTimeMLabel">Maximum Time minutes: </string>
+    <string name="scorecardMaxTimeMLabel">Maximum Time:  </string>
     <string name="scorecardMaxTimeSLabel">Maximum Time seconds: </string>
     <string name="scorecardFinishCallLabel">Finish Call: </string>
     <string name="scorecardFalseAlertFringeLabel">False Alert/Fringe: </string>
@@ -93,6 +94,11 @@
     <string name="tallyTitleLabel">Title: </string>
     <string name="tallyQualScoreLabel">Qualifying Score: </string>
     <string name="tallyQualScoresLabel">Qualifying Scores: </string>
+
+    <string name="timerVal">00:00:00</string>
+    <string name="stopButtonLabel">Stop</string>
+    <string name="startButtonLabel">Start</string>
+    <string name="saveButtonLabel">Save</string>
 
     <string name="nav_list_key">Nav</string>
     <string name="nav_events">Events</string>

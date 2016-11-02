@@ -16,9 +16,11 @@ import com.example.android.scoresheet.app.R;
 public class ScorecardListAdapter extends CursorAdapter{
     public static class ViewHolder {
         public final TextView scorecardElementView;
+        public final TextView scorecardSearchAreaView;
 
         public ViewHolder(View view) {
-            scorecardElementView = (TextView) view.findViewById(R.id.list_item_element_textview);
+            scorecardElementView = (TextView) view.findViewById(R.id.scorecard_list_element_text_view);
+            scorecardSearchAreaView = (TextView) view.findViewById(R.id.scorecard_list_search_area_text_view);
         }
     }
 
@@ -43,7 +45,9 @@ public class ScorecardListAdapter extends CursorAdapter{
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         String element = cursor.getString(ScorecardListFragment.COL_ELEMENT);
+        String search_area = cursor.getString(ScorecardListFragment.COL_SA);
 
         viewHolder.scorecardElementView.setText(element);
+        viewHolder.scorecardSearchAreaView.setText(search_area);
     }
 }

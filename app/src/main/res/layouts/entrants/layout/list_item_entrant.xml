@@ -8,10 +8,24 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:background="@drawable/touch_selector"
     android:id="@+id/list_item_entrant" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/list_item_first_name_textview"
+            android:layout_gravity="center_horizontal"
+            android:paddingRight="12dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/list_item_last_name_textview"
+            android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_item_first_name_textview" />
+    </LinearLayout>
 
 </LinearLayout>

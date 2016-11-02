@@ -1,5 +1,6 @@
 package com.example.android.scoresheet.app.Scorecards;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.scoresheet.app.R;
+import com.example.android.scoresheet.app.Utilities;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
 
 /**
@@ -139,7 +141,13 @@ public class ScorecardViewFragment extends Fragment {
 
         String sortOrder = ScorecardEntry._ID + " ASC";
         String selection = ScorecardEntry._ID + " = ?";
-        String[] selectionArgs = {Long.valueOf(ScorecardEntry.getScorecardIdFromUri(mUri)).toString()};
+        String scorecardid = Long.valueOf(ScorecardEntry.getScorecardIdFromUri(mUri)).toString();
+        String[] selectionArgs = {scorecardid};
+
+        ContentValues mScdContentValues = new ContentValues();
+
+        mScdContentValues.put(ScorecardEntry.COLUMN_MAXPOINT, Utilities.getMaxPoint(getContext(), scorecardid));
+        getContext().getContentResolver().update(ScorecardEntry.CONTENT_URI, mScdContentValues, selection, selectionArgs);
 
         Cursor c = getContext().getContentResolver().query(ScorecardEntry.CONTENT_URI, SCORECARD_COLUMNS, selection, selectionArgs, sortOrder);
 

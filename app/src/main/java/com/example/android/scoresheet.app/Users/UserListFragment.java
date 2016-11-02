@@ -167,7 +167,7 @@ public class UserListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = UserEntry.COLUMN_FIRST_NAME + " ASC";
+        String sortOrder = UserEntry.COLUMN_LAST_NAME + " ASC";
         return new CursorLoader(getActivity(), UserEntry.CONTENT_URI, USER_COLUMNS, null, null, sortOrder);
     }
 

@@ -1,6 +1,7 @@
 package com.example.android.scoresheet.app.Users;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,9 @@ import com.example.android.scoresheet.app.data.ScoreSheetContract.UserEntry;
  */
 public class UserNewFragment extends Fragment{
     public static final String LOG_TAG = UserNewFragment.class.getSimpleName();
+    static final String USERNEW_URI = "URI";
+    private Uri mUri;
+    private Uri newUri;
 
     private static final String[] USER_COLUMNS = {
             UserEntry.TABLE_NAME + "." + UserEntry._ID,
@@ -38,10 +42,6 @@ public class UserNewFragment extends Fragment{
     static final int COL_EMAIL = 6;
     static final int COL_PASSWD = 7;
 
-    static final String USERNEW_URI = "URI";
-
-    private Uri mUri;
-    private Uri newUri;
     private EditText mFirstNameNewText;
     private EditText mLastNameNewText;
     private EditText mRoleNewText;
@@ -57,6 +57,10 @@ public class UserNewFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mUri = arguments.getParcelable(UserNewFragment.USERNEW_URI);
+        }
 
         View rootView = inflater.inflate(R.layout.fragment_new_user, container, false);
 
@@ -83,6 +87,8 @@ public class UserNewFragment extends Fragment{
 
                 newUri = getContext().getContentResolver().insert(UserEntry.CONTENT_URI, mNewContentValues);
 
+                Intent intent = new Intent(getContext(), UserViewDetailActivity.class).setData(newUri);
+                startActivity(intent);
             }
         };
 

@@ -1,10 +1,10 @@
 package com.example.android.scoresheet.app.Events;
 
+import android.support.v4.app.Fragment;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.scoresheet.app.R;
+import com.example.android.scoresheet.app.Utilities;
 import com.example.android.scoresheet.app.data.ScoreSheetContract;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
+
+//import android.support.v4.app.Fragment;
 
 /**
  * Created by Kari Stromsland on 9/15/2016.
  */
-public class EventEditFragment extends Fragment{
+public class EventEditFragment extends Fragment {
 
     public static final String LOG_TAG = EventEditFragment.class.getSimpleName();
     private Uri mUri;
     private Uri eventUri;
     private Uri editUri;
+    static final String EVENTEDIT_URI = "URI";
 
     private static final int EVENT_LOADER = 0;
     private static final String[] EVENT_COLUMNS = {
@@ -64,9 +68,7 @@ public class EventEditFragment extends Fragment{
     public static final int COL_VEH_HD = 15;
     public static final int COL_ELITE_HD = 16;
 
-    static final String EVENTEDIT_URI = "URI";
-
-    private long eventid;
+    private String eventid;
     private EditText mNameEditText;
     private EditText mLocationEditText;
     private EditText mDateEditText;
@@ -129,7 +131,9 @@ public class EventEditFragment extends Fragment{
 
         String sortOrder = EventEntry._ID + " ASC";
         String selection = EventEntry._ID + " = ?";
-        String[] selectionArgs = {Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString()};
+        eventid = Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString();
+        String[] selectionArgs = {eventid};
+
 
         Cursor c = getContext().getContentResolver().query(EventEntry.CONTENT_URI, EVENT_COLUMNS, selection, selectionArgs, sortOrder);
         if(c.moveToFirst()) {
@@ -163,27 +167,45 @@ public class EventEditFragment extends Fragment{
                 String selection = EventEntry._ID + " = ?";
                 String[] selectionArgs = {Long.valueOf(EventEntry.getEventIdFromUri(mUri)).toString()};
 
-                mEditContentValues.put(EventEntry.COLUMN_NAME, mNameEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_LOCATION, mLocationEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_DATE, mDateEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_HOST,  mHostEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_STATUS, mStatusEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_DIVISION, mDivisionEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_INT_SEARCH_AREAS, mIntSearchAreasEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_EXT_SEARCH_AREAS, mExtSearchAreasEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_CONT_SEARCH_AREAS, mContSearchAreasEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_VEH_SEARCH_AREAS, mVehSearchAreasEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_ELITE_SEARCH_AREAS, mEliteSearchAreasEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_INT_HIDES,  mIntHidesEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_EXT_HIDES, mExtHidesEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_CONT_HIDES, mContHidesEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_VEH_HIDES, mVehHidesEditText.getText().toString());
-                mEditContentValues.put(EventEntry.COLUMN_ELITE_HIDES, mEliteHidesEditText.getText().toString());
+                Cursor cEv = getContext().getContentResolver().query(EventEntry.CONTENT_URI, EVENT_COLUMNS, selection, selectionArgs, sortOrder);
 
-                getContext().getContentResolver().update(EventEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
+                if(cEv.moveToFirst()) {
 
+                    mEditContentValues.put(EventEntry.COLUMN_NAME, mNameEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_LOCATION, mLocationEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_DATE, mDateEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_HOST, mHostEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_STATUS, mStatusEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_DIVISION, mDivisionEditText.getText().toString());
+                    if(!cEv.getString(COL_INT_SA).equals(mIntSearchAreasEditText.getText().toString())){
+                        mEditContentValues.put(EventEntry.COLUMN_INT_SEARCH_AREAS, mIntSearchAreasEditText.getText().toString());
+                        Utilities.updateScorecards(getContext(), eventid, mIntSearchAreasEditText.getText().toString(), "Interior");
+                    }
+                    if(!cEv.getString(COL_EXT_SA).equals(mExtSearchAreasEditText.getText().toString())) {
+                        mEditContentValues.put(EventEntry.COLUMN_EXT_SEARCH_AREAS, mExtSearchAreasEditText.getText().toString());
+                        Utilities.updateScorecards(getContext(), eventid, mExtSearchAreasEditText.getText().toString(), "Exterior");
+                    }
+                    if(!cEv.getString(COL_CONT_SA).equals(mContSearchAreasEditText.getText().toString())) {
+                        mEditContentValues.put(EventEntry.COLUMN_CONT_SEARCH_AREAS, mContSearchAreasEditText.getText().toString());
+                        Utilities.updateScorecards(getContext(), eventid, mContSearchAreasEditText.getText().toString(), "Containers");
+                    }
+                    if(!cEv.getString(COL_VEH_SA).equals(mVehSearchAreasEditText.getText().toString())) {
+                        mEditContentValues.put(EventEntry.COLUMN_VEH_SEARCH_AREAS, mVehSearchAreasEditText.getText().toString());
+                        Utilities.updateScorecards(getContext(), eventid, mVehSearchAreasEditText.getText().toString(), "Vehicles");
+                    }
+                    if(!cEv.getString(COL_ELITE_SA).equals(mEliteSearchAreasEditText.getText().toString())) {
+                        mEditContentValues.put(EventEntry.COLUMN_ELITE_SEARCH_AREAS, mEliteSearchAreasEditText.getText().toString());
+                        Utilities.updateScorecards(getContext(), eventid, mEliteSearchAreasEditText.getText().toString(), "Elite");
+                    }
+                    mEditContentValues.put(EventEntry.COLUMN_INT_HIDES, mIntHidesEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_EXT_HIDES, mExtHidesEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_CONT_HIDES, mContHidesEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_VEH_HIDES, mVehHidesEditText.getText().toString());
+                    mEditContentValues.put(EventEntry.COLUMN_ELITE_HIDES, mEliteHidesEditText.getText().toString());
+
+                    getContext().getContentResolver().update(EventEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
+                }
             }
-
         };
 
         save_edit_button.setOnClickListener(edit_saveOnClickListener);

@@ -17,9 +17,11 @@ public class EventListAdapter extends CursorAdapter {
 
     public static class ViewHolder {
         public final TextView eventNameView;
+        public final TextView eventDateView;
 
         public ViewHolder(View view) {
-            eventNameView = (TextView) view.findViewById(R.id.list_item_event_textview);
+            eventNameView = (TextView) view.findViewById(R.id.list_item_event_name_textview);
+            eventDateView = (TextView) view.findViewById(R.id.list_item_event_date_textview);
         }
     }
 
@@ -44,8 +46,10 @@ public class EventListAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         String name = cursor.getString(EventListFragment.COL_NAME);
+        String date = cursor.getString(EventListFragment.COL_DATE);
 
         viewHolder.eventNameView.setText(name);
+        viewHolder.eventDateView.setText(date);
     }
 
 }

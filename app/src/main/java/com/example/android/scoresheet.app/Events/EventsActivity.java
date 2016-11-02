@@ -29,6 +29,8 @@ public class EventsActivity extends AppCompatActivity implements EventListFragme
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+
+
         if (findViewById(R.id.event_entrant_detail_container) != null) {
             // android.support.v7.app.AppCompatActivity
 

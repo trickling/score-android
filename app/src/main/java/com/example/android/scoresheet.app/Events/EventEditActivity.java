@@ -22,6 +22,8 @@ public class EventEditActivity extends AppCompatActivity implements EventEditFra
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setElevation(0f);
 
         if (savedInstanceState == null) {
@@ -48,6 +50,16 @@ public class EventEditActivity extends AppCompatActivity implements EventEditFra
         EventEditUsersFragment eevf = (EventEditUsersFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_users_edit_event);
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // Respond to the action bar's Up/Home button
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onEventEditEntrants(Uri contentUri) {

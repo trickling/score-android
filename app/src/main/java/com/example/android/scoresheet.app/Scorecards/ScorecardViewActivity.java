@@ -27,6 +27,8 @@ public class ScorecardViewActivity extends AppCompatActivity{
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setElevation(0f);
 
         if (savedInstanceState == null) {
@@ -66,6 +68,13 @@ public class ScorecardViewActivity extends AppCompatActivity{
                         .setData(mUri);
                 startActivity(intent);
                 return true;
+
+//            case android.R.id.home:
+////                NavUtils.navigateUpFromSameTask(this);
+//                intent = new Intent(this, ScorecardViewActivity.class)
+//                        .setData(mUri);
+//                startActivity(intent);
+//                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

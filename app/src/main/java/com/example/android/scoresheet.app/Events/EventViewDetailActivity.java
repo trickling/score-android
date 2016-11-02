@@ -21,6 +21,8 @@ public class EventViewDetailActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setElevation(0f);
 
         if (savedInstanceState == null) {
@@ -37,6 +39,17 @@ public class EventViewDetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // Respond to the action bar's Up/Home button
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     protected void onResume() {
         // Resume and either load unchanged data or updated data

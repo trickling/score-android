@@ -2,11 +2,11 @@ package com.example.android.scoresheet.app.Events;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
-import android.support.v4.widget.CursorAdapter;
 
 import com.example.android.scoresheet.app.R;
 
@@ -19,10 +19,10 @@ public class EventEditUsersListAdapter extends CursorAdapter{
 
     // A ViewHolder describes an item view and metadata about its place within RecyclerView
     public static class ViewHolder {
-        public final CheckedTextView userFirstNameView;
+        public final CheckedTextView userInfoView;
 
         public ViewHolder(View view) {
-            userFirstNameView = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_users_textview);
+            userInfoView = (CheckedTextView) view.findViewById(R.id.list_item_event_edit_users_textview);
         }
     }
 
@@ -48,15 +48,17 @@ public class EventEditUsersListAdapter extends CursorAdapter{
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         String first_name = cursor.getString(EventEditUsersFragment.COL_FIRST_NAME);
+        String last_name = cursor.getString(EventEditUsersFragment.COL_LAST_NAME);
+        String role = cursor.getString(EventEditUsersFragment.COL_ROLE);
 
-        viewHolder.userFirstNameView.setText(first_name);
+        viewHolder.userInfoView.setText(first_name + " " + last_name + "  ( " + role + " )");
 
         if (EventEditUsersFragment.checked_status(context, cursor)){
-            viewHolder.userFirstNameView.setChecked(true);
-            viewHolder.userFirstNameView.setCheckMarkDrawable(android.R.drawable.checkbox_on_background);
+            viewHolder.userInfoView.setChecked(true);
+            viewHolder.userInfoView.setCheckMarkDrawable(android.R.drawable.checkbox_on_background);
         }else{
-            viewHolder.userFirstNameView.setChecked(false);
-            viewHolder.userFirstNameView.setCheckMarkDrawable(android.R.drawable.checkbox_off_background);
+            viewHolder.userInfoView.setChecked(false);
+            viewHolder.userInfoView.setCheckMarkDrawable(android.R.drawable.checkbox_off_background);
         }
     }
 }

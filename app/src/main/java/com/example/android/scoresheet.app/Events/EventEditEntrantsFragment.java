@@ -20,7 +20,6 @@ import com.example.android.scoresheet.app.R;
 import com.example.android.scoresheet.app.data.ScoreSheetContract;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantScorecardEntry;
-//import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantTallyEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntry;
 import com.example.android.scoresheet.app.data.ScoreSheetContract.ScorecardEntry;
@@ -29,6 +28,8 @@ import com.example.android.scoresheet.app.data.ScoreSheetContract.TallyEntry;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
+
+//import com.example.android.scoresheet.app.data.ScoreSheetContract.EventEntrantEntry;
 
 /**
  * Created by Kari Stromsland on 9/19/2016.
@@ -113,14 +114,73 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
     static final int COL_DOG_ID = 5;
     static final int COL_BREED = 6;
 
+    private static final String[] SCORECARD_COLUMNS = {
+            ScorecardEntry.TABLE_NAME + "." + ScorecardEntry._ID,
+            ScorecardEntry.COLUMN_ELEMENT,
+            ScorecardEntry.COLUMN_MAXTIME_M,
+            ScorecardEntry.COLUMN_MAXTIME_S,
+            ScorecardEntry.COLUMN_FINISH_CALL,
+            ScorecardEntry.COLUMN_FALSE_ALERT_FRINGE,
+            ScorecardEntry.COLUMN_TIMED_OUT,
+            ScorecardEntry.COLUMN_DISMISSED,
+            ScorecardEntry.COLUMN_EXCUSED,
+            ScorecardEntry.COLUMN_ABSENT,
+            ScorecardEntry.COLUMN_ELIMINATED_DURING_SEARCH,
+            ScorecardEntry.COLUMN_OTHER_FAULTS_DESCR,
+            ScorecardEntry.COLUMN_OTHER_FAULTS_COUNT,
+            ScorecardEntry.COLUMN_COMMENTS,
+            ScorecardEntry.COLUMN_TOTAL_TIME,
+            ScorecardEntry.COLUMN_PRONOUNCED,
+            ScorecardEntry.COLUMN_JUDGE_SIGNATURE,
+            ScorecardEntry.COLUMN_SEARCH_AREA,
+            ScorecardEntry.COLUMN_HIDES_MAX,
+            ScorecardEntry.COLUMN_HIDES_FOUND,
+            ScorecardEntry.COLUMN_HIDES_MISSED,
+            ScorecardEntry.COLUMN_TOTAL_FAULTS,
+            ScorecardEntry.COLUMN_MAXPOINT,
+            ScorecardEntry.COLUMN_TOTAL_POINTS
+    };
+    static final int COL_SCORECARD_ID = 0;
+    static final int COL_ELEMENT = 1;
+    static final int COL_MAXTM = 2;
+    static final int COL_MAXTS = 3;
+    static final int COL_FINCALL = 4;
+    static final int COL_FAF = 5;
+    static final int COL_TIMEOUT = 6;
+    static final int COL_DISMISSED = 7;
+    static final int COL_EXCUSED = 8;
+    static final int COL_ABSENT = 9;
+    static final int COL_EDS = 10;
+    static final int COL_OFD = 11;
+    static final int COL_OFC = 12;
+    static final int COL_COMMENTS = 13;
+    static final int COL_TOTALT = 14;
+    static final int COL_PRON = 15;
+    static final int COL_JS = 16;
+    static final int COL_SA = 17;
+    static final int COL_HDMAX = 18;
+    static final int COL_HDFOUND = 19;
+    static final int COL_HDMISSED = 20;
+    static final int COL_TOTALFLTS = 21;
+    static final int COL_MAXPT = 22;
+    static final int COL_TOTALPTS = 23;
 
-//    private static final String[] EVENTENTRANT_COLUMNS = {
-//            EventEntrantEntry.TABLE_NAME + "." + EventEntrantEntry._ID,
-//            EventEntrantEntry.COLUMN_EVENT_ID, EventEntrantEntry.COLUMN_ENTRANT_ID
-//    };
-//    public static final int COL_EVENTENTRANT = 0;
-//    public static final int COL_EV_ID = 1;
-//    public static final int COL_EN_ID = 2;
+    private static final String[] TALLY_COLUMNS = {
+            TallyEntry.TABLE_NAME + "." + TallyEntry._ID,
+            TallyEntry.COLUMN_TOTAL_TIME,
+            TallyEntry.COLUMN_TOTAL_FAULTS,
+            TallyEntry.COLUMN_TOTAL_POINTS,
+            TallyEntry.COLUMN_TITLE,
+            TallyEntry.COLUMN_QUALIFYING_SCORE,
+            TallyEntry.COLUMN_QUALIFYING_SCORES
+    };
+    public static final int COL_TALLY_ID = 0;
+    public static final int COL_TOTAL_TIME = 1;
+    public static final int COL_TOTAL_FAULTS = 2;
+    public static final int COL_TOTAL_POINTS = 3;
+    public static final int COL_TITLE = 4;
+    public static final int COL_QSCORE = 5;
+    public static final int COL_QSCORES = 6;
 
     private static final String[] EVENTENTRANTSCORECARD_COLUMNS = {
             EventEntrantScorecardEntry.TABLE_NAME + "." + EventEntrantScorecardEntry._ID,
@@ -210,42 +270,52 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
 
                         Iterator<String> itr = keys.iterator();
 
-                        while (itr.hasNext()){
+                        while (itr.hasNext()) {
                             String keySA = itr.next();
                             ContentValues mSCContentValues = new ContentValues();
-                            if(searchAreas.get(keySA)>0) {
-                                switch (keySA) {
-                                    case intSAelmt:
-                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, intSAelmt + " " + searchAreas.get(keySA));
-                                        break;
-                                    case extSAelmt:
-                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, extSAelmt + " " + searchAreas.get(keySA));
-                                        break;
-                                    case contSAelmt:
-                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, contSAelmt + " " + searchAreas.get(keySA));
-                                        break;
-                                    case vehSAelmt:
-                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, vehSAelmt + " " + searchAreas.get(keySA));
-                                        break;
-                                    case eliteSAelmt:
-                                        mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, eliteSAelmt + " " + searchAreas.get(keySA));
-                                        break;
-                                    default:
-                                        break;
+                            if (searchAreas.get(keySA) > 0) {
+                                for (int i = 0; i < searchAreas.get(keySA); i++) {
+                                    switch (keySA) {
+                                        case intSAelmt:
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_SEARCH_AREA, i+1);
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, keySA);
+                                            break;
+                                        case extSAelmt:
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_SEARCH_AREA, i+1);
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, keySA);
+                                            break;
+                                        case contSAelmt:
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_SEARCH_AREA, i+1);
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, keySA);
+                                            break;
+                                        case vehSAelmt:
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_SEARCH_AREA, i+1);
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, keySA);
+                                            break;
+                                        case eliteSAelmt:
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_SEARCH_AREA, i+1);
+                                            mSCContentValues.put(ScorecardEntry.COLUMN_ELEMENT, keySA);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    Uri scUri = getContext().getContentResolver().insert(ScorecardEntry.buildScorecardUri(), mSCContentValues);
+                                    scorecardid = ScorecardEntry.getScorecardIdFromUri(scUri);
+
+                                    // TODO get event and entrant info for scorecards if we want it listed on scorecards
+
+                                    ContentValues mscEditContentValues = new ContentValues();
+                                    mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, entrantid);
+                                    mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_EVENT_ID, eventid);
+                                    mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_SCORECARD_ID, scorecardid);
+
+                                    getContext().getContentResolver().insert(EventEntrantScorecardEntry.buildEventEntrantScorecardUri(), mscEditContentValues);
                                 }
-                                Uri scUri = getContext().getContentResolver().insert(ScorecardEntry.buildScorecardUri(), mSCContentValues);
-                                scorecardid = ScorecardEntry.getScorecardIdFromUri(scUri);
-                                ContentValues mscEditContentValues = new ContentValues();
-                                mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_ENTRANT_ID, entrantid);
-                                mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_EVENT_ID, eventid);
-                                mscEditContentValues.put(EventEntrantScorecardEntry.COLUMN_SCORECARD_ID, scorecardid);
-//                                Uri uri_SC = EventEntrantScorecardEntry.buildEventEntrantScorecardUri();
-                                getContext().getContentResolver().insert(EventEntrantScorecardEntry.buildEventEntrantScorecardUri(), mscEditContentValues);
                             }
                         }
 
                         ContentValues mTLYContentValues = new ContentValues();
-                        String tallyTitle = eventid + " " + entrantid + " tally";
+                        String tallyTitle = "no";
                         mTLYContentValues.put(TallyEntry.COLUMN_TITLE, tallyTitle);
                         Uri tlyUri = getContext().getContentResolver().insert(TallyEntry.buildTallyUri(), mTLYContentValues);
                         tallyid = TallyEntry.getTallyIdFromUri(tlyUri);
@@ -255,10 +325,6 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
                         mtlyEditContentValues.put(EventEntrantTallyEntry.COLUMN_TALLY_ID, tallyid);
                         Uri uri_TLY = EventEntrantTallyEntry.buildEventEntrantTallyUri();
                         getContext().getContentResolver().insert(EventEntrantTallyEntry.buildEventEntrantTallyUri(), mtlyEditContentValues);
-//                        ContentValues mevenEditContentValues = new ContentValues();
-//                        mevenEditContentValues.put(EventEntrantEntry.COLUMN_EVENT_ID, eventid);
-//                        mevenEditContentValues.put(EventEntrantEntry.COLUMN_ENTRANT_ID, entrantid);
-
 
                     }else{
 
@@ -366,7 +432,7 @@ public class EventEditEntrantsFragment extends Fragment implements LoaderManager
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = EntrantEntry.COLUMN_FIRST_NAME + " ASC";
+        String sortOrder = EntrantEntry.COLUMN_LAST_NAME + " ASC";
 
         // CursorLoader is a loader that queries the ContentResolver and returns a Cursor.  This class implements
         // the Loader protocol in a standard way for querying cursors, building on AsyncTaskLoader to perform

@@ -20,16 +20,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantFirstNameHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/entrantFirstNameLabel" />
+                android:text="@string/entrantFirstNameLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/entrant_first_name_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -45,16 +47,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantLastNameHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/entrantLastNameLabel" />
+                android:text="@string/entrantLastNameLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/entrant_last_name_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -70,16 +74,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantIdHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/entrantIdLabel" />
+                android:text="@string/entrantIdLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/entrant_id_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -95,16 +101,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantDogNameHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/entrantDogNameLabel" />
+                android:text="@string/entrantDogNameLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/entrant_dog_name_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -121,15 +129,17 @@
                 android:layout_height="100px"
                 android:id="@+id/entrantDogIdHeader"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/entrantDogIdLabel" />
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:text="@string/entrantDogIdLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/entrant_dog_id_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />
@@ -145,16 +155,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100px"
                 android:id="@+id/entrantBreedHeader"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/entrantBreedLabel" />
+                android:text="@string/entrantBreedLabel"
+                android:layout_weight="1"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/entrant_breed_text_edit"
-                android:layout_gravity="center_horizontal"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center_vertical"
                 android:allowUndo="true"
                 android:clickable="true"
                 android:enabled="true" />

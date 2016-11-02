@@ -1,6 +1,7 @@
 package com.example.android.scoresheet.app.Users;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -108,6 +109,9 @@ public class UserEditFragment extends Fragment {
                 String selection = UserEntry._ID + " = ?";
                 String[] selectionArgs = {Long.valueOf(UserEntry.getUserIdFromUri(mUri)).toString()};
                 getContext().getContentResolver().update(UserEntry.CONTENT_URI, mEditContentValues, selection, selectionArgs);
+
+                Intent intent = new Intent(getContext(), UserViewDetailActivity.class).setData(mUri);
+                startActivity(intent);
             }
         };
 

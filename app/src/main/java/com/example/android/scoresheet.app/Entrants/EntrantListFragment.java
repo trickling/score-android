@@ -167,7 +167,7 @@ public class EntrantListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
-        String sortOrder = EntrantEntry.COLUMN_FIRST_NAME + " ASC";
+        String sortOrder = EntrantEntry.COLUMN_LAST_NAME + " ASC";
         return new CursorLoader(getActivity(), EntrantEntry.CONTENT_URI, ENTRANT_COLUMNS, null, null, sortOrder);
     }
 

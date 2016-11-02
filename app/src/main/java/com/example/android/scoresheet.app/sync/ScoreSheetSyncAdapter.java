@@ -120,7 +120,7 @@ public class ScoreSheetSyncAdapter extends AbstractThreadedSyncAdapter{
      */
     public static void syncImmediately(Context context) {
 //        dropDB(context);
-////        seedEventDB(EventData.EVENTS, context);
+//        seedEventDB(EventData.EVENTS, context);
 //        seedEntrantDB(EntrantData.ENTRANTS, context);
 //        seedUserDB(UserData.USERS, context);
         Bundle bundle = new Bundle();
